@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 纹样重构实验室，计算机视觉 + 扩散模型，实现传统非遗纹样的数字化提取与创新。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23f5efe4'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%232c2a27' font-weight='bold'>雄</text></svg>">
+<title>AI 纹样重构实验室 — 数绘雄州 · 智承非遗</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+  background: linear-gradient(135deg, #FDF8F0 0%, #F5EDE0 50%, #FDF8F0 100%);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 35% 45%, rgba(181,65,62,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 65% 55%, rgba(245,224,184,0.05) 0%, transparent 50%);
+  z-index: 0;
+}
+.hero-pattern-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(181,65,62,0.3) 20px, rgba(181,65,62,0.3) 21px),
+    repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(181,65,62,0.3) 20px, rgba(181,65,62,0.3) 21px);
+  z-index: 0;
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+.hero-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 8px;
+  color: rgba(51,51,51,0.12);
+  border: 1px solid rgba(181,65,62,0.2);
+  padding: 8px 28px;
+  border-radius: 24px;
+  margin-bottom: 28px;
+}
+.hero-title {
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  background: linear-gradient(135deg, #8C2B28, #B5413E, #D4A24E, #CC524F);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(181,65,62,0.2));
+}
+.hero-desc {
+  margin-top: 20px;
+  font-size: 17px;
+  color: rgba(184,168,138,0.5);
+  letter-spacing: 4px;
+}
+
+/* ===== 四大纹样 ===== */
+.pattern-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+.pattern-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  display: flex;
+  flex-direction: column;
+}
+.pattern-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08);
+}
+.pattern-card .card-visual { position: relative; }
+.pattern-card .card-visual .img-placeholder { min-height: 240px; border: none; border-radius: 0; }
+.pattern-card .card-visual .pattern-badge {
+  position: absolute; top: 16px; right: 16px;
+  padding: 6px 14px; border-radius: 16px; font-size: 11px; letter-spacing: 1px;
+  background: rgba(253,248,240,0.5); border: 1px solid rgba(51,51,51,0.08); color: var(--gold-primary);
+}
+.pattern-card .card-body { padding: 28px; flex: 1; }
+.pattern-card .card-body h4 { font-size: 20px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.pattern-card .card-body p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 14px; }
+.pattern-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+.pattern-meta span { padding: 4px 12px; border-radius: 10px; font-size: 11px; letter-spacing: 1px; background: rgba(181,65,62,0.06); border: 1px solid rgba(181,65,62,0.12); color: var(--text-dim); }
+
+/* ===== 纹样色谱 ===== */
+.palette-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.palette-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 16px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.palette-card:hover { border-color: var(--border-gold-hover); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08); }
+.palette-card .palette-visual .img-placeholder { min-height: 180px; border: none; border-radius: 0; }
+.palette-card .palette-body { padding: 24px; }
+.palette-card .palette-body h4 { font-size: 17px; color: var(--gold-primary); letter-spacing: 2px; margin-bottom: 10px; }
+.palette-card .palette-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+.palette-colors { display: flex; gap: 6px; margin-top: 14px; }
+.palette-swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(181,65,62,0.15); }
+.palette-desc { margin-top: 20px; padding: 20px 24px; background: rgba(181,65,62,0.03); border: 1px solid rgba(181,65,62,0.08); border-radius: 12px; }
+.palette-desc p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; }
+
+/* ===== 处理流程 ===== */
+.pipeline-wrap { display: flex; gap: 0; align-items: stretch; overflow-x: auto; padding-bottom: 12px; }
+.pipeline-step { flex: 1; min-width: 180px; background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 28px 20px; text-align: center; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); position: relative; }
+.pipeline-step:hover { border-color: var(--border-gold-hover); transform: translateY(-3px); }
+.pipeline-step .step-icon { font-size: 32px; margin-bottom: 14px; display: block; }
+.pipeline-step .step-num { font-size: 11px; letter-spacing: 3px; color: rgba(51,51,51,0.1); margin-bottom: 8px; }
+.pipeline-step h5 { font-size: 15px; color: var(--gold-primary); letter-spacing: 2px; margin-bottom: 10px; }
+.pipeline-step p { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+.pipeline-arrow { display: flex; align-items: center; padding: 0 8px; font-size: 20px; color: rgba(181,65,62,0.25); flex-shrink: 0; }
+
+/* ===== 处理效果对比 ===== */
+.compare-pairs { display: flex; flex-direction: column; gap: 32px; }
+.compare-pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: stretch; }
+.compare-side { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.3s ease; }
+.compare-side:hover { border-color: var(--border-gold-hover); }
+.compare-side .img-placeholder { min-height: 200px; border: none; border-radius: 0; }
+.compare-side .compare-label { padding: 14px 20px; text-align: center; }
+.compare-side .compare-label h5 { font-size: 14px; color: var(--gold-primary); letter-spacing: 2px; margin-bottom: 4px; }
+.compare-side .compare-label p { font-size: 12px; color: var(--text-dim); }
+.compare-arrow-col { display: flex; align-items: center; justify-content: center; padding: 0 20px; font-size: 24px; color: rgba(51,51,51,0.08); }
+
+/* ===== 古今对比 ===== */
+.comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+.comparison-col h3 { font-size: 24px; color: var(--gold-primary); letter-spacing: 3px; margin-bottom: 24px; text-align: center; }
+.comparison-col .col-label { text-align: center; font-size: 12px; letter-spacing: 4px; color: var(--text-dim); margin-bottom: 8px; }
+.comparison-items { display: flex; flex-direction: column; gap: 20px; }
+.comparison-item { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.3s ease; }
+.comparison-item:hover { border-color: var(--border-gold-hover); }
+.comparison-item .img-placeholder { min-height: 180px; border: none; border-radius: 0; }
+.comparison-item .item-info { padding: 18px 22px; }
+.comparison-item .item-info h5 { font-size: 15px; color: var(--gold-primary); letter-spacing: 1px; margin-bottom: 6px; }
+.comparison-item .item-info p { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+.comparison-divider { display: flex; align-items: center; justify-content: center; position: relative; }
+.comparison-divider::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: linear-gradient(180deg, transparent, rgba(181,65,62,0.2), transparent); }
+.comparison-divider .vs-badge { position: relative; z-index: 1; width: 48px; height: 48px; border-radius: 50%; background: var(--bg-primary); border: 1px solid rgba(181,65,62,0.25); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--gold-primary); letter-spacing: 1px; }
+
+/* ===== 纹样应用案例 ===== */
+.application-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.application-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.application-card:hover { border-color: var(--border-gold-hover); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08); }
+.application-card .card-visual .img-placeholder { min-height: 200px; border: none; border-radius: 0; }
+.application-card .card-body { padding: 22px; }
+.application-card .card-body h4 { font-size: 16px; color: var(--gold-primary); letter-spacing: 2px; margin-bottom: 8px; }
+.application-card .card-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* ===== 实验室设备 ===== */
+.equipment-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.equipment-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); text-align: center; }
+.equipment-card:hover { border-color: var(--border-gold-hover); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08); }
+.equipment-card .card-visual .img-placeholder { min-height: 180px; border: none; border-radius: 0; }
+.equipment-card .card-body { padding: 22px; }
+.equipment-card .card-body h4 { font-size: 16px; color: var(--gold-primary); letter-spacing: 2px; margin-bottom: 8px; }
+.equipment-card .card-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+.equipment-card .equip-spec { display: inline-block; margin-top: 10px; padding: 4px 12px; border-radius: 10px; font-size: 11px; letter-spacing: 1px; border: 1px solid rgba(245,224,184,0.15); color: rgba(245,224,184,0.6); background: rgba(245,224,184,0.04); }
+
+/* ===== AI 重构互动区 ===== */
+.recon-interactive { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+.recon-panel { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 16px; padding: 32px; }
+.recon-panel h4 { font-size: 18px; color: var(--gold-primary); letter-spacing: 2px; margin-bottom: 20px; }
+.recon-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.recon-option { padding: 14px 20px; border-radius: 12px; border: 1px solid rgba(181,65,62,0.12); background: rgba(181,65,62,0.04); cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 12px; }
+.recon-option:hover, .recon-option.active { border-color: var(--gold-primary); background: rgba(181,65,62,0.06); }
+.recon-option .opt-icon { font-size: 20px; }
+.recon-option .opt-text { font-size: 14px; color: var(--text-secondary); }
+.recon-option .opt-text strong { color: var(--gold-primary); display: block; margin-bottom: 2px; }
+.recon-result .img-placeholder { min-height: 300px; }
+.recon-result-info { margin-top: 16px; padding: 16px; background: rgba(51,51,51,0.08); border-radius: 10px; }
+.recon-result-info p { font-size: 13px; color: var(--text-dim); line-height: 1.8; }
+
+/* ===== 纹样数据 ===== */
+.pattern-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.pattern-stat-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 32px 20px; text-align: center; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.pattern-stat-card:hover { border-color: var(--border-gold-hover); transform: translateY(-3px); }
+.pattern-stat-card .stat-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+.pattern-stat-card .stat-value { font-size: 36px; font-weight: 900; background: linear-gradient(135deg, var(--gold-primary), var(--gold-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.2; }
+.pattern-stat-card .stat-label { font-size: 13px; color: var(--text-dim); letter-spacing: 1px; margin-top: 6px; }
+
+/* ===== 开源共享 ===== */
+.opensource-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.opensource-visual .img-placeholder { min-height: 360px; border-radius: 16px; }
+.opensource-text h3 { font-size: 26px; color: var(--gold-primary); margin-bottom: 18px; letter-spacing: 3px; }
+.opensource-text p { font-size: 15px; line-height: 2; color: var(--text-secondary); margin-bottom: 14px; }
+.opensource-features { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+.opensource-feat { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 12px; transition: all 0.3s ease; }
+.opensource-feat:hover { border-color: var(--border-gold-hover); transform: translateX(4px); }
+.opensource-feat .feat-icon { font-size: 22px; flex-shrink: 0; }
+.opensource-feat .feat-text { font-size: 14px; color: var(--text-secondary); }
+.opensource-feat .feat-text strong { color: var(--gold-primary); }
+
+/* ===== 响应式 ===== */
+@media (max-width: 1024px) {
+  .hero { min-height: 55vh; }
+  .hero-title { font-size: 40px; letter-spacing: 5px; }
+  .hero-desc { font-size: 15px; }
+  .hero-tag { font-size: 10px; letter-spacing: 5px; padding: 6px 20px; }
+  .pattern-grid { grid-template-columns: 1fr; gap: 24px; }
+  .pattern-card .card-body { padding: 22px; }
+  .pattern-card .card-body h4 { font-size: 18px; }
+  .palette-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .palette-card .palette-body { padding: 18px; }
+  .pipeline-wrap { flex-wrap: wrap; justify-content: center; }
+  .pipeline-arrow { transform: rotate(90deg); padding: 8px 0; justify-content: center; }
+  .pipeline-step { min-width: 150px; padding: 20px 16px; }
+  .compare-pair { grid-template-columns: 1fr; gap: 16px; }
+  .compare-arrow-col { transform: rotate(90deg); padding: 10px 0; justify-content: center; }
+  .comparison-grid { grid-template-columns: 1fr; gap: 24px; }
+  .comparison-divider { display: none; }
+  .comparison-col h3 { font-size: 20px; }
+  .application-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .application-card .card-body { padding: 18px; }
+  .equipment-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .equipment-card .card-body { padding: 18px; }
+  .recon-interactive { grid-template-columns: 1fr; gap: 24px; }
+  .recon-panel { padding: 24px; }
+  .recon-panel h4 { font-size: 16px; }
+  .pattern-stats { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .pattern-stat-card { padding: 24px 16px; }
+  .pattern-stat-card .stat-value { font-size: 28px; }
+  .opensource-wrap { grid-template-columns: 1fr; gap: 28px; }
+  .opensource-text h3 { font-size: 22px; }
+  .opensource-visual .img-placeholder { min-height: 260px; }
+}
+@media (max-width: 768px) {
+  .hero { min-height: 45vh; }
+  .hero-title { font-size: 28px; letter-spacing: 3px; }
+  .hero-desc { font-size: 14px; letter-spacing: 2px; }
+  .pattern-grid { gap: 16px; }
+  .pattern-card .card-body { padding: 18px; }
+  .pattern-card .card-body h4 { font-size: 17px; }
+  .pattern-card .card-body p { font-size: 13px; }
+  .pattern-card .card-visual .img-placeholder { min-height: 200px; }
+  .palette-grid { grid-template-columns: 1fr; gap: 16px; }
+  .palette-card .palette-body { padding: 16px; }
+  .pipeline-wrap { flex-direction: column; }
+  .pipeline-step { min-width: auto; padding: 18px 14px; }
+  .pipeline-step h5 { font-size: 14px; }
+  .compare-pair { grid-template-columns: 1fr; }
+  .compare-side .img-placeholder { min-height: 160px; }
+  .comparison-grid { gap: 20px; }
+  .comparison-col h3 { font-size: 18px; }
+  .comparison-item .item-info { padding: 14px 16px; }
+  .comparison-item .item-info h5 { font-size: 14px; }
+  .application-grid { grid-template-columns: 1fr; gap: 16px; }
+  .application-card .card-body h4 { font-size: 15px; }
+  .equipment-grid { grid-template-columns: 1fr; gap: 16px; }
+  .recon-interactive { gap: 16px; }
+  .recon-panel { padding: 18px; }
+  .recon-option { padding: 12px 16px; }
+  .recon-result .img-placeholder { min-height: 220px; }
+  .pattern-stats { grid-template-columns: 1fr; gap: 14px; }
+  .pattern-stat-card { padding: 20px 14px; }
+  .pattern-stat-card .stat-value { font-size: 26px; }
+  .pattern-stat-card .stat-icon { font-size: 24px; }
+  .opensource-wrap { gap: 20px; }
+  .opensource-text h3 { font-size: 20px; }
+  .opensource-text p { font-size: 14px; }
+  .opensource-feat { padding: 12px 14px; }
+  .palette-desc { padding: 16px 18px; }
+  .palette-desc p { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .hero-title { font-size: 24px; letter-spacing: 2px; }
+  .hero-desc { font-size: 13px; letter-spacing: 1px; }
+  .hero-tag { font-size: 9px; letter-spacing: 3px; padding: 5px 14px; margin-bottom: 18px; }
+  .section-title { font-size: 22px; letter-spacing: 2px; }
+  .section-tag { font-size: 10px; letter-spacing: 3px; }
+  .pattern-card .card-body { padding: 14px; }
+  .pattern-card .card-body h4 { font-size: 16px; }
+  .pattern-card .card-body p { font-size: 12px; line-height: 1.7; }
+  .pattern-meta span { font-size: 10px; padding: 3px 8px; }
+  .palette-card .palette-body { padding: 14px; }
+  .palette-card .palette-body h4 { font-size: 15px; }
+  .palette-swatch { width: 22px; height: 22px; }
+  .pipeline-step { padding: 14px 12px; }
+  .pipeline-step .step-icon { font-size: 26px; }
+  .pipeline-step h5 { font-size: 13px; }
+  .pipeline-step p { font-size: 11px; }
+  .compare-side .compare-label { padding: 10px 14px; }
+  .compare-side .compare-label h5 { font-size: 13px; }
+  .comparison-item .item-info { padding: 12px 14px; }
+  .comparison-item .item-info h5 { font-size: 13px; }
+  .comparison-item .item-info p { font-size: 12px; }
+  .application-card .card-body { padding: 14px; }
+  .application-card .card-body h4 { font-size: 14px; }
+  .application-card .card-body p { font-size: 12px; }
+  .equipment-card .card-body { padding: 14px; }
+  .equipment-card .card-body h4 { font-size: 14px; }
+  .recon-panel { padding: 14px; }
+  .recon-panel h4 { font-size: 15px; }
+  .recon-option { padding: 10px 12px; gap: 8px; }
+  .recon-option .opt-icon { font-size: 18px; }
+  .recon-option .opt-text { font-size: 12px; }
+  .pattern-stat-card .stat-value { font-size: 24px; }
+  .pattern-stat-card .stat-label { font-size: 12px; }
+  .opensource-text h3 { font-size: 18px; }
+  .opensource-text p { font-size: 13px; }
+  .opensource-feat { padding: 10px 12px; gap: 10px; }
+  .opensource-feat .feat-icon { font-size: 18px; }
+  .opensource-feat .feat-text { font-size: 12px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #B5413E, #D4A24E, #B5413E);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+
+<canvas id="particleCanvas"></canvas>
+
+<!-- 导航栏 -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">雄</div>
+      <span class="nav-logo-text">数绘雄州</span>
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item">
+        <a href="heritage.html" class="nav-link">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link active">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <span class="current">AI 纹样重构实验室</span>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-pattern-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">PATTERN LAB · 纹样数字化重构</div>
+    <h1 class="hero-title page-hero-title">AI 纹样重构实验室</h1>
+    <p class="hero-desc">从传统到数字，让千年纹样在 AI 驱动下获得新生</p>
+  </div>
+</section>
+
+<!-- 四大非遗纹样 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">HERITAGE PATTERNS</div>
+    <h2 class="section-title">四大非遗纹样典藏</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="pattern-grid">
+    <div class="pattern-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-reed-01.webp" alt="芦苇画纹样" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+        <span class="pattern-badge">省级非遗</span>
+      </div>
+      <div class="card-body">
+        <h4>白洋淀芦苇纹样</h4>
+        <p>以白洋淀水乡自然风光为灵感，芦苇编织纹理与水波荡漾的曲线构成独特的视觉语言。纹样特征以自然曲线、对称构图为主，色调清新淡雅。</p>
+        <div class="pattern-meta">
+          <span>自然曲线</span>
+          <span>对称构图</span>
+          <span>水乡意境</span>
+          <span>320+ 纹样</span>
+        </div>
+      </div>
+    </div>
+    <div class="pattern-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-pottery-01.webp" alt="黑陶纹饰" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+        <span class="pattern-badge">省级非遗</span>
+      </div>
+      <div class="card-body">
+        <h4>雄州黑陶纹饰</h4>
+        <p>传承千年的黑陶装饰纹样，以回纹、雷纹、兽面纹为代表，线条刚劲有力，几何感强烈。纹样蕴含辟邪纳福的民俗寓意，是北方陶艺的精华。</p>
+        <div class="pattern-meta">
+          <span>回纹雷纹</span>
+          <span>几何刚劲</span>
+          <span>民俗寓意</span>
+          <span>280+ 纹样</span>
+        </div>
+      </div>
+    </div>
+    <div class="pattern-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-lantern-01.webp" alt="盒子灯纹样" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+        <span class="pattern-badge">省级非遗</span>
+      </div>
+      <div class="card-body">
+        <h4>双堂盒子灯纹样</h4>
+        <p>盒子灯表面装饰以花卉、龙凤、吉祥文字为主，色彩浓烈喜庆。纹样融合民间剪纸与年画风格，具有浓厚的北方民俗特色。</p>
+        <div class="pattern-meta">
+          <span>花卉龙凤</span>
+          <span>喜庆色彩</span>
+          <span>民俗剪纸风</span>
+          <span>150+ 纹样</span>
+        </div>
+      </div>
+    </div>
+    <div class="pattern-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-music-01.webp" alt="古乐纹样" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+        <span class="pattern-badge">国家级非遗</span>
+      </div>
+      <div class="card-body">
+        <h4>圈头村古乐纹饰</h4>
+        <p>古乐谱字本身即为独特的视觉纹样，工尺谱的书写形态兼具实用与美感。乐器上的雕刻纹饰则以云纹、莲花纹为主，风格古朴典雅。</p>
+        <div class="pattern-meta">
+          <span>工尺谱字</span>
+          <span>云纹莲花</span>
+          <span>古朴典雅</span>
+          <span>90+ 纹样</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 纹样色谱 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">COLOR PALETTE</div>
+    <h2 class="section-title">纹样色谱</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="palette-grid">
+    <div class="palette-card reveal">
+      <div class="palette-visual">
+        <img src="vibe_images/pattern-color-01.webp" alt="芦苇画色卡" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="palette-body">
+        <h4>芦苇画色谱</h4>
+        <p>取自天然芦苇材料的自然色调，从初秋的米白到深秋的深褐，呈现水乡四季的色彩变迁。</p>
+        <div class="palette-colors">
+          <div class="palette-swatch" style="background:#F5F0E1;"></div>
+          <div class="palette-swatch" style="background:#D4C5A0;"></div>
+          <div class="palette-swatch" style="background:#B8A472;"></div>
+          <div class="palette-swatch" style="background:#8B7355;"></div>
+          <div class="palette-swatch" style="background:#6B5B3E;"></div>
+          <div class="palette-swatch" style="background:#4A3C28;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="palette-card reveal">
+      <div class="palette-visual">
+        <img src="vibe_images/pattern-color-02.webp" alt="黑陶色卡" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="palette-body">
+        <h4>黑陶色谱</h4>
+        <p>源自千年窑火的深沉色调，从炭黑的釉面到古铜的胎体，每一色都承载着泥土与火焰的对话。</p>
+        <div class="palette-colors">
+          <div class="palette-swatch" style="background:#2C2C2C;"></div>
+          <div class="palette-swatch" style="background:#3D3530;"></div>
+          <div class="palette-swatch" style="background:#5C4A3A;"></div>
+          <div class="palette-swatch" style="background:#7A6348;"></div>
+          <div class="palette-swatch" style="background:#8B7355;"></div>
+          <div class="palette-swatch" style="background:#A08060;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="palette-card reveal">
+      <div class="palette-visual">
+        <img src="vibe_images/pattern-color-03.webp" alt="盒子灯色卡" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="palette-body">
+        <h4>盒子灯色谱</h4>
+        <p>北方民间节庆的喜庆色调，从正红的灯笼到金色的流苏，洋溢着浓郁的传统节日氛围。</p>
+        <div class="palette-colors">
+          <div class="palette-swatch" style="background:#CC2936;"></div>
+          <div class="palette-swatch" style="background:#D94040;"></div>
+          <div class="palette-swatch" style="background:#E86040;"></div>
+          <div class="palette-swatch" style="background:#D4883A;"></div>
+          <div class="palette-swatch" style="background:#C9A84C;"></div>
+          <div class="palette-swatch" style="background:#E8C860;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="palette-card reveal">
+      <div class="palette-visual">
+        <img src="vibe_images/pattern-color-04.webp" alt="古乐色卡" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="palette-body">
+        <h4>古乐色谱</h4>
+        <p>千年雅乐的素雅色调，从青灰的乐谱到墨绿的古器，传递着文人音乐的清雅与内敛。</p>
+        <div class="palette-colors">
+          <div class="palette-swatch" style="background:#8A9A9E;"></div>
+          <div class="palette-swatch" style="background:#6E7F7D;"></div>
+          <div class="palette-swatch" style="background:#556B5E;"></div>
+          <div class="palette-swatch" style="background:#3E5C4F;"></div>
+          <div class="palette-swatch" style="background:#2D4A3E;"></div>
+          <div class="palette-swatch" style="background:#1E3630;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="palette-desc reveal" style="margin-top: 28px;">
+    <p>纹样色谱提取是数字化处理的关键环节。我们通过光谱分析设备对非遗实物进行精确的色彩采样，建立每种非遗项目的专属色彩体系。这些色谱数据不仅用于 AI 模型训练时的色彩约束，也为文创产品设计提供了标准化的色彩参考。每种色谱均经过非遗传承人审核确认，确保色彩还原的文化准确性。</p>
+  </div>
+</section>
+
+<!-- 处理流程 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">PROCESSING PIPELINE</div>
+    <h2 class="section-title">纹样数字化处理流程</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="pipeline-wrap reveal">
+    <div class="pipeline-step">
+      <span class="step-icon">📸</span>
+      <div class="step-num">STEP 01</div>
+      <h5>高精度采集</h5>
+      <p>4K+ 高分辨率扫描，确保纹样细节完整捕获</p>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <span class="step-icon">🔲</span>
+      <div class="step-num">STEP 02</div>
+      <h5>灰度二值化</h5>
+      <p>去除色彩干扰，提取纹样核心结构信息</p>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <span class="step-icon">🧩</span>
+      <div class="step-num">STEP 03</div>
+      <h5>像素拆解</h5>
+      <p>将纹样分解为最小可重构单元，建立元素库</p>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <span class="step-icon">📐</span>
+      <div class="step-num">STEP 04</div>
+      <h5>矢量化提取</h5>
+      <p>将像素图转为矢量路径，实现无损缩放</p>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <span class="step-icon">🤖</span>
+      <div class="step-num">STEP 05</div>
+      <h5>AI 重构生成</h5>
+      <p>基于深度学习模型，生成新纹样变体</p>
+    </div>
+  </div>
+</section>
+
+<!-- 处理效果对比 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">PROCESSING RESULTS</div>
+    <h2 class="section-title">处理效果对比</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="compare-pairs reveal">
+    <div class="compare-pair">
+      <div class="compare-side">
+        <img src="vibe_images/pattern-step-01.webp" alt="原始扫描" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+        <div class="compare-label">
+          <h5>原始扫描</h5>
+          <p>4K 高精度扫描原始数据</p>
+        </div>
+      </div>
+      <div class="compare-arrow-col">→</div>
+      <div class="compare-side">
+        <img src="vibe_images/pattern-step-02.webp" alt="灰度处理" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+        <div class="compare-label">
+          <h5>灰度处理</h5>
+          <p>去除色彩干扰，强化结构信息</p>
+        </div>
+      </div>
+    </div>
+    <div class="compare-pair">
+      <div class="compare-side">
+        <img src="vibe_images/pattern-step-03.webp" alt="像素拆解" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+        <div class="compare-label">
+          <h5>像素拆解</h5>
+          <p>分解为最小可重构单元</p>
+        </div>
+      </div>
+      <div class="compare-arrow-col">→</div>
+      <div class="compare-side">
+        <img src="vibe_images/pattern-step-04.webp" alt="矢量化" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+        <div class="compare-label">
+          <h5>矢量化</h5>
+          <p>转为矢量路径，实现无损缩放</p>
+        </div>
+      </div>
+    </div>
+    <div class="compare-pair">
+      <div class="compare-side">
+        <img src="vibe_images/pattern-step-05.webp" alt="黑陶回纹实拍" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+        <div class="compare-label">
+          <h5>原始纹样</h5>
+          <p>传统器物表面纹饰实拍</p>
+        </div>
+      </div>
+      <div class="compare-arrow-col">→</div>
+      <div class="compare-side">
+        <img src="vibe_images/pattern-step-06.webp" alt="AI重构纹样" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+        <div class="compare-label">
+          <h5>AI 重构</h5>
+          <p>深度学习驱动的智能纹样重构</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 古今对比 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">TRADITIONAL VS MODERN</div>
+    <h2 class="section-title">传统纹样 vs 数字重构</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="comparison-grid reveal">
+    <div class="comparison-col">
+      <div class="col-label">TRADITIONAL</div>
+      <h3>传统原始纹样</h3>
+      <div class="comparison-items">
+        <div class="comparison-item">
+          <img src="vibe_images/pattern-comp-01.webp" alt="芦苇画原始" style="width:100%;height:180px;object-fit:cover;display:block;">
+          <div class="item-info">
+            <h5>芦苇画 · 水乡晨曲</h5>
+            <p>传统手工芦苇画作品，以白洋淀清晨捕鱼场景为主题，展现水乡生活的宁静与美好</p>
+          </div>
+        </div>
+        <div class="comparison-item">
+          <img src="vibe_images/pattern-comp-02.webp" alt="黑陶纹饰特写" style="width:100%;height:180px;object-fit:cover;display:block;">
+          <div class="item-info">
+            <h5>黑陶 · 回纹尊</h5>
+            <p>千年黑陶器物表面的回纹装饰，线条古朴有力，承载宋辽时期的审美意趣</p>
+          </div>
+        </div>
+        <div class="comparison-item">
+          <img src="vibe_images/pattern-comp-03.webp" alt="盒子灯彩绘" style="width:100%;height:180px;object-fit:cover;display:block;">
+          <div class="item-info">
+            <h5>盒子灯 · 牡丹富贵</h5>
+            <p>盒子灯表面的牡丹花卉彩绘，色彩浓艳热烈，寓意富贵吉祥</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="comparison-col">
+      <div class="col-label">AI RECONSTRUCTED</div>
+      <h3>AI 数字重构纹样</h3>
+      <div class="comparison-items">
+        <div class="comparison-item">
+          <img src="vibe_images/pattern-comp-04.webp" alt="AI芦苇纹样" style="width:100%;height:180px;object-fit:cover;display:block;">
+          <div class="item-info">
+            <h5>数字芦苇 · 金波荡漾</h5>
+            <p>AI 提取芦苇画曲线元素，以金色粒子流重新演绎水乡意境，传统与现代的对话</p>
+          </div>
+        </div>
+        <div class="comparison-item">
+          <img src="vibe_images/pattern-comp-05.webp" alt="AI黑陶纹饰" style="width:100%;height:180px;object-fit:cover;display:block;">
+          <div class="item-info">
+            <h5>参数回纹 · 数字尊</h5>
+            <p>AI 对回纹进行参数化解构与重组，生成无限变体，保留原始韵律感</p>
+          </div>
+        </div>
+        <div class="comparison-item">
+          <img src="vibe_images/pattern-comp-06.webp" alt="AI盒子灯纹样" style="width:100%;height:180px;object-fit:cover;display:block;">
+          <div class="item-info">
+            <h5>光粒子牡丹 · 数字灯</h5>
+            <p>AI 将牡丹纹样转化为光粒子流动效果，赋予传统吉祥纹样未来感</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 纹样应用案例 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">APPLICATION CASES</div>
+    <h2 class="section-title">纹样应用案例</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="application-grid">
+    <div class="application-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-app-01.webp" alt="纺织设计" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>纺织品设计</h4>
+        <p>将数字化重构的非遗纹样应用于现代纺织品设计，在丝巾、面料等产品上呈现传统美学与现代工艺的融合。</p>
+      </div>
+    </div>
+    <div class="application-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-app-02.webp" alt="建筑装饰" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>建筑装饰</h4>
+        <p>将非遗纹样元素融入建筑装饰设计，在雄安新区的建筑外立面、室内空间中展现传统文化符号的当代表达。</p>
+      </div>
+    </div>
+    <div class="application-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-app-03.webp" alt="产品包装" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>包装设计</h4>
+        <p>以 AI 重构的非遗纹样为主题，设计产品包装，提升雄安特色产品的文化附加值与品牌辨识度。</p>
+      </div>
+    </div>
+    <div class="application-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-app-04.webp" alt="数字界面" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>UI 设计</h4>
+        <p>将非遗纹样融入数字界面设计，为网站、APP 等数字产品注入传统文化基因，打造独特的雄安数字美学体验。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI 重构互动区 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">INTERACTIVE LAB</div>
+    <h2 class="section-title">AI 纹样重构互动</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="recon-interactive">
+    <div class="recon-panel reveal">
+      <h4>选择重构参数</h4>
+      <div class="recon-options">
+        <div class="recon-option active">
+          <span class="opt-icon">🎨</span>
+          <div class="opt-text">
+            <strong>风格迁移</strong>
+            将传统纹样转化为指定艺术风格
+          </div>
+        </div>
+        <div class="recon-option">
+          <span class="opt-icon">🧬</span>
+          <div class="opt-text">
+            <strong>纹样融合</strong>
+            混合多种非遗纹样生成新图案
+          </div>
+        </div>
+        <div class="recon-option">
+          <span class="opt-icon">🔄</span>
+          <div class="opt-text">
+            <strong>变体生成</strong>
+            基于原始纹样生成无限变体
+          </div>
+        </div>
+        <div class="recon-option">
+          <span class="opt-icon">✨</span>
+          <div class="opt-text">
+            <strong>超分辨率增强</strong>
+            低清纹样的高清修复与细节增强
+          </div>
+        </div>
+      </div>
+      <img src="vibe_images/pattern-inter-01.webp" alt="操作界面" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+    </div>
+    <div class="recon-panel reveal">
+      <h4>重构结果展示</h4>
+      <div class="recon-result">
+        <img src="vibe_images/pattern-inter-02.webp" alt="重构过程" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+        <div class="recon-result-info">
+          <p>AI 纹样重构引擎基于 Stable Diffusion 模型与非遗专属 LoRA 微调权重，在保留原始纹样核心特征的基础上，生成兼具传统韵味与现代审美的全新数字纹样。每一次重构都是传统与科技的对话。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 实验室设备 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">LAB EQUIPMENT</div>
+    <h2 class="section-title">实验室设备</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="equipment-grid">
+    <div class="equipment-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-device-01.webp" alt="高精度扫描仪" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+      </div>
+      <div class="card-body">
+        <h4>高精度扫描仪</h4>
+        <p>专业级大幅面扫描仪，支持 4800dpi 超高分辨率采集，确保纹样微观细节的完整捕获。</p>
+        <span class="equip-spec">4800dpi 光学分辨率</span>
+      </div>
+    </div>
+    <div class="equipment-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-device-02.webp" alt="光谱仪" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+      </div>
+      <div class="card-body">
+        <h4>光谱分析仪</h4>
+        <p>用于非遗器物色彩的精确分析，建立标准化色谱数据，为 AI 模型训练提供可靠的色彩约束参数。</p>
+        <span class="equip-spec">380-780nm 全光谱</span>
+      </div>
+    </div>
+    <div class="equipment-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-device-03.webp" alt="三维扫描" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+      </div>
+      <div class="card-body">
+        <h4>三维扫描设备</h4>
+        <p>结构光三维扫描仪，对非遗器物进行非接触式高精度三维数字化，构建点云模型与网格模型。</p>
+        <span class="equip-spec">0.05mm 扫描精度</span>
+      </div>
+    </div>
+    <div class="equipment-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/pattern-device-04.webp" alt="GPU工作站" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+      </div>
+      <div class="card-body">
+        <h4>高性能工作站</h4>
+        <p>搭载多 GPU 并行计算集群的 AI 训练工作站，支持大规模深度学习模型的训练与推理。</p>
+        <span class="equip-spec">8×GPU 并行计算</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 纹样数据 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">PATTERN DATA</div>
+    <h2 class="section-title">纹样数字化成果</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="pattern-stats">
+    <div class="pattern-stat-card reveal">
+      <span class="stat-icon">📐</span>
+      <div class="stat-number stat-value" data-target="2400">0</div>
+      <div class="stat-label">数字化纹样总量</div>
+    </div>
+    <div class="pattern-stat-card reveal">
+      <span class="stat-icon">🧬</span>
+      <div class="stat-number stat-value" data-target="860">0</div>
+      <div class="stat-label">AI 重构变体</div>
+    </div>
+    <div class="pattern-stat-card reveal">
+      <span class="stat-icon">📁</span>
+      <div class="stat-number stat-value" data-target="12">0</div>
+      <div class="stat-label">纹样分类体系</div>
+    </div>
+    <div class="pattern-stat-card reveal">
+      <span class="stat-icon">🎯</span>
+      <div class="stat-number stat-value" data-target="98">0</div>
+      <div class="stat-label">特征识别准确率 %</div>
+    </div>
+  </div>
+</section>
+
+<!-- 开源共享 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">OPEN SOURCE</div>
+    <h2 class="section-title">开源共享</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="opensource-wrap">
+    <div class="opensource-visual reveal">
+      <img src="vibe_images/pattern-db.webp" alt="纹样数据库" style="width:100%;display:block;border-radius:14px;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+    <div class="opensource-text reveal">
+      <h3>纹样开源数据库</h3>
+      <p>我们坚信文化遗产的数字化成果应当惠及更多人。纹样开源数据库面向全球研究者、设计师与创作者，提供经过数字化处理的非遗纹样资源免费下载与使用。</p>
+      <p>所有开源纹样均经过非遗传承人授权，采用知识共享许可协议（CC BY-NC-SA），在尊重文化版权的前提下，鼓励创新应用与学术研究。</p>
+      <div class="opensource-features">
+        <div class="opensource-feat">
+          <span class="feat-icon">🔍</span>
+          <div class="feat-text"><strong>智能检索</strong> — 支持按纹样类型、色彩、风格等多维度检索</div>
+        </div>
+        <div class="opensource-feat">
+          <span class="feat-icon">📥</span>
+          <div class="feat-text"><strong>多格式下载</strong> — 提供 PNG、SVG、AI 等多种格式的高清纹样文件</div>
+        </div>
+        <div class="opensource-feat">
+          <span class="feat-icon">🔬</span>
+          <div class="feat-text"><strong>学术研究</strong> — 为高校与研究机构提供批量数据接口与学术授权</div>
+        </div>
+        <div class="opensource-feat">
+          <span class="feat-icon">🤝</span>
+          <div class="feat-text"><strong>社区共建</strong> — 欢迎设计师上传重构作品，共建非遗数字创意社区</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 底部纹样 -->
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<!-- 数字人 -->
+<div class="digital-human">
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header">
+      <span class="dh-panel-title">AI 数字人助手</span>
+      <button class="dh-panel-close" onclick="toggleDH()">✕</button>
+    </div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">青年体验官：</span>你好！我是雄安数字体验官，可以为你介绍项目概况、网站功能和雄安文化。有什么想了解的？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

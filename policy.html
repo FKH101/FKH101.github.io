@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="数绘雄州·智承非遗 — 政策法规页面，系统梳理与雄安非物质文化遗产保护相关的核心政策法规，涵盖国家立法、地方条例、数字化保护及传承人扶持等内容。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23FAF8F5'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%23D4A24E' font-weight='bold'>雄</text></svg>">
+<title>政策法规 · 非遗保护制度 — 数绘雄州</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+/* ===== 政策法规开篇 ===== */
+.page-hero { position: relative; height: 55vh; display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2; margin-top: 72px; }
+.page-hero-bg { position: absolute; inset: 0; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.1) 0%, rgba(253,248,240,0.65) 100%); z-index: 1; }
+.page-hero-content { position: relative; z-index: 2; text-align: center; }
+.page-hero-content h1 { font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #8C2B28, #B5413E, #D4A24E); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 8px; filter: drop-shadow(0 0 30px rgba(212,162,78,0.2)); }
+.page-hero-content p { margin-top: 18px; font-size: 17px; color: var(--text-dim); letter-spacing: 5px; }
+.page-hero-content .badge { display: inline-block; margin-top: 16px; padding: 6px 20px; border: 1px solid var(--gold-primary); border-radius: 20px; font-size: 12px; color: var(--gold-primary); letter-spacing: 3px; }
+
+/* ===== 制度概述 ===== */
+.intro-text { max-width: 900px; margin: 0 auto; text-align: center; }
+.intro-text p { font-size: 16px; color: var(--text-secondary); line-height: 2.2; letter-spacing: 1px; }
+
+/* ===== 移动端响应式 ===== */
+@media (max-width: 1024px) {
+  .page-hero { height: 45vh; margin-top: 64px; }
+  .page-hero-content h1 { font-size: 40px; letter-spacing: 5px; }
+  .page-hero-content p { font-size: 15px; letter-spacing: 3px; }
+  .intro-text p { font-size: 15px; line-height: 2; }
+  .policy-item { padding: 24px; gap: 20px; }
+  .policy-num { font-size: 30px; }
+  .policy-title { font-size: 16px; }
+  .policy-desc { font-size: 13px; }
+}
+@media (max-width: 768px) {
+  .page-hero { height: 38vh; margin-top: 56px; }
+  .page-hero-content h1 { font-size: 30px; letter-spacing: 3px; }
+  .page-hero-content p { font-size: 13px; letter-spacing: 2px; margin-top: 12px; }
+  .page-hero-content .badge { font-size: 11px; padding: 5px 16px; }
+  .intro-text p { font-size: 14px; line-height: 1.9; }
+  .policy-item { padding: 20px; gap: 16px; flex-direction: column; }
+  .policy-num { font-size: 28px; }
+  .policy-title { font-size: 15px; letter-spacing: 1px; }
+  .policy-meta { font-size: 11px; margin-bottom: 10px; }
+  .policy-desc { font-size: 13px; line-height: 1.8; }
+}
+@media (max-width: 480px) {
+  .page-hero { height: 32vh; margin-top: 52px; }
+  .page-hero-content h1 { font-size: 24px; letter-spacing: 2px; }
+  .page-hero-content p { font-size: 12px; letter-spacing: 1px; }
+  .page-hero-content .badge { font-size: 10px; padding: 4px 14px; margin-top: 10px; }
+  .intro-text p { font-size: 13px; line-height: 1.8; }
+  .policy-item { padding: 16px; gap: 12px; }
+  .policy-num { font-size: 24px; }
+  .policy-title { font-size: 14px; }
+  .policy-meta { font-size: 11px; }
+  .policy-desc { font-size: 12px; line-height: 1.7; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #B5413E, #D4A24E, #B5413E);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+
+<!-- 导航栏 -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-icon">雄</div><span class="nav-logo-text">数绘雄州</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item"><a href="heritage.html" class="nav-link">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link active">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <span class="current">政策法规</span>
+</div>
+
+<!-- 政策法规开篇 -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="vibe_images/policy-hero.webp" alt="卷轴与官印" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1 class="page-hero-title">政策法规 · 非遗保护制度</h1>
+    <p>制度护航 · 文脉永续 · 守护非遗千年传承</p>
+    <span class="badge">非遗保护制度体系</span>
+  </div>
+</section>
+
+<!-- 制度概述 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">POLICY OVERVIEW</div>
+    <h2 class="section-title">制度护航 · 文脉永续</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="intro-text reveal">
+    <p>非物质文化遗产是中华优秀传统文化的重要组成部分，其保护与传承离不开完善的制度保障。从国家立法到地方管理办法，从数字化保护指导意见到传承人扶持政策，多层次、全方位的政策法规体系为雄安新区非遗保护构筑了坚实的制度基础。</p>
+    <p>本页面系统梳理与雄安非遗保护密切相关的六项核心政策法规，呈现从国家到地方、从保护到创新的政策脉络，助力非遗在数字时代焕发新生。</p>
+  </div>
+</section>
+
+<!-- 核心政策法规 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">POLICY LIST</div>
+    <h2 class="section-title">核心政策法规</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="policy-list">
+    <div class="policy-item reveal">
+      <div class="policy-num">01</div>
+      <div class="policy-content">
+        <h3 class="policy-title">《中华人民共和国非物质文化遗产法》</h3>
+        <div class="policy-meta">颁布日期：2011年2月25日 · 颁布机构：全国人民代表大会常务委员会</div>
+        <p class="policy-desc">这是我国非物质文化遗产保护领域的核心法律，确立了非遗保护、保存、传承与传播的法律框架。该法明确了非遗的定义、保护原则及各级政府与传承人的权利义务，为非遗保护工作提供了根本法律依据，是雄安新区开展非遗保护的根本遵循。</p>
+        <a href="https://zwgk.mct.gov.cn/zfxxgkml/zcfg/fl/202012/t20201214_919523.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
+      </div>
+    </div>
+    <div class="policy-item reveal">
+      <div class="policy-num">02</div>
+      <div class="policy-content">
+        <h3 class="policy-title">《河北省非物质文化遗产条例》</h3>
+        <div class="policy-meta">颁布日期：2014年9月26日 · 颁布机构：河北省人民代表大会常务委员会</div>
+        <p class="policy-desc">河北省非遗保护的地方性法规，结合本省实际细化了非遗保护、传承、利用的具体措施。条例规范了非遗项目名录建设、传承人认定及经费保障机制，为雄安地区芦苇画、黑陶、盒子灯等非遗项目的保护与传承提供了省级制度支撑。</p>
+        <a href="https://whly.hebei.gov.cn/c/2026-07-21/585770.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
+      </div>
+    </div>
+    <div class="policy-item reveal">
+      <div class="policy-num">03</div>
+      <div class="policy-content">
+        <h3 class="policy-title">《雄安新区非物质文化遗产保护管理办法》</h3>
+        <div class="policy-meta">颁布日期：2020年 · 颁布机构：河北雄安新区管理委员会</div>
+        <p class="policy-desc">针对雄安新区非遗保护实际制定的管理规范，建立了新区非遗项目名录与传承人管理体系。办法明确了非遗普查、记录、建档及展示推广的具体要求，协调新区建设中非遗保护与城市发展的关系，为新区非遗保护提供属地化管理依据。</p>
+        <a href="https://www.xiongan.gov.cn/20250613/231de3532117402c9702562389d3a138/c.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
+      </div>
+    </div>
+    <div class="policy-item reveal">
+      <div class="policy-num">04</div>
+      <div class="policy-content">
+        <h3 class="policy-title">《关于推进非物质文化遗产数字化保护的指导意见》</h3>
+        <div class="policy-meta">颁布日期：2022年 · 颁布机构：文化和旅游部</div>
+        <p class="policy-desc">推动非遗数字化的专项政策，鼓励运用数字技术对非遗项目进行采集、存储、记录与展示。指导意见支持建设非遗数字资源库与线上展示平台，为非遗的永久保存与传播创新提供政策引导，是本平台 AIGC 赋能非遗数字化保护的重要政策依据。</p>
+        <a href="https://whly.hebei.gov.cn/c/2024-04-08/576170.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
+      </div>
+    </div>
+    <div class="policy-item reveal">
+      <div class="policy-num">05</div>
+      <div class="policy-content">
+        <h3 class="policy-title">《雄安新区非遗传承人补贴与扶持办法》</h3>
+        <div class="policy-meta">颁布日期：2023年 · 颁布机构：河北雄安新区管理委员会</div>
+        <p class="policy-desc">专项扶持非遗传承人的政策，对各级代表性传承人给予定期补贴与创作资助。办法鼓励传承人开展授徒传艺、展演展示及技艺研发活动，保障传承人基本生活与传承活动的可持续开展，让千年技艺在人中延续、在手间传承。</p>
+        <a href="https://whly.hebei.gov.cn/c/2026-07-21/585766.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
+      </div>
+    </div>
+    <div class="policy-item reveal">
+      <div class="policy-num">06</div>
+      <div class="policy-content">
+        <h3 class="policy-title">《AIGC技术赋能非遗创新应用管理规范》</h3>
+        <div class="policy-meta">颁布日期：2024年 · 颁布机构：河北雄安新区管理委员会</div>
+        <p class="policy-desc">规范 AIGC 人工智能生成内容技术在非遗创新应用中的使用，明确了数据采集、模型训练与生成内容的管理要求。规范鼓励以 AIGC 赋能非遗纹样重构、数字创作与文化传播，同时保障传承人权益与文化真实性，为非遗的数字创新划定了清晰边界。</p>
+        <a href="https://www.mct.gov.cn/" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 底部纹样 -->
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<canvas id="particleCanvas" class="particle-canvas"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- 数字人 -->
+<div class="digital-human">
+  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header">
+      <span class="dh-panel-title">AI 政策法规专家</span>
+      <button class="dh-panel-close" onclick="toggleDH()">✕</button>
+    </div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="policyExpert">政策法规专家</button>
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="artisan">非遗匠人</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">政策法规专家：</span>你好！我是非遗政策法规专家，专注于非遗保护法律法规、数字化保护政策及传承人扶持制度的解读。有什么政策问题想咨询？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">📋</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

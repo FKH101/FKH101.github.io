@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="白洋淀芦苇画，省级非物质文化遗产。以芦苇为原料，经剪、割、刨、漂、压、烙、绘七道工序，将普通芦苇化为精美艺术品。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23FAF8F5'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%23D4A24E' font-weight='bold'>雄</text></svg>">
+<title>白洋淀芦苇画 · 非遗博览</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+.page-hero { position: relative; height: 55vh; display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2; margin-top: 72px; }
+.page-hero-bg { position: absolute; inset: 0; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.1) 0%, rgba(253,248,240,0.65) 100%); z-index: 1; }
+.page-hero-content { position: relative; z-index: 2; text-align: center; }
+.page-hero-content h1 { font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #2d6a4f, #52b788, #385058, #87A89C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 8px; filter: drop-shadow(0 0 30px rgba(82,183,136,0.2)); }
+.page-hero-content p { margin-top: 18px; font-size: 17px; color: var(--text-dim); letter-spacing: 5px; }
+.page-hero-content .badge { display: inline-block; margin-top: 16px; padding: 6px 20px; border: 1px solid #52b788; border-radius: 20px; font-size: 12px; color: #52b788; letter-spacing: 3px; }
+
+.detail-section { padding: 80px 0; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.detail-grid.reverse { direction: rtl; }
+.detail-grid.reverse > * { direction: ltr; }
+.detail-text h3 { font-size: 28px; color: var(--gold-primary); margin-bottom: 20px; letter-spacing: 3px; }
+.detail-text p { font-size: 15px; color: var(--text-secondary); line-height: 2.2; margin-bottom: 16px; }
+
+/* 工序步骤 */
+.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.step-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  padding: 28px 20px; text-align: center; transition: all 0.4s ease;
+}
+.step-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); }
+.step-num { font-size: 36px; font-weight: 900; color: rgba(56,80,88,0.15); margin-bottom: 12px; }
+.step-card h4 { font-size: 16px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.step-card p { font-size: 13px; color: var(--text-dim); line-height: 1.8; }
+
+/* 作品赏析 */
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.gallery-item {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  overflow: hidden; transition: all 0.4s ease;
+}
+.gallery-item:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(51,51,51,0.1); }
+.gallery-item .gallery-img { width: 100%; }
+.gallery-item .gallery-caption { padding: 20px; font-size: 14px; color: var(--text-secondary); text-align: center; letter-spacing: 1px; }
+
+/* 数字化价值 */
+.digital-value { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.dv-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  padding: 32px; transition: all 0.4s ease;
+}
+.dv-card:hover { border-color: var(--border-gold-hover); }
+.dv-card .dv-icon { font-size: 32px; margin-bottom: 16px; display: block; }
+.dv-card h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 12px; letter-spacing: 2px; }
+.dv-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 过渡横幅 */
+.transition-banner { padding: 0; margin: 0; }
+.transition-banner .img-placeholder { border-radius: 0; min-height: 28vh; }
+
+/* 传承人卡片 */
+.inheritor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.inheritor-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  overflow: hidden; transition: all 0.4s ease;
+}
+.inheritor-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(51,51,51,0.1); }
+.inheritor-card .inheritor-img { width: 100%; }
+.inheritor-card .inheritor-info { padding: 28px; }
+.inheritor-card .inheritor-info h4 { font-size: 20px; color: var(--gold-primary); margin-bottom: 6px; letter-spacing: 2px; }
+.inheritor-card .inheritor-info .inheritor-title { font-size: 13px; color: #52b788; margin-bottom: 14px; letter-spacing: 1px; display: block; }
+.inheritor-card .inheritor-info p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; }
+
+/* 现代设计卡片 */
+.modern-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.modern-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  overflow: hidden; transition: all 0.4s ease;
+}
+.modern-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(51,51,51,0.1); }
+.modern-card .modern-img { width: 100%; }
+.modern-card .modern-info { padding: 24px; }
+.modern-card .modern-info h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.modern-card .modern-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 匠人心语 */
+.quotes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.quote-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  padding: 32px; position: relative; transition: all 0.4s ease;
+}
+.quote-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); }
+.quote-card .quote-mark { font-size: 48px; color: rgba(82,183,136,0.2); position: absolute; top: 16px; left: 20px; line-height: 1; }
+.quote-card .quote-text { font-size: 15px; color: var(--text-secondary); line-height: 2; margin-bottom: 20px; padding-top: 24px; font-style: italic; }
+.quote-card .quote-author { font-size: 14px; color: #52b788; letter-spacing: 2px; text-align: right; }
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 1024px) {
+  .page-hero { height: 45vh; }
+  .page-hero-content h1 { font-size: 40px; letter-spacing: 5px; }
+  .page-hero-content p { font-size: 15px; letter-spacing: 3px; }
+  .detail-section { padding: 60px 0; }
+  .detail-grid { gap: 32px; }
+  .detail-text h3 { font-size: 24px; }
+  .steps-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .digital-value { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .inheritor-grid { gap: 24px; }
+  .modern-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .quotes-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+@media (max-width: 768px) {
+  .page-hero { height: 38vh; margin-top: 60px; }
+  .page-hero-content h1 { font-size: 30px; letter-spacing: 4px; }
+  .page-hero-content p { font-size: 14px; letter-spacing: 2px; margin-top: 12px; }
+  .page-hero-content .badge { font-size: 11px; padding: 5px 16px; }
+  .detail-section { padding: 40px 0; }
+  .detail-grid { grid-template-columns: 1fr; gap: 24px; }
+  .detail-grid.reverse { direction: ltr; }
+  .detail-text h3 { font-size: 22px; }
+  .detail-text p { font-size: 14px; line-height: 2; }
+  .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .step-card { padding: 20px 14px; }
+  .step-num { font-size: 28px; }
+  .step-card h4 { font-size: 15px; }
+  .step-card p { font-size: 12px; }
+  .gallery-grid { grid-template-columns: 1fr; gap: 18px; }
+  .gallery-item .gallery-caption { padding: 16px; font-size: 13px; }
+  .digital-value { grid-template-columns: 1fr; gap: 18px; }
+  .dv-card { padding: 24px; }
+  .inheritor-grid { grid-template-columns: 1fr; gap: 20px; }
+  .inheritor-card .inheritor-info { padding: 20px; }
+  .inheritor-card .inheritor-info h4 { font-size: 18px; }
+  .modern-grid { grid-template-columns: 1fr; gap: 18px; }
+  .modern-card .modern-info { padding: 20px; }
+  .quotes-grid { grid-template-columns: 1fr; gap: 18px; }
+  .quote-card { padding: 24px; }
+  .quote-card .quote-text { font-size: 14px; }
+  .transition-banner .img-placeholder { min-height: 20vh; }
+}
+
+@media (max-width: 480px) {
+  .page-hero { height: 32vh; }
+  .page-hero-content h1 { font-size: 24px; letter-spacing: 3px; }
+  .page-hero-content p { font-size: 12px; letter-spacing: 1px; }
+  .page-hero-content .badge { font-size: 10px; padding: 4px 12px; letter-spacing: 2px; }
+  .detail-grid { gap: 18px; }
+  .detail-text h3 { font-size: 20px; letter-spacing: 2px; }
+  .detail-text p { font-size: 13px; line-height: 1.9; }
+  .steps-grid { grid-template-columns: 1fr; gap: 12px; }
+  .step-card { padding: 18px 12px; }
+  .gallery-grid { gap: 14px; }
+  .digital-value { gap: 14px; }
+  .dv-card { padding: 20px; }
+  .dv-card h4 { font-size: 16px; }
+  .inheritor-card .inheritor-info { padding: 16px; }
+  .inheritor-card .inheritor-info p { font-size: 13px; }
+  .modern-card .modern-info { padding: 16px; }
+  .modern-card .modern-info h4 { font-size: 16px; }
+  .quotes-grid { gap: 14px; }
+  .quote-card { padding: 20px; }
+  .quote-card .quote-mark { font-size: 36px; }
+  .quote-card .quote-text { font-size: 13px; padding-top: 18px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #385058, #87A89C, #385058);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-icon">雄</div><span class="nav-logo-text">数绘雄州</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item"><a href="heritage.html" class="nav-link active">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <a href="heritage.html">非遗博览</a>
+  <span class="sep">/</span>
+  <span class="current">白洋淀芦苇画</span>
+</div>
+
+<!-- 开篇全景 -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="vibe_images/reed-hero-01.webp" alt="芦苇荡全景" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1 class="page-hero-title">白洋淀芦苇画</h1>
+    <p>芦苇为笔 · 水韵为墨 · 绘就淀泊千年风华</p>
+    <span class="badge">省级非物质文化遗产</span>
+  </div>
+</section>
+
+<!-- 非遗档案 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">HERITAGE PROFILE</div>
+    <h2 class="section-title">非遗档案</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-text reveal">
+      <h3>水乡艺术瑰宝</h3>
+      <p>白洋淀芦苇画是河北省省级非物质文化遗产，起源于明清时期，距今已有数百年历史。它以白洋淀天然生长的芦苇为原料，经过艺人的巧手创作，将平凡的芦苇转化为精美的艺术画作。</p>
+      <p>芦苇画题材广泛，涵盖花鸟鱼虫、山水人物、民俗风情等，作品风格清新自然，具有浓郁的水乡特色。画面层次丰富，质感独特，芦苇的天然纹理与色彩为作品增添了不可复制的自然之美。</p>
+      <p>2007年，白洋淀芦苇画被列入河北省非物质文化遗产名录，成为雄安地区重要的文化名片。如今，芦苇画不仅是艺术品，更成为文创产品、旅游纪念品的重要载体。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/reed-profile-01.webp" alt="芦苇画代表作" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/reed-banner-01.webp" alt="水乡意境" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 芦苇产地 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">REED ORIGIN</div>
+    <h2 class="section-title">芦苇产地</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="reveal" style="margin-bottom: 40px;">
+    <img src="vibe_images/reed-origin-01.webp" alt="芦苇四季" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+  <div class="detail-grid">
+    <div class="detail-text reveal">
+      <h3>天赐佳材 · 淀泊精华</h3>
+      <p>白洋淀地处华北平原腹地，总面积366平方公里，是华北平原最大的淡水湖泊湿地。这里水质清澈、土壤肥沃，为芦苇的生长提供了得天独厚的自然条件。白洋淀芦苇种植面积达十余万亩，年产优质芦苇数万吨。</p>
+      <p>白洋淀的芦苇以其秆粗、壁厚、纤维长、韧性佳而著称。秋季成熟的芦苇经过阳光充分照射，秆体呈现温润的米黄至浅褐色，天然色泽层次丰富，是制作芦苇画的绝佳材料。不同季节采收的芦苇，色泽与质感各有不同，为艺人提供了丰富的创作素材。</p>
+      <p>每年深秋至初冬是采收芦苇的最佳时节。淀区农民沿袭千年的收割传统，既是对自然资源的合理利用，也维系着白洋淀独特的湿地生态系统。芦苇的生长与采收，构成了白洋淀人与自然和谐共生的生动图景。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/reed-origin-02.webp" alt="芦苇采收" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 七道工序 -->
+<section class="section detail-section">
+  <div class="section-header reveal">
+    <div class="section-tag">CRAFT PROCESS</div>
+    <h2 class="section-title">七道古法工序</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card reveal">
+      <img src="vibe_images/reed-step-01.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">01</div>
+      <h4>剪</h4>
+      <p>选取秋后成熟芦苇，按画面需要剪取合适长度的芦苇段，要求芦苇秆直、节少、皮厚。</p>
+    </div>
+    <div class="step-card reveal">
+      <img src="vibe_images/reed-step-02.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">02</div>
+      <h4>割</h4>
+      <p>将芦苇秆纵向剖开，剥去外层硬皮，取出内部柔软的芦苇膜，这是作画的主要材料。</p>
+    </div>
+    <div class="step-card reveal">
+      <img src="vibe_images/reed-step-03.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">03</div>
+      <h4>刨</h4>
+      <p>用特制刨刀将芦苇膜刨成不同厚度的薄片，厚度决定颜色的深浅，最薄可达0.1毫米。</p>
+    </div>
+    <div class="step-card reveal">
+      <img src="vibe_images/reed-step-04.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">04</div>
+      <h4>漂</h4>
+      <p>将刨好的芦苇片放入清水中浸泡漂白，去除杂质，使芦苇片呈现自然的米白至浅黄色泽。</p>
+    </div>
+    <div class="step-card reveal">
+      <img src="vibe_images/reed-step-05.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">05</div>
+      <h4>压</h4>
+      <p>将漂白后的芦苇片平整压制，去除水分和卷曲，使其成为平整的作画材料，便于后续加工。</p>
+    </div>
+    <div class="step-card reveal">
+      <img src="vibe_images/reed-step-06.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">06</div>
+      <h4>烙</h4>
+      <p>用烙铁在芦苇片上烫出不同深浅的褐色，通过温度控制实现色彩的层次变化，这是芦苇画的核心技法。</p>
+    </div>
+    <div class="step-card reveal">
+      <img src="vibe_images/reed-step-07.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">07</div>
+      <h4>绘</h4>
+      <p>将处理好的芦苇片按设计图稿拼贴、裁剪、组合，最终完成整幅芦苇画作品，装裱成型。</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/reed-banner-02.webp" alt="匠人双手" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 作品赏析 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">GALLERY</div>
+    <h2 class="section-title">作品赏析</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <div class="gallery-img"><img src="vibe_images/reed-gallery-01.webp" alt="淀泊春色" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
+      <div class="gallery-caption">《淀泊春色》— 展现白洋淀春日荷花盛开之美</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-img"><img src="vibe_images/reed-gallery-02.webp" alt="渔舟唱晚" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
+      <div class="gallery-caption">《渔舟唱晚》— 描绘水乡渔民傍晚归舟场景</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-img"><img src="vibe_images/reed-gallery-03.webp" alt="百鸟朝凤" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
+      <div class="gallery-caption">《百鸟朝凤》— 精细展现鸟类羽毛纹理之美</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-img"><img src="vibe_images/reed-gallery-04.webp" alt="荷塘月色" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
+      <div class="gallery-caption">《荷塘月色》— 月光下的荷花芦苇意境</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-img"><img src="vibe_images/reed-gallery-05.webp" alt="雁翎队" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
+      <div class="gallery-caption">《雁翎队》— 抗日历史题材作品</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-img"><img src="vibe_images/reed-gallery-06.webp" alt="水乡新娘" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
+      <div class="gallery-caption">《水乡新娘》— 民俗婚礼场景</div>
+    </div>
+  </div>
+</section>
+
+<!-- 传承人故事 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">INHERITORS</div>
+    <h2 class="section-title">传承人故事</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="inheritor-grid">
+    <div class="inheritor-card reveal">
+      <div class="inheritor-img"><img src="vibe_images/reed-inheritor-01.webp" alt="刘永山" style="width:100%;height:280px;object-fit:cover;display:block;"></div>
+      <div class="inheritor-info">
+        <h4>刘永山</h4>
+        <span class="inheritor-title">国家级代表性传承人</span>
+        <p>刘永山，1952年生于白洋淀畔，自幼随父学习芦苇画技艺，从事芦苇画创作已逾五十载。他精通芦苇画全部七道工序，尤擅"烙"法，能以烙铁在芦苇片上呈现出水墨画般的层次与意境。其作品《淀泊风光》系列被中国国家博物馆收藏。多年来，刘永山培养了数十名弟子，致力于将芦苇画技艺传承给年轻一代。他说："每一根芦苇都有它的灵魂，我要做的，就是让它们在画中活过来。"</p>
+      </div>
+    </div>
+    <div class="inheritor-card reveal">
+      <div class="inheritor-img"><img src="vibe_images/reed-inheritor-02.webp" alt="杨沛利" style="width:100%;height:280px;object-fit:cover;display:block;"></div>
+      <div class="inheritor-info">
+        <h4>杨沛利</h4>
+        <span class="inheritor-title">省级传承人</span>
+        <p>杨沛利，1968年生于安新县，是白洋淀芦苇画领域的杰出代表。他在继承传统技法的基础上大胆创新，将现代绘画的透视与色彩理论融入芦苇画创作，开创了"新水乡画派"。其代表作《四季白洋淀》以四联屏形式展现淀区四季更迭之美，荣获中国民间文艺最高奖"山花奖"。杨沛利积极推动芦苇画进校园、进社区活动，并在多所高校设立非遗工作坊，让这门古老技艺走进年轻人的视野。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/reed-banner-03.webp" alt="作品微距" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 芦苇画与现代设计 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MODERN DESIGN</div>
+    <h2 class="section-title">芦苇画与现代设计</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="modern-grid">
+    <div class="modern-card reveal">
+      <div class="modern-img"><img src="vibe_images/reed-modern-01.webp" alt="文创产品" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="modern-info">
+        <h4>文创产品</h4>
+        <p>将芦苇画的经典图案与意境应用于文创产品设计，开发出书签、团扇、丝巾、笔记本、手机壳等系列文创产品。这些产品既保留了芦苇画的自然美感，又融入了现代生活美学，让非遗走进日常。</p>
+      </div>
+    </div>
+    <div class="modern-card reveal">
+      <div class="modern-img"><img src="vibe_images/reed-modern-02.webp" alt="家居装饰" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="modern-info">
+        <h4>家居装饰</h4>
+        <p>芦苇画天然质朴的质感与现代简约家居风格高度契合。大型芦苇画屏风、装饰挂画、灯罩等家居产品，为现代空间注入东方自然意韵，营造出宁静雅致的居住氛围。</p>
+      </div>
+    </div>
+    <div class="modern-card reveal">
+      <div class="modern-img"><img src="vibe_images/reed-modern-03.webp" alt="数字艺术" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="modern-info">
+        <h4>数字艺术</h4>
+        <p>通过数字技术将芦苇画转化为动态数字艺术作品，结合投影映射、VR/AR等技术，打造沉浸式芦苇画艺术体验。观众可以在数字空间中"走进"芦苇画，感受水乡意境的无限魅力。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 数字化价值 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">DIGITAL VALUE</div>
+    <h2 class="section-title">数字化保护价值</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="digital-value">
+    <div class="dv-card reveal">
+      <img src="vibe_images/reed-dv-01.webp" alt="高清采集" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:16px;display:block;">
+      <h4>高清数字化采集</h4>
+      <p>对芦苇画作品进行高精度扫描与拍摄，建立数字档案库，永久保存艺术品细节信息，防止因时间流逝导致的损坏。</p>
+    </div>
+    <div class="dv-card reveal">
+      <img src="vibe_images/reed-dv-02.webp" alt="AI纹样" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:16px;display:block;">
+      <h4>AI 纹样提取重构</h4>
+      <p>运用计算机视觉技术，从芦苇画作品中提取典型纹样元素，通过 AI 算法进行矢量化重构，生成可应用于文创设计的数字纹样库。</p>
+    </div>
+    <div class="dv-card reveal">
+      <img src="vibe_images/reed-dv-03.webp" alt="在线展示" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:16px;display:block;">
+      <h4>交互式在线展示</h4>
+      <p>构建线上虚拟展厅，观众可360度旋转欣赏芦苇画作品，放大查看细节，了解每道工序的制作过程，实现非遗文化的远程传播。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 匠人心语 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">ARTISAN VOICES</div>
+    <h2 class="section-title">匠人心语</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="quotes-grid">
+    <div class="quote-card reveal">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">芦苇是有生命的材料，每一片都有它独特的纹理和脾性。做芦苇画急不得，要顺着它的性子来，心静了，画自然就好了。</p>
+      <p class="quote-author">— 刘永山 · 国家级传承人</p>
+    </div>
+    <div class="quote-card reveal">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">我小时候在淀边长大，看惯了芦苇随风摇摆的样子。现在每一幅画里，都有我记忆中的那片水乡。传承不只是教手艺，更是传递对这片土地的热爱。</p>
+      <p class="quote-author">— 杨沛利 · 省级传承人</p>
+    </div>
+    <div class="quote-card reveal">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">烙铁的温度差一度，颜色就变一个层次。这门手艺没有捷径，全凭手上的功夫和心里的感觉。一辈子做一件事，值了。</p>
+      <p class="quote-author">— 赵淑芬 · 芦苇画高级工艺师</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<div class="digital-human">
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header"><span class="dh-panel-title">AI 数字人助手</span><button class="dh-panel-close" onclick="toggleDH()"></button></div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">非遗匠人：</span>欢迎了解白洋淀芦苇画！这是白洋淀水乡最具代表性的非遗技艺，经七道古法工序将芦苇化为艺术。想了解哪方面？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍🎨</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

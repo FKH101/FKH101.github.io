@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="刘永利，白洋淀芦苇画省级非物质文化遗产代表性传承人。从事芦苇画创作四十余年，精通选材、剪贴、烙制等核心工序，作品质朴苍润、层次分明，致力于芦苇画技艺的传承与推广。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23FAF8F5'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%23D4A24E' font-weight='bold'>雄</text></svg>">
+<title>刘永利 · 白洋淀芦苇画省级非遗代表性传承人</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+/* ===== 移动端响应式 ===== */
+@media (max-width: 1024px) {
+  .master-hero { padding: 80px 0 40px; }
+  .master-portrait { width: 130px; height: 130px; }
+  .master-name { font-size: 28px !important; }
+  .master-info-grid { grid-template-columns: 1fr; gap: 32px; }
+  .master-sidebar { position: static; }
+  .master-works-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .master-work-card .work-img { height: 160px; }
+  .master-skill-item { padding: 20px; }
+  .master-info-card { padding: 22px; }
+  .section-title { font-size: 26px !important; }
+}
+@media (max-width: 768px) {
+  .master-hero { padding: 60px 0 30px; }
+  .master-portrait { width: 110px; height: 110px; margin-bottom: 18px; }
+  .master-name { font-size: 24px !important; }
+  .master-title-text { font-size: 14px !important; }
+  .master-heritage-name { font-size: 13px !important; }
+  .master-info-grid { gap: 24px; }
+  .master-bio p { font-size: 14px; line-height: 2; }
+  .master-works-grid { grid-template-columns: 1fr; gap: 14px; }
+  .master-work-card .work-img { height: 180px; }
+  .master-work-card .work-body { padding: 14px; }
+  .master-skill-item { padding: 18px; }
+  .master-skill-item h4 { font-size: 15px; }
+  .master-skill-item p { font-size: 13px; line-height: 1.8; }
+  .master-info-card { padding: 18px; }
+  .master-info-card h4 { font-size: 15px; }
+  .section-header { margin-bottom: 24px !important; }
+  .section-title { font-size: 22px !important; }
+  .section-tag { font-size: 11px !important; }
+}
+@media (max-width: 480px) {
+  .master-hero { padding: 48px 0 24px; }
+  .master-portrait { width: 90px; height: 90px; margin-bottom: 14px; }
+  .master-name { font-size: 20px !important; }
+  .master-title-text { font-size: 12px !important; letter-spacing: 2px !important; }
+  .master-heritage-name { font-size: 12px !important; }
+  .master-bio p { font-size: 13px; line-height: 1.9; margin-bottom: 12px; }
+  .master-skill-item { padding: 14px; }
+  .master-skill-item h4 { font-size: 14px; margin-bottom: 8px; }
+  .master-skill-item p { font-size: 12px; line-height: 1.7; }
+  .master-work-card .work-body { padding: 12px; }
+  .master-work-card h5 { font-size: 13px; }
+  .master-work-card p { font-size: 11px; }
+  .master-info-card { padding: 14px; }
+  .master-info-row { font-size: 12px; }
+  .section-title { font-size: 20px !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-icon">雄</div><span class="nav-logo-text">数绘雄州</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item"><a href="heritage.html" class="nav-link">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link active">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <a href="heritage.html">非遗博览</a>
+  <span class="sep">/</span>
+  <span class="current">传承人详情</span>
+</div>
+
+<!-- 传承人主视觉 -->
+<section class="master-hero">
+  <div class="master-portrait">
+    <img src="vibe_images/inheritor-portrait.webp" alt="刘永利肖像" style="width:100%;display:block;border-radius:14px;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+  <h1 class="master-name">刘永利</h1>
+  <p class="master-title-text">省级非遗代表性传承人</p>
+  <p class="master-heritage-name">白洋淀芦苇画</p>
+</section>
+
+<!-- 生平简介 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MASTER PROFILE</div>
+    <h2 class="section-title">生平简介</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="master-info-grid">
+    <div class="master-bio reveal">
+      <p>刘永利，1965年生于河北省安新县白洋淀畔的一个匠人之家。自幼生长于淀区水乡，目之所及皆是随风摇曳的芦苇荡，耳濡目染间对这门以芦苇为材的民间艺术产生了深厚情感。少年时他便随父辈下淀收割芦苇，熟知不同季节芦苇的色泽与脾性，为日后从艺打下了坚实的根基。</p>
+      <p>1980年代初，刘永利正式拜入芦苇画老艺人门下，系统学习剪、割、刨、漂、压、烙、绘七道古法工序。十余年潜心钻研，他尤擅"烙"法——以烙铁温度之差在芦苇片上烫出深浅不一的褐色层次，使画面呈现水墨晕染般的意境。出师后，他扎根白洋淀畔开设工坊，将毕生精力倾注于芦苇画的创作与传承之中。</p>
+      <p>在艺术理念上，刘永利始终秉持"顺物之性、循理而行"的匠人哲学。他认为芦苇是有生命的材料，每一片都有独特的纹理与走向，创作时不可强求，须顺应其天然之势，方能令画面气韵生动。他在继承传统水乡题材的基础上，融入北方山水画的雄浑意境，逐渐形成了质朴苍润、层次分明的个人风格。</p>
+      <p>多年来，刘永利的作品先后入选省级民间工艺展览并屡获奖项，代表作《芦雁归秋》《淀泊晓雾》被多家美术馆收藏。他先后收徒数十人，并在当地中小学开设芦苇画兴趣课堂，致力于让这门古老技艺在水乡薪火相传。2015年，他被命名为白洋淀芦苇画省级非物质文化遗产代表性传承人。</p>
+    </div>
+    <aside class="master-sidebar reveal">
+      <div class="master-info-card">
+        <h4>基本信息</h4>
+        <div class="master-info-row"><span>出生年份</span><span>1965年</span></div>
+        <div class="master-info-row"><span>籍贯</span><span>河北安新</span></div>
+        <div class="master-info-row"><span>级别</span><span>省级代表性传承人</span></div>
+        <div class="master-info-row"><span>从艺年限</span><span>四十余年</span></div>
+        <div class="master-info-row"><span>代表作</span><span>《芦雁归秋》</span></div>
+        <div class="master-info-row"><span>获誉</span><span>省级民间工艺金奖</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- 技艺介绍 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">CRAFTSMANSHIP</div>
+    <h2 class="section-title">技艺介绍</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="master-skill-list">
+    <div class="master-skill-item reveal">
+      <h4>选材处理</h4>
+      <p>深秋至初冬，刘永利亲赴白洋淀荡中挑选秆直、壁厚、节少的成熟芦苇。芦苇收割后经剖秆、取膜、浸漂、压平等数道处理，去除杂质与卷曲，制成厚薄各异、色泽温润的芦苇薄片，为后续作画储备素材。他尤重"因材施用"——不同厚度对应不同色阶，最薄可至0.1毫米，凭手感便能辨出可用与否。</p>
+    </div>
+    <div class="master-skill-item reveal">
+      <h4>剪贴拼贴</h4>
+      <p>依设计图稿，将处理好的芦苇片裁剪成所需形状，再依画面层次逐层拼贴组合。刘永利善用芦苇天然的纹理走向表现羽毛、水波、芦叶等细节，以拼贴之巧营造画面的虚实与疏密，使平凡芦苇在方寸之间化为生动的花鸟山水。每一片落位皆经反复推敲，差之毫厘便重起一幅。</p>
+    </div>
+    <div class="master-skill-item reveal">
+      <h4>烙制定型</h4>
+      <p>以特制烙铁在芦苇片上烫出深浅不一的褐色，这是芦苇画最具技艺含量的核心环节。刘永利凭手感与经验控温，温度差之一度，色泽便深一层，层层叠烫间，水墨般的浓淡层次自然浮现。烙制定成后即行定型装裱，一幅芦苇画方告完成，可历久而不褪色。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 代表作品 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">REPRESENTATIVE WORKS</div>
+    <h2 class="section-title">代表作品</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="master-works-grid">
+    <div class="master-work-card reveal">
+      <div class="work-img"><img src="vibe_images/inheritor-work-01.webp" alt="淀泊春晓" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-body"><h5>淀泊春晓</h5><p>春日淀区荷花初绽</p></div>
+    </div>
+    <div class="master-work-card reveal">
+      <div class="work-img"><img src="vibe_images/inheritor-work-02.webp" alt="芦雁归秋" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-body"><h5>芦雁归秋</h5><p>秋日芦荡雁阵南归</p></div>
+    </div>
+    <div class="master-work-card reveal">
+      <div class="work-img"><img src="vibe_images/inheritor-work-03.webp" alt="荷韵清夏" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-body"><h5>荷韵清夏</h5><p>盛夏荷塘清雅意境</p></div>
+    </div>
+    <div class="master-work-card reveal">
+      <div class="work-img"><img src="vibe_images/inheritor-work-04.webp" alt="渔舟唱晚" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-body"><h5>渔舟唱晚</h5><p>水乡傍晚渔舟归泊</p></div>
+    </div>
+    <div class="master-work-card reveal">
+      <div class="work-img"><img src="vibe_images/inheritor-work-05.webp" alt="水乡人家" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-body"><h5>水乡人家</h5><p>淀区民俗生活场景</p></div>
+    </div>
+    <div class="master-work-card reveal">
+      <div class="work-img"><img src="vibe_images/inheritor-work-06.webp" alt="百鸟朝凤" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-body"><h5>百鸟朝凤</h5><p>精细鸟羽纹理之妙</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<canvas id="particleCanvas" class="particle-canvas"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- 数字人 -->
+<div class="digital-human">
+  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header">
+      <span class="dh-panel-title">AI 传承人数字分身</span>
+      <button class="dh-panel-close" onclick="toggleDH()">✕</button>
+    </div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="oralHistory">传承人·刘永利</button>
+      <button class="dh-identity-tab" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">传承人·刘永利：</span>你好！我是白洋淀芦苇画省级非遗代表性传承人刘永利的数字分身，可以为你讲述我的从艺经历、芦苇画技艺与代表作品。</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍🎨</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

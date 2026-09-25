@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="圈头村古乐，省级非物质文化遗产。古老的民间音乐形式。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23f5efe4'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%232c2a27' font-weight='bold'>雄</text></svg>">
+<title>圈头村古乐 · 非遗博览</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+.page-hero { position: relative; height: 55vh; display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2; margin-top: 72px; }
+.page-hero-bg { position: absolute; inset: 0; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.1) 0%, rgba(253,248,240,0.65) 100%); z-index: 1; }
+.page-hero-content { position: relative; z-index: 2; text-align: center; }
+.page-hero-content h1 { font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #4a6741, #8fbc8f, #B5413E, #D4A24E); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 8px; filter: drop-shadow(0 0 30px rgba(143,188,143,0.2)); }
+.page-hero-content p { margin-top: 18px; font-size: 17px; color: var(--text-dim); letter-spacing: 5px; }
+.page-hero-content .badge { display: inline-block; margin-top: 16px; padding: 6px 20px; border: 1px solid #8fbc8f; border-radius: 20px; font-size: 12px; color: #8fbc8f; letter-spacing: 3px; }
+
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; padding: 80px 0; }
+.detail-grid.reverse { direction: rtl; }
+.detail-grid.reverse > * { direction: ltr; }
+.detail-text h3 { font-size: 28px; color: var(--gold-primary); margin-bottom: 20px; letter-spacing: 3px; }
+.detail-text p { font-size: 15px; color: var(--text-secondary); line-height: 2.2; margin-bottom: 16px; }
+
+.instruments-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.instrument-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); text-align: center; }
+.instrument-card:hover { border-color: var(--border-gold-hover); transform: translateY(-6px); }
+.instrument-card .inst-img { width: 100%; }
+.instrument-card .inst-name { padding: 16px 12px; font-size: 15px; color: var(--gold-primary); letter-spacing: 2px; font-weight: 600; }
+.instrument-card .inst-desc { padding: 0 12px 16px; font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+.repertoire-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.repertoire-item { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 28px; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.repertoire-item:hover { border-color: var(--border-gold-hover); }
+.repertoire-item h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.repertoire-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 过渡横幅 */
+.trans-banner { position: relative; height: 260px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0; }
+.trans-banner-bg { position: absolute; inset: 0; }
+.trans-banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.3) 0%, rgba(253,248,240,0.2) 50%, rgba(253,248,240,0.3) 100%); z-index: 1; }
+.trans-banner-text { position: relative; z-index: 2; text-align: center; }
+.trans-banner-text h3 { font-size: 28px; color: var(--gold-primary); letter-spacing: 6px; font-weight: 700; }
+.trans-banner-text p { font-size: 14px; color: var(--text-dim); margin-top: 10px; letter-spacing: 3px; }
+
+/* 工尺谱解读 */
+.notation-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.notation-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+.notation-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 28px 20px; text-align: center; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.notation-card:hover { border-color: #8fbc8f; transform: translateY(-6px); box-shadow: 0 0 24px rgba(143,188,143,0.1); }
+.notation-card .notation-symbol { font-size: 42px; color: #8fbc8f; margin-bottom: 14px; font-weight: 900; letter-spacing: 2px; }
+.notation-card h5 { font-size: 16px; color: var(--gold-primary); margin-bottom: 8px; letter-spacing: 2px; }
+.notation-card p { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+
+/* 演奏场景 */
+.scene-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.scene-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.scene-card:hover { border-color: #8fbc8f; transform: translateY(-6px); box-shadow: 0 0 24px rgba(143,188,143,0.1); }
+.scene-card .scene-img { width: 100%; }
+.scene-card .scene-body { padding: 24px; }
+.scene-card h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.scene-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 传承谱系 */
+.lineage-tree { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: flex-start; }
+.gen-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+.gen-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); text-align: center; }
+.gen-card:hover { border-color: #8fbc8f; transform: translateY(-6px); }
+.gen-card .gen-portrait { width: 100%; }
+.gen-card .gen-info { padding: 20px 16px; }
+.gen-card .gen-era { font-size: 11px; color: #8fbc8f; letter-spacing: 2px; margin-bottom: 6px; }
+.gen-card h5 { font-size: 16px; color: var(--gold-primary); margin-bottom: 8px; letter-spacing: 2px; }
+.gen-card p { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+/* 古乐新声 */
+.revival-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.revival-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+.revival-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 28px; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.revival-card:hover { border-color: #8fbc8f; transform: translateY(-6px); }
+.revival-card .revival-icon { font-size: 32px; margin-bottom: 14px; display: block; }
+.revival-card h5 { font-size: 16px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.revival-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 1024px) {
+  .page-hero { height: 45vh; }
+  .page-hero-content h1 { font-size: 40px; letter-spacing: 5px; }
+  .page-hero-content p { font-size: 15px; letter-spacing: 3px; }
+  .detail-grid { gap: 32px; padding: 60px 0; }
+  .detail-text h3 { font-size: 24px; }
+  .instruments-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .repertoire-list { gap: 16px; }
+  .trans-banner { height: 200px; }
+  .trans-banner-text h3 { font-size: 24px; }
+  .notation-intro { gap: 32px; }
+  .notation-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .scene-grid { gap: 20px; }
+  .lineage-tree { gap: 32px; }
+  .gen-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .revival-grid { gap: 32px; }
+  .revival-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+
+@media (max-width: 768px) {
+  .page-hero { height: 38vh; margin-top: 60px; }
+  .page-hero-content h1 { font-size: 30px; letter-spacing: 4px; }
+  .page-hero-content p { font-size: 14px; letter-spacing: 2px; margin-top: 12px; }
+  .page-hero-content .badge { font-size: 11px; padding: 5px 16px; }
+  .detail-grid { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+  .detail-grid.reverse { direction: ltr; }
+  .detail-text h3 { font-size: 22px; }
+  .detail-text p { font-size: 14px; line-height: 2; }
+  .instruments-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .instrument-card .inst-name { font-size: 14px; padding: 12px 10px; }
+  .instrument-card .inst-desc { font-size: 11px; padding: 0 10px 12px; }
+  .repertoire-list { grid-template-columns: 1fr; gap: 14px; }
+  .repertoire-item { padding: 22px; }
+  .repertoire-item h4 { font-size: 17px; }
+  .trans-banner { height: 180px; }
+  .trans-banner-text h3 { font-size: 20px; letter-spacing: 4px; }
+  .trans-banner-text p { font-size: 12px; letter-spacing: 2px; }
+  .notation-intro { grid-template-columns: 1fr; gap: 24px; }
+  .notation-cards { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .notation-card { padding: 20px 16px; }
+  .notation-card .notation-symbol { font-size: 32px; }
+  .notation-card h5 { font-size: 15px; }
+  .scene-grid { grid-template-columns: 1fr; gap: 18px; }
+  .scene-card .scene-body { padding: 20px; }
+  .scene-card h4 { font-size: 17px; }
+  .lineage-tree { grid-template-columns: 1fr; gap: 24px; }
+  .gen-cards { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .gen-card .gen-info { padding: 16px 12px; }
+  .revival-grid { grid-template-columns: 1fr; gap: 24px; }
+  .revival-cards { grid-template-columns: 1fr; gap: 14px; }
+  .revival-card { padding: 22px; }
+}
+
+@media (max-width: 480px) {
+  .page-hero { height: 32vh; }
+  .page-hero-content h1 { font-size: 24px; letter-spacing: 3px; }
+  .page-hero-content p { font-size: 12px; letter-spacing: 1px; }
+  .page-hero-content .badge { font-size: 10px; padding: 4px 12px; letter-spacing: 2px; }
+  .detail-grid { gap: 18px; padding: 30px 0; }
+  .detail-text h3 { font-size: 20px; letter-spacing: 2px; }
+  .detail-text p { font-size: 13px; line-height: 1.9; }
+  .instruments-grid { grid-template-columns: 1fr; gap: 12px; }
+  .repertoire-item { padding: 18px; }
+  .repertoire-item h4 { font-size: 16px; }
+  .trans-banner { height: 150px; }
+  .trans-banner-text h3 { font-size: 18px; letter-spacing: 3px; }
+  .trans-banner-text p { font-size: 11px; }
+  .notation-cards { grid-template-columns: 1fr; gap: 12px; }
+  .notation-card { padding: 18px 14px; }
+  .notation-card .notation-symbol { font-size: 28px; }
+  .gen-cards { grid-template-columns: 1fr; gap: 12px; }
+  .revival-cards { grid-template-columns: 1fr; gap: 12px; }
+  .revival-card { padding: 18px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #B5413E, #D4A24E, #B5413E);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-icon">雄</div><span class="nav-logo-text">数绘雄州</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item"><a href="heritage.html" class="nav-link active">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <a href="heritage.html">非遗博览</a>
+  <span class="sep">/</span>
+  <span class="current">圈头村古乐</span>
+</div>
+
+<!-- 古乐演奏全景 -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="vibe_images/music-hero-01.webp" alt="古乐社演奏" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1 class="page-hero-title">圈头村古乐</h1>
+    <p>礼乐传千年 · 古韵绕梁间</p>
+    <span class="badge">省级非物质文化遗产</span>
+  </div>
+</section>
+
+<!-- 非遗档案 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">HERITAGE PROFILE</div>
+    <h2 class="section-title">非遗档案</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-text reveal">
+      <h3>宋代宫廷音乐的民间活化石</h3>
+      <p>圈头村古乐是河北省省级非物质文化遗产，源自宋代宫廷音乐，经数百年流传于冀中平原民间，至今保持着较为完整的演奏形式和曲目体系。</p>
+      <p>古乐社以圈头村为中心，辐射周边多个村落，每逢庙会、祭祀、节庆等重要场合，古乐社便奏乐助兴。乐曲庄重典雅，节奏舒缓，具有浓厚的礼乐文化色彩。</p>
+      <p>圈头村古乐的乐器配置、曲谱体系、演奏技法都保留了大量古代音乐的特征，被誉为"中国古代音乐的活化石"，对研究中国传统音乐史具有重要价值。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/music-profile-01.webp" alt="古乐谱手稿" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：乐器之声 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/music-banner-01.webp" alt="五种乐器" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>五音不全 · 何以成乐</h3>
+    <p>管子领奏 · 云锣点缀 · 鼓镲相和 · 笙声烘托</p>
+  </div>
+</div>
+
+<!-- 五大乐器 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">INSTRUMENTS</div>
+    <h2 class="section-title">五大乐器展示</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="instruments-grid">
+    <div class="instrument-card reveal">
+      <div class="inst-img"><img src="vibe_images/music-inst-01.webp" alt="管子" style="width:100%;height:160px;object-fit:cover;display:block;"></div>
+      <div class="inst-name">管子</div>
+      <div class="inst-desc">主奏乐器，音色高亢明亮，引领全曲旋律走向</div>
+    </div>
+    <div class="instrument-card reveal">
+      <div class="inst-img"><img src="vibe_images/music-inst-02.webp" alt="云锣" style="width:100%;height:160px;object-fit:cover;display:block;"></div>
+      <div class="inst-name">云锣</div>
+      <div class="inst-desc">打击乐器，音色清脆悦耳，增添乐曲层次感</div>
+    </div>
+    <div class="instrument-card reveal">
+      <div class="inst-img"><img src="vibe_images/music-inst-03.webp" alt="鼓" style="width:100%;height:160px;object-fit:cover;display:block;"></div>
+      <div class="inst-name">鼓</div>
+      <div class="inst-desc">节奏核心，控制全曲速度与情绪变化</div>
+    </div>
+    <div class="instrument-card reveal">
+      <div class="inst-img"><img src="vibe_images/music-inst-04.webp" alt="镲" style="width:100%;height:160px;object-fit:cover;display:block;"></div>
+      <div class="inst-name">镲</div>
+      <div class="inst-desc">铜制打击乐，增强节奏感与仪式感</div>
+    </div>
+    <div class="instrument-card reveal">
+      <div class="inst-img"><img src="vibe_images/music-inst-05.webp" alt="笙" style="width:100%;height:160px;object-fit:cover;display:block;"></div>
+      <div class="inst-name">笙</div>
+      <div class="inst-desc">和声乐器，丰富音色层次，烘托庄重氛围</div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：曲谱之秘 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/music-banner-02.webp" alt="工尺谱叠影" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>工尺之间 · 古谱存真</h3>
+    <p>千年记谱智慧 · 口传心授之秘</p>
+  </div>
+</div>
+
+<!-- 工尺谱解读 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">NOTATION SYSTEM</div>
+    <h2 class="section-title">工尺谱解读</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="notation-intro">
+    <div class="detail-text reveal">
+      <h3>中国古代音乐的密码本</h3>
+      <p>工尺谱是中国传统音乐独有的记谱方式，以"合、四、一、上、尺、工、凡、六、五、乙"等汉字作为音高符号，记录旋律走向。这种记谱法始于唐代，成熟于宋元，至明清广泛运用于民间音乐。</p>
+      <p>圈头村古乐至今保留着用工尺谱手抄的曲谱本，这些泛黄的纸页上记录着数十首古乐曲目，是研究古代音乐形态的珍贵实物。工尺谱不仅记录音高，还通过特殊的节奏标记和装饰符号，提示演奏的轻重缓急。</p>
+      <p>工尺谱的读法遵循"上=do、尺=re、工=mi、凡=fa、六=sol、五=la、乙=si"的基本对应关系，但实际演奏中存在大量的装饰音和微分音变化，这正是口传心授不可替代的原因。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/music-notation-01.webp" alt="工尺谱手稿" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+  <div class="reveal" style="margin-top: 32px;">
+    <img src="vibe_images/music-notation-02.webp" alt="工尺谱对照表" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+  <div class="notation-cards">
+    <div class="notation-card reveal">
+      <div class="notation-symbol">上 尺 工</div>
+      <h5>基本音高</h5>
+      <p>"上"对应do，"尺"对应re，"工"对应mi，构成五声音阶的基础音级，是工尺谱最核心的记谱符号。</p>
+    </div>
+    <div class="notation-card reveal">
+      <div class="notation-symbol">凡 六 五</div>
+      <h5>变化音级</h5>
+      <p>"凡"为fa，"六"为sol，"五"为la。加上"乙"（si）构成完整的七声音阶体系，丰富了旋律表现力。</p>
+    </div>
+    <div class="notation-card reveal">
+      <div class="notation-symbol">板 眼</div>
+      <h5>节奏标记</h5>
+      <p>"板"代表强拍，"眼"代表弱拍。通过板眼的组合标记，指示乐曲的节拍结构和速度变化。</p>
+    </div>
+    <div class="notation-card reveal">
+      <div class="notation-symbol">叠 擞</div>
+      <h5>装饰技法</h5>
+      <p>"叠"表示叠音装饰，"擞"表示颤音技法。这些特殊符号记录了管子的独特演奏技巧，需口传心授方能领悟。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：古乐场景 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/music-banner-03.webp" alt="庙会演奏" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>礼乐相济 · 古今共鸣</h3>
+    <p>庙会奏乐 · 祭祀行礼 · 堂会雅集 · 现代新声</p>
+  </div>
+</div>
+
+<!-- 古乐曲目 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">REPERTOIRE</div>
+    <h2 class="section-title">经典曲目</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="repertoire-list">
+    <div class="repertoire-item reveal">
+      <h4>《放驴》</h4>
+      <p>圈头村古乐代表性曲目，旋律欢快活泼，描绘农村放驴的生动场景，是古乐中少有的轻松曲目。</p>
+    </div>
+    <div class="repertoire-item reveal">
+      <h4>《昭君出塞》</h4>
+      <p>曲调悲壮苍凉，讲述王昭君出塞和亲的历史故事，旋律中蕴含深厚的历史情感。</p>
+    </div>
+    <div class="repertoire-item reveal">
+      <h4>《小二番》</h4>
+      <p>节奏明快、旋律流畅，是古乐社日常演奏的常用曲目，深受村民喜爱。</p>
+    </div>
+    <div class="repertoire-item reveal">
+      <h4>《豆叶黄》</h4>
+      <p>曲名取自民间生活，旋律质朴自然，体现了古乐与民间生活的紧密联系。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 演奏场景 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">PERFORMANCE SCENES</div>
+    <h2 class="section-title">演奏场景</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="scene-grid">
+    <div class="scene-card reveal">
+      <div class="scene-img"><img src="vibe_images/music-scene-01.webp" alt="庙会演奏" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="scene-body">
+        <h4>庙会演奏</h4>
+        <p>每逢农历庙会，古乐社成员身着传统服饰，列队行进于庙会队伍之中。管子领奏，鼓镲相随，笙箫和鸣，乐曲声传数里，是庙会最庄严的仪仗。</p>
+      </div>
+    </div>
+    <div class="scene-card reveal">
+      <div class="scene-img"><img src="vibe_images/music-scene-02.webp" alt="祭祀奏乐" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="scene-body">
+        <h4>祭祀奏乐</h4>
+        <p>在祭祀天地、祖先的传统仪式中，古乐承担着沟通天人的神圣职能。乐曲庄重肃穆，节奏缓慢，每一个音符都承载着对天地神灵的敬畏之心。</p>
+      </div>
+    </div>
+    <div class="scene-card reveal">
+      <div class="scene-img"><img src="vibe_images/music-scene-03.webp" alt="堂会雅集" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="scene-body">
+        <h4>堂会雅集</h4>
+        <p>旧时文人雅士聚会，常邀古乐社奏乐助兴。堂会之中，古乐与茶香相伴，宾主品茗赏乐，在典雅的旋律中感受传统文化的韵味与意境。</p>
+      </div>
+    </div>
+    <div class="scene-card reveal">
+      <div class="scene-img"><img src="vibe_images/music-scene-04.webp" alt="现代演出" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="scene-body">
+        <h4>现代演出</h4>
+        <p>近年来，圈头村古乐社走出村庄，登上现代音乐厅的舞台。在专业灯光音响的加持下，古老的音乐焕发出新的魅力，让更多观众领略到传统古乐的永恒之美。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：传承之路 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/music-banner-04.webp" alt="传承时间线" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>薪火相传 · 代代不息</h3>
+    <p>从清代古乐社到当代校园传承 · 口传心授绵延不绝</p>
+  </div>
+</div>
+
+<!-- 礼乐文化 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">CULTURE</div>
+    <h2 class="section-title">礼乐文化传承</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid reverse">
+    <div class="detail-text reveal">
+      <h3>礼乐文明的民间延续</h3>
+      <p>圈头村古乐不仅是一种音乐形式，更是中国传统礼乐文化在民间的活态传承。古乐社的演奏活动与民间祭祀、庙会、婚丧嫁娶等仪式紧密结合，体现了"礼乐相济"的传统文化理念。</p>
+      <p>古乐社有着严格的传承制度，老艺人通过口传心授的方式将曲目与技法传给年轻一代。乐谱采用传统的工尺谱记谱法，保留了古代音乐的记谱传统。</p>
+      <p>在现代社会，圈头村古乐面临着传承人老龄化、年轻人兴趣不足等挑战。通过数字化录音录像、建立曲谱数据库、开展校园传承活动等方式，古乐文化正在得到系统性保护。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/music-culture-01.webp" alt="传承活动" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 传承谱系 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">LINEAGE</div>
+    <h2 class="section-title">传承谱系</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="lineage-tree">
+    <div class="detail-text reveal">
+      <h3>从清代至今的传承脉络</h3>
+      <p>圈头村古乐的传承可追溯至清代中叶，当时村中已有成规模的古乐社组织。历经数代传承人的坚守与努力，古乐社的曲目体系和演奏技法得以完整保存。</p>
+      <p>传承方式以"师徒制"为核心，每位传人不仅要精通乐器演奏，还需熟记全部工尺谱曲谱，掌握各类仪式用乐的规矩与礼仪。这种严格的传承制度确保了古乐的纯正性。</p>
+      <p>进入当代，传承谱系从家族传承扩展为社会传承，越来越多的年轻人通过校园课程、社区活动接触到古乐，为这一古老艺术注入了新的生命力。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/music-lineage-01.webp" alt="传承谱系" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+  <div class="gen-cards">
+    <div class="gen-card reveal">
+      <div class="gen-portrait"><img src="vibe_images/music-gen-01.webp" alt="清代传人" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="gen-info">
+        <div class="gen-era">清代 · 创始期</div>
+        <h5>赵氏先祖</h5>
+        <p>清代中叶创立圈头村古乐社，将宫廷音乐引入民间，奠定古乐社的演奏传统与曲目基础。</p>
+      </div>
+    </div>
+    <div class="gen-card reveal">
+      <div class="gen-portrait"><img src="vibe_images/music-gen-02.webp" alt="民国传人" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="gen-info">
+        <div class="gen-era">民国 · 发展期</div>
+        <h5>赵德明</h5>
+        <p>民国时期古乐社核心人物，精通管子演奏，整理并完善了工尺谱曲谱体系，培养了大批传人。</p>
+      </div>
+    </div>
+    <div class="gen-card reveal">
+      <div class="gen-portrait"><img src="vibe_images/music-gen-03.webp" alt="新中国传人" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="gen-info">
+        <div class="gen-era">新中国 · 保护期</div>
+        <h5>赵振邦</h5>
+        <p>新中国成立后积极组织古乐社恢复演出，参与民间音乐普查与录音工作，为古乐的系统性保护奠定基础。</p>
+      </div>
+    </div>
+    <div class="gen-card reveal">
+      <div class="gen-portrait"><img src="vibe_images/music-gen-04.webp" alt="当代传人" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="gen-info">
+        <div class="gen-era">当代 · 传承期</div>
+        <h5>赵宝旺</h5>
+        <p>当代古乐社社长，省级非遗代表性传承人，致力于古乐的数字化保护与校园传承推广工作。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：古乐新声 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/music-banner-05.webp" alt="古乐科技融合" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>古乐新声 · 数字传承</h3>
+    <p>录音存档 · 校园授课 · 舞台展演 · 科技赋能</p>
+  </div>
+</div>
+
+<!-- 古乐新声 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MODERN REVIVAL</div>
+    <h2 class="section-title">古乐新声</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="revival-grid">
+    <div class="detail-text reveal">
+      <h3>传统古乐的当代活化</h3>
+      <p>面对传承人老龄化、受众减少等挑战，圈头村古乐正在积极探索数字化保护与创新传承的新路径。通过专业录音棚录制全套曲目、建立工尺谱数字化数据库、开展校园传承课堂等方式，让千年古乐焕发新生。</p>
+      <p>古乐社还积极参与各类文化交流活动，从乡村庙会走向城市音乐厅，从民间自发组织走向专业舞台。在保持传统演奏风格的同时，古乐社也在探索与现代音乐的融合可能，尝试跨界合作演出。</p>
+      <p>借助短视频、直播等新媒体平台，圈头村古乐的影响力正在不断扩大。越来越多的年轻人通过屏幕了解到这一古老艺术，其中不乏主动拜师学艺的热心青年。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/music-revival-01.webp" alt="录音棚录制" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+  <div class="reveal" style="margin-top: 32px;">
+    <img src="vibe_images/music-revival-02.webp" alt="校园课堂" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+  <div class="revival-cards">
+    <div class="revival-card reveal">
+      <span class="revival-icon">🎙️</span>
+      <h5>数字化录音存档</h5>
+      <p>邀请专业录音团队，使用高保真设备对古乐社全部保留曲目进行系统录制，建立数字音频档案，确保珍贵音乐资料永久保存。</p>
+    </div>
+    <div class="revival-card reveal">
+      <span class="revival-icon">🏫</span>
+      <h5>校园传承课堂</h5>
+      <p>与雄安新区中小学合作开设古乐传承课程，由非遗传承人亲自授课，教授工尺谱基础知识和乐器演奏技法，培养年轻一代传承人。</p>
+    </div>
+    <div class="revival-card reveal">
+      <span class="revival-icon">🎭</span>
+      <h5>舞台展演推广</h5>
+      <p>组织古乐社参加全国民间音乐节、非遗展演等活动，在更广阔的舞台上展示圈头村古乐的魅力，提升社会知名度与影响力。</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<div class="digital-human">
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header"><span class="dh-panel-title">AI 数字人助手</span><button class="dh-panel-close" onclick="toggleDH()">✕</button></div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">非遗匠人：</span>欢迎了解圈头村古乐！这是源自宋代宫廷音乐的民间古乐，五大乐器合奏，曲调庄重典雅。想了解哪方面？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍🎨</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

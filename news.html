@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="数绘雄州·智承非遗 — 新闻动态页面，展示雄安新区非遗相关活动、展览、政策资讯、教育传承及文化交流等最新动态。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23FAF8F5'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%23D4A24E' font-weight='bold'>雄</text></svg>">
+<title>新闻动态 — 数绘雄州</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+.page-hero { position: relative; height: 55vh; display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2; margin-top: 72px; }
+.page-hero-bg { position: absolute; inset: 0; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.1) 0%, rgba(253,248,240,0.65) 100%); z-index: 1; }
+.page-hero-content { position: relative; z-index: 2; text-align: center; }
+.page-hero-content h1 { font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #8C2B28, #B5413E, #D4A24E); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 8px; filter: drop-shadow(0 0 30px rgba(212,162,78,0.2)); }
+.page-hero-content p { margin-top: 18px; font-size: 17px; color: var(--text-dim); letter-spacing: 5px; }
+.page-hero-content .badge { display: inline-block; margin-top: 16px; padding: 6px 20px; border: 1px solid var(--gold-primary); border-radius: 20px; font-size: 12px; color: var(--gold-primary); letter-spacing: 3px; }
+
+/* ===== 移动端响应式 ===== */
+@media (max-width: 1024px) {
+  .page-hero { height: 45vh; margin-top: 64px; }
+  .page-hero-content h1 { font-size: 40px; letter-spacing: 5px; }
+  .page-hero-content p { font-size: 15px; letter-spacing: 3px; }
+  .news-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .news-card-img { height: 170px; }
+  .news-card-body { padding: 20px; }
+  .news-card-title { font-size: 16px; }
+}
+@media (max-width: 768px) {
+  .page-hero { height: 38vh; margin-top: 56px; }
+  .page-hero-content h1 { font-size: 30px; letter-spacing: 3px; }
+  .page-hero-content p { font-size: 13px; letter-spacing: 2px; margin-top: 12px; }
+  .page-hero-content .badge { font-size: 11px; padding: 5px 16px; }
+  .news-grid { grid-template-columns: 1fr; gap: 18px; }
+  .news-card-img { height: 180px; }
+  .news-card-body { padding: 18px; }
+  .news-card-title { font-size: 15px; margin-bottom: 8px; }
+  .news-card-desc { font-size: 12px; line-height: 1.7; }
+  .news-card-footer { margin-top: 12px; padding-top: 10px; }
+}
+@media (max-width: 480px) {
+  .page-hero { height: 32vh; margin-top: 52px; }
+  .page-hero-content h1 { font-size: 24px; letter-spacing: 2px; }
+  .page-hero-content p { font-size: 12px; letter-spacing: 1px; }
+  .page-hero-content .badge { font-size: 10px; padding: 4px 14px; margin-top: 10px; }
+  .news-card-img { height: 160px; }
+  .news-card-body { padding: 14px; }
+  .news-card-title { font-size: 14px; }
+  .news-card-desc { font-size: 12px; }
+  .news-card-tag { font-size: 10px; }
+  .news-card-source, .news-card-link { font-size: 11px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #B5413E, #D4A24E, #B5413E);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+  }
+</style>
+</head>
+<body>
+
+<div id="scrollProgress"></div>
+
+<!-- 导航栏 -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">雄</div>
+      <span class="nav-logo-text">数绘雄州</span>
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item">
+        <a href="heritage.html" class="nav-link">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link active">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <span class="current">新闻动态</span>
+</div>
+
+<!-- 开场封面 -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="vibe_images/news-hero.webp" alt="展览全景" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1 class="page-hero-title">新闻动态 · 非遗前沿</h1>
+    <p>雄安非遗最新资讯 · 活动 · 展览 · 政策</p>
+    <span class="badge">实时追踪非遗动态</span>
+  </div>
+</section>
+
+<!-- 置顶新闻 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">FEATURED NEWS</div>
+    <h2 class="section-title">头条新闻</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="news-grid">
+    <a href="http://www.xiongan.gov.cn/20260613/cb401bde78994ceaa5a48542fad5e80f/c.html" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-01.webp" alt="国博展览" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.12.15</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">展览资讯</div>
+        <h4 class="news-card-title">雄安非遗数字创新展在中国国家博物馆开幕</h4>
+        <p class="news-card-desc">本次展览集中展示雄安新区六大非遗项目的数字化创新成果，包括AIGC纹样重构、三维数字孪生、交互式非遗体验等，吸引众多市民和游客参观。展览将持续至2025年2月，预计接待观众超20万人次。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">雄安发布</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="http://www.xiongan.gov.cn/20260613/cb401bde78994ceaa5a48542fad5e80f/c.html" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-02.webp" alt="六位传承人" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.11.28</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">活动报道</div>
+        <h4 class="news-card-title">六大非遗传承人齐聚雄县展示百年技艺</h4>
+        <p class="news-card-desc">芦苇画、黑陶、盒子灯、古乐、翻子拳、西河大鼓六位国家级和省级传承人同台献艺，为公众带来一场沉浸式非遗文化盛宴。活动现场还设有体验区，观众可亲手体验芦苇剪贴和陶器拉坯等工艺。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">雄安日报</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="policy.html" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-03.webp" alt="政策签署" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.10.20</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">政策法规</div>
+        <h4 class="news-card-title">雄安新区出台非遗数字化保护新政策</h4>
+        <p class="news-card-desc">政策明确将每年投入专项资金用于非遗数字化采集、传承人补贴、数字化平台建设，为非遗保护提供制度保障。新政策还鼓励高校与企业参与非遗数字化创新，推动产学研深度融合。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">管委会</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- 更多新闻 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MORE NEWS</div>
+    <h2 class="section-title">更多资讯</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="news-grid">
+    <a href="http://www.xiongan.gov.cn/20260613/cb401bde78994ceaa5a48542fad5e80f/c.html" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-04.webp" alt="进校园体验" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.09.10</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">教育传承</div>
+        <h4 class="news-card-title">非遗文化进校园：雄县中小学开设非遗体验课</h4>
+        <p class="news-card-desc">雄县20所中小学引入非遗体验课程，邀请传承人走进课堂，让学生近距离感受芦苇画、黑陶等传统技艺的魅力。课程涵盖理论讲解与动手实践，每学期16课时。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">教育局</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="http://www.xiongan.gov.cn/" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-05.webp" alt="AIGC大赛" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.08.05</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">赛事活动</div>
+        <h4 class="news-card-title">首届"AIGC+非遗"数字创作大赛启动报名</h4>
+        <p class="news-card-desc">面向全国高校和创作者征集以雄安非遗为灵感的AIGC数字作品，优秀作品将入选雄安非遗数字资源库并在展览中展出。大赛设金、银、铜奖及优秀指导教师奖，总奖金池30万元。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">数绘雄州</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="https://www.hebei.gov.cn/columns/580d0301-2e0b-4152-9dd1-7d7f4e0f4980/202406/10/81d6e2dc-a09f-4fe9-94e6-ab6b8ccef3ac.html" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-06.webp" alt="国际博览会" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.07.18</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">文化交流</div>
+        <h4 class="news-card-title">雄安非遗亮相国际文化遗产博览会</h4>
+        <p class="news-card-desc">雄安六大非遗项目及数字化创新成果在第五届国际文化遗产博览会上展出，向世界展示中国传统文化的数字新生。博览会期间，雄安展位接待了来自20余个国家的参展嘉宾。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">文旅局</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="https://www.xiongan.gov.cn/20250613/231de3532117402c9702562389d3a138/c.html" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-07.webp" alt="数字资源库" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.06.22</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">平台建设</div>
+        <h4 class="news-card-title">雄安非遗数字资源库正式上线</h4>
+        <p class="news-card-desc">资源库目前已收录六大非遗项目的3000余件纹样、影像、音频数据，面向高校和科研机构开放访问，为非遗研究提供数据支撑。平台支持AI纹样检索与智能匹配。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">数绘雄州</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="inheritor.html" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-08.webp" alt="表彰大会" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.05.30</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">传承人风采</div>
+        <h4 class="news-card-title">雄安新区表彰优秀非遗传承人</h4>
+        <p class="news-card-desc">六位非遗传承人获颁"雄安非遗保护突出贡献奖"，表彰他们在技艺传承、人才培养、数字化记录等方面的卓越贡献。获奖传承人还将获得专项扶持资金。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">雄安发布</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="http://www.xiongan.gov.cn/" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-09.webp" alt="纪录片拍摄" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.04.12</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">影像记录</div>
+        <h4 class="news-card-title">大型非遗纪录片《雄安匠心》开机拍摄</h4>
+        <p class="news-card-desc">纪录片以六大非遗传承人的技艺与人生为主线，用4K超高清影像记录非遗技艺的每一个细节，预计2025年初在央视纪录片频道播出，共6集。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">央视纪录</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="http://www.xiongan.gov.cn/20260502/e889c6c1a0a74f919a4e0da6f6aaf9b4/c.html" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-10.webp" alt="文创产品" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.03.08</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">产业创新</div>
+        <h4 class="news-card-title">雄安非遗文创产品发布会成功举办</h4>
+        <p class="news-card-desc">融合芦苇画纹样、黑陶质感、盒子灯造型等非遗元素的30余款文创产品正式发布，涵盖文具、家居、服饰等品类，让非遗走进日常生活。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">文旅局</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="http://www.xiongan.gov.cn/" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-11.webp" alt="志愿者培训" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.02.15</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">志愿服务</div>
+        <h4 class="news-card-title">雄安非遗保护志愿者计划启动招募</h4>
+        <p class="news-card-desc">面向社会公开招募200名非遗保护志愿者，参与非遗普查、数字化记录、展览讲解等工作。志愿者将接受专业培训并获颁证书，服务期满可优先参与非遗相关活动。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">管委会</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+    <a href="https://www.xiongan.gov.cn/20250613/231de3532117402c9702562389d3a138/c.html" target="_blank" class="news-card reveal">
+      <div class="news-card-img"><img src="vibe_images/news-card-12.webp" alt="年度成果展" style="width:100%;height:180px;object-fit:cover;display:block;"><span class="news-card-date">2024.01.20</span></div>
+      <div class="news-card-body">
+        <div class="news-card-tag">年度回顾</div>
+        <h4 class="news-card-title">2023年度雄安非遗保护成果展开展</h4>
+        <p class="news-card-desc">展览回顾了过去一年雄安新区在非遗数字化采集、传承人培养、文创开发、国际交流等方面取得的丰硕成果，累计完成6项非遗、3000余件数字资产采集。</p>
+        <div class="news-card-footer">
+          <span class="news-card-source">数绘雄州</span>
+          <span class="news-card-link">阅读全文 →</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- 底部纹样 -->
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<canvas id="particleCanvas" class="particle-canvas"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- 数字人 -->
+<div class="digital-human">
+  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header">
+      <span class="dh-panel-title">AI 新闻发言人</span>
+      <button class="dh-panel-close" onclick="toggleDH()">✕</button>
+    </div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="reporter">新闻发言人</button>
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="artisan">非遗匠人</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">雄安新闻发言人：</span>你好！我是雄安非遗新闻发言人，随时为你播报非遗展览、活动、赛事、文化交流等最新动态。想了解哪方面的新闻？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">📰</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

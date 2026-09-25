@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="西河大鼓，国家级非物质文化遗产。雄县曲艺代表。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23f5efe4'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%232c2a27' font-weight='bold'>雄</text></svg>">
+<title>西河大鼓 · 非遗博览</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+.page-hero { position: relative; height: 55vh; display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2; margin-top: 72px; }
+.page-hero-bg { position: absolute; inset: 0; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.1) 0%, rgba(253,248,240,0.65) 100%); z-index: 1; }
+.page-hero-content { position: relative; z-index: 2; text-align: center; }
+.page-hero-content h1 { font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #4a2060, #8b5cf6, #B5413E, #D4A24E); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 8px; filter: drop-shadow(0 0 30px rgba(139,92,246,0.2)); }
+.page-hero-content p { margin-top: 18px; font-size: 17px; color: var(--text-dim); letter-spacing: 5px; }
+.page-hero-content .badge { display: inline-block; margin-top: 16px; padding: 6px 20px; border: 1px solid #8b5cf6; border-radius: 20px; font-size: 12px; color: #8b5cf6; letter-spacing: 3px; }
+
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; padding: 80px 0; }
+.detail-grid.reverse { direction: rtl; }
+.detail-grid.reverse > * { direction: ltr; }
+.detail-text h3 { font-size: 28px; color: var(--gold-primary); margin-bottom: 20px; letter-spacing: 3px; }
+.detail-text p { font-size: 15px; color: var(--text-secondary); line-height: 2.2; margin-bottom: 16px; }
+
+.instruments-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.inst-detail-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.inst-detail-card:hover { border-color: var(--border-gold-hover); transform: translateY(-6px); }
+.inst-detail-card .inst-img { width: 100%; }
+.inst-detail-card .inst-body { padding: 24px; }
+.inst-detail-card h4 { font-size: 20px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.inst-detail-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+.styles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.style-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 32px; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.style-card:hover { border-color: var(--border-gold-hover); }
+.style-card .style-name { font-size: 22px; color: var(--gold-primary); margin-bottom: 12px; letter-spacing: 2px; }
+.style-card .style-desc { font-size: 14px; color: var(--text-secondary); line-height: 2; }
+
+.books-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.book-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 28px 20px; text-align: center; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.book-card:hover { border-color: var(--border-gold-hover); transform: translateY(-6px); }
+.book-card .book-icon { font-size: 36px; margin-bottom: 14px; display: block; }
+.book-card h5 { font-size: 16px; color: var(--gold-primary); margin-bottom: 8px; letter-spacing: 2px; }
+.book-card p { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+/* 过渡横幅 */
+.trans-banner { position: relative; height: 260px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0; }
+.trans-banner-bg { position: absolute; inset: 0; }
+.trans-banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.3) 0%, rgba(253,248,240,0.2) 50%, rgba(253,248,240,0.3) 100%); z-index: 1; }
+.trans-banner-text { position: relative; z-index: 2; text-align: center; }
+.trans-banner-text h3 { font-size: 28px; color: var(--gold-primary); letter-spacing: 6px; font-weight: 700; }
+.trans-banner-text p { font-size: 14px; color: var(--text-dim); margin-top: 10px; letter-spacing: 3px; }
+
+/* 名家荟萃 */
+.famous-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.famous-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); text-align: center; }
+.famous-card:hover { border-color: #8b5cf6; transform: translateY(-6px); box-shadow: 0 0 24px rgba(139,92,246,0.1); }
+.famous-card .famous-portrait { width: 100%; }
+.famous-card .famous-info { padding: 20px 16px; }
+.famous-card .famous-era { font-size: 11px; color: #8b5cf6; letter-spacing: 2px; margin-bottom: 6px; }
+.famous-card h5 { font-size: 16px; color: var(--gold-primary); margin-bottom: 8px; letter-spacing: 2px; }
+.famous-card .famous-specialty { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.6; }
+.famous-card .famous-quote { font-size: 11px; color: var(--text-dim); font-style: italic; line-height: 1.6; border-top: 1px solid var(--border-gold); padding-top: 10px; margin-top: 6px; }
+
+/* 书场文化 */
+.venue-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.venue-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.venue-card:hover { border-color: #8b5cf6; transform: translateY(-6px); box-shadow: 0 0 24px rgba(139,92,246,0.1); }
+.venue-card .venue-img { width: 100%; }
+.venue-card .venue-body { padding: 24px; }
+.venue-card h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.venue-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 唱腔赏析 */
+.appreciation-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.appreciation-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.appreciation-card:hover { border-color: #8b5cf6; transform: translateY(-6px); }
+.appreciation-card .app-img { width: 100%; }
+.appreciation-card .app-body { padding: 24px; }
+.appreciation-card h4 { font-size: 17px; color: var(--gold-primary); margin-bottom: 8px; letter-spacing: 2px; }
+.appreciation-card .app-style { font-size: 11px; color: #8b5cf6; letter-spacing: 2px; margin-bottom: 10px; }
+.appreciation-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 鼓书对比 */
+.comparison-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.comparison-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.comparison-card:hover { border-color: #8b5cf6; transform: translateY(-6px); }
+.comparison-card .comp-img { width: 100%; }
+.comparison-card .comp-body { padding: 24px; }
+.comparison-card h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.comparison-card .comp-origin { font-size: 11px; color: #8b5cf6; letter-spacing: 2px; margin-bottom: 10px; }
+.comparison-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 当代传承 */
+.modern-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.modern-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+.modern-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 28px; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.modern-card:hover { border-color: #8b5cf6; transform: translateY(-6px); }
+.modern-card .modern-icon { font-size: 32px; margin-bottom: 14px; display: block; }
+.modern-card h5 { font-size: 16px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.modern-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 1024px) {
+  .page-hero { height: 45vh; }
+  .page-hero-content h1 { font-size: 40px; letter-spacing: 5px; }
+  .page-hero-content p { font-size: 15px; letter-spacing: 3px; }
+  .detail-grid { gap: 32px; padding: 60px 0; }
+  .detail-text h3 { font-size: 24px; }
+  .instruments-row { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .styles-grid { gap: 20px; }
+  .books-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .trans-banner { height: 200px; }
+  .trans-banner-text h3 { font-size: 24px; }
+  .famous-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .venue-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .appreciation-grid { gap: 20px; }
+  .comparison-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .modern-grid { gap: 32px; }
+  .modern-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+
+@media (max-width: 768px) {
+  .page-hero { height: 38vh; margin-top: 60px; }
+  .page-hero-content h1 { font-size: 30px; letter-spacing: 4px; }
+  .page-hero-content p { font-size: 14px; letter-spacing: 2px; margin-top: 12px; }
+  .page-hero-content .badge { font-size: 11px; padding: 5px 16px; }
+  .detail-grid { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+  .detail-grid.reverse { direction: ltr; }
+  .detail-text h3 { font-size: 22px; }
+  .detail-text p { font-size: 14px; line-height: 2; }
+  .instruments-row { grid-template-columns: 1fr; gap: 18px; }
+  .inst-detail-card .inst-body { padding: 20px; }
+  .inst-detail-card h4 { font-size: 18px; }
+  .styles-grid { grid-template-columns: 1fr; gap: 18px; }
+  .style-card { padding: 24px; }
+  .style-card .style-name { font-size: 20px; }
+  .books-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .book-card { padding: 22px 16px; }
+  .book-card .book-icon { font-size: 30px; }
+  .book-card h5 { font-size: 15px; }
+  .trans-banner { height: 180px; }
+  .trans-banner-text h3 { font-size: 20px; letter-spacing: 4px; }
+  .trans-banner-text p { font-size: 12px; letter-spacing: 2px; }
+  .famous-cards { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .famous-card .famous-info { padding: 16px 12px; }
+  .famous-card h5 { font-size: 15px; }
+  .venue-grid { grid-template-columns: 1fr; gap: 18px; }
+  .venue-card .venue-body { padding: 20px; }
+  .venue-card h4 { font-size: 17px; }
+  .appreciation-grid { grid-template-columns: 1fr; gap: 18px; }
+  .appreciation-card .app-body { padding: 20px; }
+  .appreciation-card h4 { font-size: 16px; }
+  .comparison-grid { grid-template-columns: 1fr; gap: 18px; }
+  .comparison-card .comp-body { padding: 20px; }
+  .comparison-card h4 { font-size: 17px; }
+  .modern-grid { grid-template-columns: 1fr; gap: 24px; }
+  .modern-cards { grid-template-columns: 1fr; gap: 14px; }
+  .modern-card { padding: 22px; }
+}
+
+@media (max-width: 480px) {
+  .page-hero { height: 32vh; }
+  .page-hero-content h1 { font-size: 24px; letter-spacing: 3px; }
+  .page-hero-content p { font-size: 12px; letter-spacing: 1px; }
+  .page-hero-content .badge { font-size: 10px; padding: 4px 12px; letter-spacing: 2px; }
+  .detail-grid { gap: 18px; padding: 30px 0; }
+  .detail-text h3 { font-size: 20px; letter-spacing: 2px; }
+  .detail-text p { font-size: 13px; line-height: 1.9; }
+  .inst-detail-card .inst-body { padding: 16px; }
+  .inst-detail-card h4 { font-size: 17px; }
+  .style-card { padding: 20px; }
+  .style-card .style-name { font-size: 18px; }
+  .style-card .style-desc { font-size: 13px; }
+  .books-grid { grid-template-columns: 1fr; gap: 12px; }
+  .book-card { padding: 18px 14px; }
+  .trans-banner { height: 150px; }
+  .trans-banner-text h3 { font-size: 18px; letter-spacing: 3px; }
+  .trans-banner-text p { font-size: 11px; }
+  .famous-cards { grid-template-columns: 1fr; gap: 12px; }
+  .famous-card .famous-info { padding: 14px 10px; }
+  .venue-card .venue-body { padding: 16px; }
+  .appreciation-card .app-body { padding: 16px; }
+  .comparison-card .comp-body { padding: 16px; }
+  .modern-card { padding: 18px; }
+  .modern-card h5 { font-size: 15px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #B5413E, #D4A24E, #B5413E);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-icon">雄</div><span class="nav-logo-text">数绘雄州</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item"><a href="heritage.html" class="nav-link active">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <a href="heritage.html">非遗博览</a>
+  <span class="sep">/</span>
+  <span class="current">西河大鼓</span>
+</div>
+
+<!-- 说书全景 -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="vibe_images/drum-hero-01.webp" alt="说书全景" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1 class="page-hero-title">西河大鼓</h1>
+    <p>一鼓一板说古今 · 三弦伴奏唱千秋</p>
+    <span class="badge">国家级非物质文化遗产</span>
+  </div>
+</section>
+
+<!-- 流派溯源 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">ORIGIN</div>
+    <h2 class="section-title">流派溯源</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-text reveal">
+      <h3>华北曲艺的璀璨明珠</h3>
+      <p>西河大鼓是国家级非物质文化遗产，起源于清代中叶的冀中平原，因发源于大清河（古称西河）流域而得名。它是华北地区最具代表性的曲艺形式之一，与京东大鼓、乐亭大鼓并称"河北三大鼓书"。</p>
+      <p>西河大鼓的表演形式为一人坐唱，演员左手持板（木板或铜板），右手击鼓，自伴自唱。伴奏乐器以三弦为主，有时辅以四胡、琵琶等。唱腔丰富多变，既有高亢激昂的"硬唱"，也有委婉抒情的"软唱"。</p>
+      <p>西河大鼓的曲目内容广泛，涵盖历史演义、英雄传奇、民间故事、公案小说等，是民间文化传播的重要载体。2006年，西河大鼓被列入第一批国家级非物质文化遗产名录。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/drum-origin-01.webp" alt="历史古书场" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：名家风采 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/drum-banner-01.webp" alt="名家风采" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>名家荟萃 · 流派纷呈</h3>
+    <p>马派婉转 · 赵派豪放 · 当代名家 · 薪火相传</p>
+  </div>
+</div>
+
+<!-- 乐器详解 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">INSTRUMENTS</div>
+    <h2 class="section-title">乐器详解</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="instruments-row">
+    <div class="inst-detail-card reveal">
+      <div class="inst-img"><img src="vibe_images/drum-inst-01.webp" alt="鼓与板" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="inst-body">
+        <h4>鼓与板</h4>
+        <p>演员左手持板（木板或铜板），右手执鼓签击鼓。鼓声控制节奏，板声点缀节拍，是表演的核心打击乐器。鼓点变化丰富，可表现紧张、舒缓、激昂等不同情绪。</p>
+      </div>
+    </div>
+    <div class="inst-detail-card reveal">
+      <div class="inst-img"><img src="vibe_images/drum-inst-02.webp" alt="三弦" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="inst-body">
+        <h4>三弦</h4>
+        <p>西河大鼓的主要伴奏乐器，音色浑厚圆润，表现力丰富。三弦伴奏与唱腔紧密配合，既烘托气氛，又填补唱腔间隙，是西河大鼓音乐性的关键。</p>
+      </div>
+    </div>
+    <div class="inst-detail-card reveal">
+      <div class="inst-img"><img src="vibe_images/drum-inst-03.webp" alt="辅助乐器" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="inst-body">
+        <h4>辅助乐器</h4>
+        <p>四胡、琵琶等乐器在大型演出中作为辅助伴奏，丰富音乐层次。现代演出中有时加入电子琴等现代乐器，在保持传统韵味的同时增添时代感。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：唱腔之妙 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/drum-banner-02.webp" alt="艺人说唱" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>四板成章 · 唱腔万千</h3>
+    <p>头板抒情 · 二板叙事 · 三板激昂 · 散板自由</p>
+  </div>
+</div>
+
+<!-- 四大唱腔板式 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">VOCAL STYLES</div>
+    <h2 class="section-title">四大唱腔板式</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="styles-grid">
+    <div class="style-card reveal">
+      <div class="style-name">头板（慢板）</div>
+      <div class="style-desc">节奏舒缓，旋律优美，多用于开场或抒情段落。唱腔婉转悠扬，如泣如诉，适合表现人物内心情感与景物描写。</div>
+    </div>
+    <div class="style-card reveal">
+      <div class="style-name">二板（中板）</div>
+      <div class="style-desc">节奏适中，叙事性强，是西河大鼓最常用的板式。唱腔平稳流畅，适合讲述故事情节、推进叙事发展。</div>
+    </div>
+    <div class="style-card reveal">
+      <div class="style-name">三板（快板）</div>
+      <div class="style-desc">节奏紧凑，情绪激昂，多用于高潮段落或战斗场景。唱腔高亢有力，鼓点密集，营造紧张激烈的氛围。</div>
+    </div>
+    <div class="style-card reveal">
+      <div class="style-name">散板</div>
+      <div class="style-desc">节奏自由，无固定节拍，多用于情感爆发或转折处。唱腔自由发挥，演员根据情感需要灵活处理，极具表现力。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：经典书目 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/drum-banner-03.webp" alt="经典书目" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>书中乾坤大 · 曲里日月长</h3>
+    <p>忠良演义 · 清官断案 · 英雄传奇 · 民间故事</p>
+  </div>
+</div>
+
+<!-- 经典书目 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">REPERTOIRE</div>
+    <h2 class="section-title">经典书目</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="books-grid">
+    <div class="book-card reveal">
+      <span class="book-icon">📖</span>
+      <h5>《杨家将》</h5>
+      <p>讲述杨家世代忠良、保家卫国的英雄故事，是西河大鼓最经典的长篇书目之一。</p>
+    </div>
+    <div class="book-card reveal">
+      <span class="book-icon">📖</span>
+      <h5>《呼家将》</h5>
+      <p>以呼延赞家族为主角，展现北宋年间的忠奸斗争与英雄传奇。</p>
+    </div>
+    <div class="book-card reveal">
+      <span class="book-icon">📖</span>
+      <h5>《包公案》</h5>
+      <p>讲述包拯断案如神的故事，情节曲折，深受百姓喜爱。</p>
+    </div>
+    <div class="book-card reveal">
+      <span class="book-icon">📖</span>
+      <h5>《薛刚反唐》</h5>
+      <p>以唐代历史为背景，讲述薛刚反抗武后、恢复李唐的英雄事迹。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：名家荟萃 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/drum-banner-04.webp" alt="舞台瞬间" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>一代宗师 · 各领风骚</h3>
+    <p>马派创始人 · 赵派代表 · 当代名家 · 电视先驱</p>
+  </div>
+</div>
+
+<!-- 名家荟萃 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">FAMOUS MASTERS</div>
+    <h2 class="section-title">名家荟萃</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="famous-cards">
+    <div class="famous-card reveal">
+      <div class="famous-portrait"><img src="vibe_images/drum-famous-01.webp" alt="马增芬" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="famous-info">
+        <div class="famous-era">马派 · 创始人</div>
+        <h5>马增芬</h5>
+        <div class="famous-specialty">擅长婉转细腻的"马派"唱腔，以抒情见长，声线柔美，被誉为"西河大鼓皇后"。</div>
+        <div class="famous-quote">"唱书如作画，一笔一墨皆需用心。"</div>
+      </div>
+    </div>
+    <div class="famous-card reveal">
+      <div class="famous-portrait"><img src="vibe_images/drum-famous-02.webp" alt="赵玉峰" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="famous-info">
+        <div class="famous-era">赵派 · 代表</div>
+        <h5>赵玉峰</h5>
+        <div class="famous-specialty">创立豪放刚健的"赵派"风格，以气势磅礴著称，尤擅演武戏，鼓点铿锵有力。</div>
+        <div class="famous-quote">"大鼓之道，在于一气呵成，声震四方。"</div>
+      </div>
+    </div>
+    <div class="famous-card reveal">
+      <div class="famous-portrait"><img src="vibe_images/drum-famous-03.webp" alt="刘兰芳" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="famous-info">
+        <div class="famous-era">当代 · 名家</div>
+        <h5>刘兰芳</h5>
+        <div class="famous-specialty">当代西河大鼓代表性人物，以播讲《岳飞传》闻名全国，声音洪亮，表演生动，深受亿万听众喜爱。</div>
+        <div class="famous-quote">"说书是说心，打动人心方为上品。"</div>
+      </div>
+    </div>
+    <div class="famous-card reveal">
+      <div class="famous-portrait"><img src="vibe_images/drum-famous-04.webp" alt="田连元" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="famous-info">
+        <div class="famous-era">电视书场 · 先驱</div>
+        <h5>田连元</h5>
+        <div class="famous-specialty">开创电视书场先河，将西河大鼓搬上荧屏，以幽默风趣的风格和现代化的表达方式，让传统曲艺走进千家万户。</div>
+        <div class="famous-quote">"让大鼓上电视，让曲艺进万家。"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：书场风云 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/drum-banner-05.webp" alt="书场对比" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>书场百年 · 风云变幻</h3>
+    <p>茶馆书场 · 乡村书棚 · 现代剧场 · 数字传播</p>
+  </div>
+</div>
+
+<!-- 民间曲艺文化 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">FOLK CULTURE</div>
+    <h2 class="section-title">民间曲艺文化</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid reverse">
+    <div class="detail-text reveal">
+      <h3>书场里的文化传承</h3>
+      <p>西河大鼓不仅是曲艺表演，更是民间文化传播的重要载体。在电视、网络尚未普及的年代，书场是百姓获取历史知识、道德教化的主要渠道。</p>
+      <p>西河大鼓的艺人多为半农半艺，农忙时务农，农闲时走乡串村说书。他们口传心授，将一部部历史演义、英雄传奇代代相传，成为民间文化的活态传承者。</p>
+      <p>在当代，西河大鼓面临受众老龄化、传承人流失等挑战。通过录制音视频资料、建立曲谱数据库、开展校园曲艺课程、利用新媒体平台传播等方式，西河大鼓正在探索新的传承路径。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/drum-culture-01.webp" alt="现代演出" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 书场文化 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">VENUE CULTURE</div>
+    <h2 class="section-title">书场文化</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-text reveal" style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+    <p>书场是西河大鼓赖以生存的空间载体。从清末的茶馆书场到民国的乡村书棚，再到当代的现代化剧场，书场的形态不断演变，但"听书"这一文化体验的核心始终未变——一壶茶、一段书、一群痴迷的听众。</p>
+  </div>
+  <div class="venue-grid">
+    <div class="venue-card reveal">
+      <div class="venue-img"><img src="vibe_images/drum-venue-01.webp" alt="茶馆书场" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="venue-body">
+        <h4>茶馆书场</h4>
+        <p>清末至民国时期，茶馆是最主要的书场形式。茶客们围坐八仙桌旁，品茗听书。艺人在堂中设一小台，鼓板一响，满座皆静。茶馆书场氛围亲切，听众与艺人距离极近，互动频繁。</p>
+      </div>
+    </div>
+    <div class="venue-card reveal">
+      <div class="venue-img"><img src="vibe_images/drum-venue-02.webp" alt="乡村书棚" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="venue-body">
+        <h4>乡村书棚</h4>
+        <p>在冀中农村，每逢农闲时节或庙会庆典，村里便搭起临时书棚。露天场地、简易舞台，却聚集了十里八乡的听书爱好者。书棚下的西河大鼓，带着泥土的芬芳和乡音的亲切。</p>
+      </div>
+    </div>
+    <div class="venue-card reveal">
+      <div class="venue-img"><img src="vibe_images/drum-venue-03.webp" alt="现代剧场" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="venue-body">
+        <h4>现代剧场</h4>
+        <p>当代西河大鼓演出已步入专业剧场、文化馆等现代化场所。专业的灯光音响设备、舒适的观众座椅，让传统曲艺焕发出新的舞台魅力。曲艺专场演出成为城市文化生活的组成部分。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：唱腔赏析 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/drum-banner-06.webp" alt="波形可视化" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>声腔入画 · 余音绕梁</h3>
+    <p>以声绘形 · 以情动人 · 经典唱段 · 声腔可视化</p>
+  </div>
+</div>
+
+<!-- 唱腔赏析 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">VOCAL APPRECIATION</div>
+    <h2 class="section-title">唱腔赏析</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-text reveal" style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+    <p>西河大鼓的唱腔丰富多变，不同板式、不同流派各有其独特的声腔特征。通过音频波形可视化技术，我们可以将经典唱段的音乐之美转化为直观的视觉体验，感受声腔的起伏跌宕与情感张力。</p>
+  </div>
+  <div class="reveal" style="margin-bottom: 32px;">
+    <img src="vibe_images/drum-app-wave-01.webp" alt="经典唱段波形" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+  <div class="appreciation-grid">
+    <div class="appreciation-card reveal">
+      <div class="app-img"><img src="vibe_images/drum-app-01.webp" alt="杨家将选段" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+      <div class="app-body">
+        <h4>《杨家将 · 金沙滩》选段</h4>
+        <div class="app-style">三板 · 快板</div>
+        <p>此段为武戏高潮，鼓点密集如战鼓催征，唱腔高亢激昂，三板快板的节奏将金沙滩之战的紧张气氛渲染到极致。波形呈现出密集而有力的脉冲特征。</p>
+      </div>
+    </div>
+    <div class="appreciation-card reveal">
+      <div class="app-img"><img src="vibe_images/drum-app-02.webp" alt="包公案选段" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+      <div class="app-body">
+        <h4>《包公案 · 铡美案》选段</h4>
+        <div class="app-style">二板 · 中板</div>
+        <p>包公怒铡陈世美的经典段落，二板叙事平稳推进，在关键转折处突然转入三板，声腔由沉稳转为激昂。波形呈现出由缓至急的戏剧性变化。</p>
+      </div>
+    </div>
+    <div class="appreciation-card reveal">
+      <div class="app-img"><img src="vibe_images/drum-app-03.webp" alt="呼家将选段" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+      <div class="app-body">
+        <h4>《呼家将 · 呼延灼》选段</h4>
+        <div class="app-style">头板 · 慢板</div>
+        <p>呼延灼蒙难一段，头板慢唱如泣如诉，旋律婉转低回，将英雄落难的悲愤与无奈表现得淋漓尽致。波形呈现出悠长而起伏的弧线特征。</p>
+      </div>
+    </div>
+    <div class="appreciation-card reveal">
+      <div class="app-img"><img src="vibe_images/drum-app-04.webp" alt="薛刚反唐选段" style="width:100%;height:180px;object-fit:cover;display:block;"></div>
+      <div class="app-body">
+        <h4>《薛刚反唐 · 祭坟》选段</h4>
+        <div class="app-style">散板 · 自由板</div>
+        <p>薛刚祭坟的情感爆发段落，散板自由发挥，唱腔忽高忽低、忽快忽慢，将悲愤交加的情感推向高潮。波形呈现出自由而不规则的剧烈波动。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：鼓书争鸣 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/drum-banner-07.webp" alt="三大鼓书同台" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>鼓书争鸣 · 各擅胜场</h3>
+    <p>西河大鼓 · 京东大鼓 · 乐亭大鼓 · 山东大鼓</p>
+  </div>
+</div>
+
+<!-- 西河大鼓与其他鼓书对比 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">COMPARISON</div>
+    <h2 class="section-title">西河大鼓与其他鼓书对比</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-text reveal" style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+    <p>中国鼓书艺术源远流长，不同地域的鼓书各有特色。西河大鼓作为河北三大鼓书之一，与京东大鼓、乐亭大鼓、山东大鼓等姊妹艺术既有共通之处，又各具鲜明的地方特色。了解它们之间的异同，有助于更深入地认识西河大鼓的独特价值。</p>
+  </div>
+  <div class="comparison-grid">
+    <div class="comparison-card reveal">
+      <div class="comp-img"><img src="vibe_images/drum-comp-01.webp" alt="京东大鼓" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="comp-body">
+        <h4>vs 京东大鼓</h4>
+        <div class="comp-origin">发源于北京东部</div>
+        <p>京东大鼓流行于京津一带，唱腔较为通俗明快，语言以京味方言为主，带有浓厚的北京韵味。与西河大鼓相比，京东大鼓更偏重说功，唱段中"说"的比例更大，表演风格更加生活化。</p>
+      </div>
+    </div>
+    <div class="comparison-card reveal">
+      <div class="comp-img"><img src="vibe_images/drum-comp-02.webp" alt="乐亭大鼓" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="comp-body">
+        <h4>vs 乐亭大鼓</h4>
+        <div class="comp-origin">发源于河北乐亭</div>
+        <p>乐亭大鼓以唱功见长，旋律优美动听，有"北方最优美的鼓书"之称。与西河大鼓相比，乐亭大鼓的唱腔更加婉转细腻，音乐性更强，但叙事性稍弱。两者在伴奏乐器上也有差异。</p>
+      </div>
+    </div>
+    <div class="comparison-card reveal">
+      <div class="comp-img"><img src="vibe_images/drum-comp-03.webp" alt="山东大鼓" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="comp-body">
+        <h4>vs 山东大鼓</h4>
+        <div class="comp-origin">发源于山东鲁西北</div>
+        <p>山东大鼓（又称梨花大鼓）历史悠久，是北方鼓书的源头之一。与西河大鼓相比，山东大鼓保留了更多古老的说唱特征，唱腔质朴粗犷，带有浓郁的齐鲁地方风味，伴奏以铁板击节为特色。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：当代传承 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/drum-banner-08.webp" alt="当代传承" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>古韵新声 · 薪火永续</h3>
+    <p>录音存档 · 校园授课 · 新媒体传播 · 跨界创新</p>
+  </div>
+</div>
+
+<!-- 当代传承 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MODERN INHERITANCE</div>
+    <h2 class="section-title">当代传承</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="modern-grid">
+    <div class="detail-text reveal">
+      <h3>传统曲艺的当代活化</h3>
+      <p>面对新媒体时代的冲击，西河大鼓正在积极探索多元化的传承路径。一方面通过专业录音录像对老艺人的经典唱段进行抢救性记录，建立数字化的曲艺档案库；另一方面通过曲艺进校园活动，培养年轻一代的听众和传承人。</p>
+      <p>短视频平台和直播为西河大鼓打开了全新的传播渠道。越来越多的曲艺演员开始在抖音、快手等平台发布演出片段，一些精彩唱段获得了数百万次的播放量。新媒体传播让这一传统艺术形式突破了地域限制，触及更广泛的受众群体。</p>
+      <p>在保持传统艺术精髓的前提下，西河大鼓也在尝试与现代元素融合，创作反映当代生活的新书目，探索曲艺与现代音乐、戏剧等艺术形式的跨界合作，为这一古老艺术注入新的时代活力。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/drum-modern-01.webp" alt="进校园" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+  <div class="reveal" style="margin-top: 32px;">
+    <img src="vibe_images/drum-modern-02.webp" alt="新媒体传播" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+  <div class="modern-cards">
+    <div class="modern-card reveal">
+      <span class="modern-icon">🎙️</span>
+      <h5>抢救性录音录像</h5>
+      <p>对在世老艺人的经典唱段进行专业录音录像，建立完整的音视频数字档案。同时收集整理散落在民间的手抄本、工尺谱等珍贵资料，进行数字化保存。</p>
+    </div>
+    <div class="modern-card reveal">
+      <span class="modern-icon">🏫</span>
+      <h5>曲艺校园传承</h5>
+      <p>与中小学及高校合作开设曲艺传承课程，邀请非遗名家授课。通过"曲艺进校园"活动，让学生近距离感受西河大鼓的魅力，培养年轻受众群体。</p>
+    </div>
+    <div class="modern-card reveal">
+      <span class="modern-icon">📱</span>
+      <h5>新媒体传播推广</h5>
+      <p>利用短视频、直播等新媒体平台传播西河大鼓，打造"网红"曲艺演员。通过线上互动、话题挑战等方式吸引年轻受众关注，让传统曲艺在互联网时代焕发新生。</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<div class="digital-human">
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header"><span class="dh-panel-title">AI 数字人助手</span><button class="dh-panel-close" onclick="toggleDH()">✕</button></div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">非遗匠人：</span>欢迎了解西河大鼓！这是国家级非遗曲艺项目，一鼓一板说古今，三弦伴奏唱千秋。想了解哪方面？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍🎨</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

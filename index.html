@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="数绘雄州·智承非遗 — 以 AIGC 人工智能赋能雄安非物质文化遗产数字化保护与创新传承的综合数字文化平台。">
+<title>数绘雄州 · 智承非遗</title>
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23f5efe4'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%232c2a27' font-weight='bold'>雄</text></svg>">
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #B5413E, #D4A24E, #B5413E);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+}
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-bg-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6) contrast(1.1);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, rgba(181,65,62,0.08) 0%, transparent 60%),
+              linear-gradient(180deg, rgba(253,248,240,0.15) 0%, rgba(253,248,240,0.5) 100%);
+  z-index: 1;
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+.hero-subtitle {
+  font-size: 15px;
+  letter-spacing: 10px;
+  color: rgba(51,51,51,0.12);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.5s forwards;
+}
+.hero-title {
+  font-size: 76px;
+  font-weight: 900;
+  letter-spacing: 14px;
+  background: linear-gradient(135deg, #8C2B28, #B5413E, #CC524F, #B5413E, #8C2B28);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeUp 1s ease 0.8s forwards, goldShimmer 4s ease infinite;
+  opacity: 0;
+  filter: drop-shadow(0 0 40px rgba(181,65,62,0.25));
+}
+@keyframes goldShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.hero-desc {
+  margin-top: 28px;
+  font-size: 19px;
+  color: rgba(184,168,138,0.6);
+  letter-spacing: 5px;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.2s forwards;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  animation: fadeUp 1s ease 2s forwards;
+  z-index: 3;
+}
+.hero-scroll span { font-size: 12px; letter-spacing: 4px; color: rgba(181,65,62,0.35); }
+.scroll-line { width: 1px; height: 48px; background: linear-gradient(180deg, var(--gold-primary), transparent); animation: scrollPulse 2s ease infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(.6)} 50%{opacity:1;transform:scaleY(1)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+/* ===== 项目概述 ===== */
+.overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.overview-text h3 { font-size: 30px; color: var(--gold-primary); margin-bottom: 24px; letter-spacing: 3px; }
+.overview-text p { font-size: 16px; line-height: 2.2; color: var(--text-secondary); margin-bottom: 18px; }
+.overview-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.overview-icon-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 14px;
+  padding: 32px 20px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+.overview-icon-card:hover {
+  border-color: var(--border-gold-hover);
+  box-shadow: 0 0 24px rgba(181,65,62,0.08);
+  transform: translateY(-4px);
+}
+.overview-icon-card .icon { font-size: 36px; margin-bottom: 14px; display: block; }
+.overview-icon-card .label { font-size: 14px; color: var(--text-dim); letter-spacing: 2px; }
+
+/* ===== 全景横幅 ===== */
+.full-banner { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-gold); }
+.full-banner-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 40px; background: linear-gradient(0deg, rgba(253,248,240,0.6) 0%, transparent 100%); }
+.full-banner-overlay h3 { font-size: 24px; color: var(--gold-primary); letter-spacing: 3px; margin-bottom: 8px; }
+.full-banner-overlay p { font-size: 14px; color: var(--text-secondary); letter-spacing: 2px; }
+
+/* ===== 数据统计 ===== */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.stat-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  padding: 44px 32px;
+  text-align: center;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.stat-card:hover::after { opacity: 1; }
+.stat-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 48px rgba(181,65,62,0.08);
+}
+.stat-number {
+  font-size: 60px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold-primary), var(--gold-bright));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.stat-unit { font-size: 16px; color: rgba(51,51,51,0.12); margin-bottom: 14px; }
+.stat-label { font-size: 14px; color: var(--text-dim); letter-spacing: 2px; }
+
+/* ===== 文化影响 ===== */
+.impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.impact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+}
+.impact-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08);
+}
+.impact-card .card-img {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.impact-card .card-img::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(to bottom, rgba(181,65,62,0) 0%, rgba(181,65,62,0.08) 100%);
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+}
+.impact-card:hover .card-img::after { opacity: 1; }
+.impact-card .card-body {
+  padding: 28px;
+  transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.impact-card:hover .card-body { transform: translateY(-4px); }
+.impact-card .card-body h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 12px; letter-spacing: 2px; transition: color 0.5s ease; }
+.impact-card .card-body p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; transition: opacity 0.5s ease 0.1s; }
+.impact-card:hover .card-body h4 { color: var(--gold-bright); }
+
+/* ===== 技术架构 ===== */
+.tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.tech-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  text-align: center;
+  position: relative;
+}
+.tech-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08);
+}
+.tech-card .card-img {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.tech-card .card-img::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(to bottom, rgba(212,162,78,0) 0%, rgba(212,162,78,0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+}
+.tech-card:hover .card-img::after { opacity: 1; }
+.tech-card .card-body {
+  padding: 24px 20px;
+  transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.tech-card:hover .card-body { transform: translateY(-4px); }
+.tech-card .card-body .tech-icon { font-size: 32px; margin-bottom: 10px; display: block; transition: transform 0.5s ease; }
+.tech-card:hover .card-body .tech-icon { transform: scale(1.15); }
+.tech-card .card-body h4 { font-size: 17px; color: var(--gold-primary); margin-bottom: 6px; letter-spacing: 2px; transition: color 0.5s ease; }
+.tech-card .card-body .tech-en { font-size: 11px; color: rgba(51,51,51,0.1); letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase; }
+.tech-card .card-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; transition: opacity 0.5s ease 0.1s; }
+.tech-card:hover .card-body h4 { color: var(--gold-bright); }
+
+
+/* ===== 快速入口 ===== */
+.entry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.entry-btn {
+  position: relative;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  padding: 44px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+}
+.entry-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(181,65,62,0.06), transparent);
+  transition: left 0.6s ease;
+}
+.entry-btn:hover::before { left: 150%; }
+.entry-btn:hover {
+  border-color: var(--border-gold-hover);
+  box-shadow: 0 0 36px rgba(181,65,62,0.08), 0 0 72px rgba(181,65,62,0.04);
+  transform: translateY(-6px);
+}
+.entry-icon { font-size: 42px; margin-bottom: 18px; display: block; }
+.entry-title { font-size: 20px; font-weight: 700; color: var(--gold-primary); letter-spacing: 3px; margin-bottom: 10px; }
+.entry-desc { font-size: 13px; color: var(--text-dim); letter-spacing: 1px; }
+
+/* ===== 项目亮点 ===== */
+.highlights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.highlight-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+}
+.highlight-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08);
+}
+.highlight-card .card-img {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.highlight-card .card-img::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(to bottom, rgba(181,65,62,0) 0%, rgba(181,65,62,0.08) 100%);
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+}
+.highlight-card:hover .card-img::after { opacity: 1; }
+.highlight-card .card-body {
+  padding: 28px;
+  transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.highlight-card:hover .card-body { transform: translateY(-4px); }
+.highlight-card .card-body h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 12px; letter-spacing: 2px; transition: color 0.5s ease; }
+.highlight-card .card-body p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; transition: opacity 0.5s ease 0.1s; }
+.highlight-card:hover .card-body h4 { color: var(--gold-bright); }
+
+/* ===== 搜索 ===== */
+.nav-search-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--text-secondary); padding: 8px 12px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; transition: all 0.3s ease;
+}
+.nav-search-btn:hover { color: var(--gold-primary); background: rgba(181,65,62,0.06); }
+.search-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(30,20,15,0.6); backdrop-filter: blur(8px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 120px; opacity: 0; visibility: hidden;
+  transition: all 0.35s ease;
+}
+.search-overlay.show { opacity: 1; visibility: visible; }
+.search-modal {
+  background: var(--bg-card); border-radius: 16px;
+  width: 90%; max-width: 640px; max-height: 70vh;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+  border: 1px solid var(--border-gold);
+  overflow: hidden; display: flex; flex-direction: column;
+  transform: translateY(-20px); transition: transform 0.35s ease;
+}
+.search-overlay.show .search-modal { transform: translateY(0); }
+.search-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 24px; border-bottom: 1px solid var(--border-gold);
+}
+.search-header svg { color: var(--gold-primary); flex-shrink: 0; }
+.search-input {
+  flex: 1; border: none; outline: none; background: none;
+  font-size: 16px; color: var(--text-primary); letter-spacing: 1px;
+}
+.search-input::placeholder { color: var(--text-dim); }
+.search-close {
+  background: none; border: none; cursor: pointer;
+  font-size: 24px; color: var(--text-dim); padding: 4px 8px;
+  border-radius: 6px; transition: all 0.3s ease;
+}
+.search-close:hover { color: var(--gold-primary); background: rgba(181,65,62,0.06); }
+.search-results {
+  overflow-y: auto; padding: 16px 24px; max-height: 50vh;
+}
+.search-hint { text-align: center; color: var(--text-dim); padding: 32px 0; font-size: 14px; letter-spacing: 2px; }
+.search-result-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 16px; border-radius: 10px;
+  cursor: pointer; transition: all 0.3s ease;
+  text-decoration: none; color: inherit;
+  border: 1px solid transparent; margin-bottom: 8px;
+}
+.search-result-item:hover {
+  background: rgba(181,65,62,0.04); border-color: var(--border-gold);
+}
+.search-result-icon { font-size: 28px; flex-shrink: 0; }
+.search-result-info h5 { font-size: 15px; color: var(--gold-primary); margin-bottom: 4px; letter-spacing: 1px; }
+.search-result-info p { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+.search-result-tag {
+  font-size: 10px; padding: 2px 8px; border-radius: 8px;
+  background: rgba(181,65,62,0.08); color: var(--gold-primary);
+  letter-spacing: 1px; flex-shrink: 0;
+}
+.search-no-result { text-align: center; color: var(--text-dim); padding: 32px 0; font-size: 14px; }
+
+/* ===== 移动端适配 ===== */
+@media (max-width: 1024px) {
+  .hero-title { font-size: 56px; letter-spacing: 10px; }
+  .hero-subtitle { font-size: 13px; letter-spacing: 6px; }
+  .hero-desc { font-size: 16px; letter-spacing: 3px; }
+  .overview-grid { grid-template-columns: 1fr; gap: 32px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .tech-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .impact-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .highlights-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .entry-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .stat-number { font-size: 48px; }
+  .section-title { font-size: 32px; }
+}
+
+@media (max-width: 768px) {
+  .hero { height: 85vh; }
+  .hero-title { font-size: 42px; letter-spacing: 8px; }
+  .hero-subtitle { font-size: 12px; letter-spacing: 4px; margin-bottom: 16px; }
+  .hero-desc { font-size: 14px; letter-spacing: 2px; margin-top: 20px; }
+  .hero-scroll { bottom: 24px; }
+  .hero-scroll span { font-size: 11px; }
+  .scroll-line { height: 36px; }
+
+  .section { padding: 60px 20px; }
+  .section-title { font-size: 28px; letter-spacing: 4px; }
+  .section-tag { font-size: 11px; letter-spacing: 3px; }
+  .section-header { margin-bottom: 40px; }
+
+  .overview-grid { gap: 24px; }
+  .overview-text h3 { font-size: 22px; }
+  .overview-text p { font-size: 14px; line-height: 2; }
+  .overview-visual { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .overview-icon-card { padding: 20px 14px; }
+  .overview-icon-card .icon { font-size: 28px; margin-bottom: 10px; }
+  .overview-icon-card .label { font-size: 12px; }
+
+  .full-banner { border-radius: 12px; }
+  .full-banner img { height: 200px !important; }
+  .full-banner-overlay { padding: 20px 24px; }
+  .full-banner-overlay h3 { font-size: 18px; }
+  .full-banner-overlay p { font-size: 12px; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .stat-card { padding: 28px 16px; border-radius: 12px; }
+  .stat-number { font-size: 40px; }
+  .stat-unit { font-size: 13px; }
+  .stat-label { font-size: 12px; letter-spacing: 1px; }
+
+  .tech-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .tech-card .card-body { padding: 16px 14px; }
+  .tech-card .card-body .tech-icon { font-size: 26px; margin-bottom: 8px; }
+  .tech-card .card-body h4 { font-size: 15px; margin-bottom: 4px; }
+  .tech-card .card-body .tech-en { font-size: 10px; margin-bottom: 8px; }
+  .tech-card .card-body p { font-size: 12px; line-height: 1.7; }
+
+  .impact-grid { grid-template-columns: 1fr; gap: 20px; }
+  .impact-card .card-body { padding: 20px; }
+  .impact-card .card-body h4 { font-size: 16px; }
+  .impact-card .card-body p { font-size: 13px; }
+
+  .highlights-grid { grid-template-columns: 1fr; gap: 20px; }
+  .highlight-card .card-body { padding: 20px; }
+  .highlight-card .card-body h4 { font-size: 16px; }
+  .highlight-card .card-body p { font-size: 13px; }
+
+  .entry-grid { grid-template-columns: 1fr; gap: 16px; }
+  .entry-btn { padding: 28px 20px; }
+  .entry-icon { font-size: 32px; margin-bottom: 12px; }
+  .entry-title { font-size: 17px; margin-bottom: 8px; }
+  .entry-desc { font-size: 12px; }
+
+  .search-modal { width: 95%; max-height: 80vh; }
+  .search-header { padding: 14px 18px; }
+  .search-input { font-size: 15px; }
+  .search-results { padding: 12px 18px; }
+  .search-result-item { padding: 12px 14px; gap: 12px; }
+  .search-result-icon { font-size: 24px; }
+  .search-result-info h5 { font-size: 14px; }
+  .search-result-info p { font-size: 11px; }
+
+  .demo-modal-content { padding: 24px 18px; }
+  .demo-modal-title { font-size: 22px; }
+  .demo-modal-desc { font-size: 13px; }
+  .demo-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .demo-cell { padding: 16px 12px; }
+  .demo-emoji { font-size: 28px; }
+  .demo-label { font-size: 13px; }
+  .demo-sub { font-size: 11px; }
+
+  .dh-panel { width: 300px; right: 10px; bottom: 70px; max-height: 70vh; }
+  .dh-avatar { width: 48px; height: 48px; font-size: 24px; }
+  .dh-chat-msg { font-size: 13px; }
+  .dh-input { font-size: 14px; }
+
+  .sf-inner { padding: 30px 20px 20px; }
+  .sf-meta { padding: 16px 20px 20px; }
+  .sf-meta p { font-size: 12px; line-height: 1.8; }
+  .sf-note { font-size: 11px !important; }
+  .sf-browser { font-size: 11px !important; }
+  .sf-navlinks { font-size: 12px; }
+  .sf-skyline { height: 50px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 32px; letter-spacing: 6px; }
+  .hero-subtitle { font-size: 11px; letter-spacing: 3px; }
+  .hero-desc { font-size: 13px; letter-spacing: 1px; }
+
+  .section { padding: 48px 16px; }
+  .section-title { font-size: 24px; letter-spacing: 3px; }
+
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card { padding: 20px 12px; }
+  .stat-number { font-size: 32px; }
+  .stat-unit { font-size: 12px; }
+  .stat-label { font-size: 11px; }
+
+  .tech-grid { grid-template-columns: 1fr; gap: 14px; }
+  .overview-visual { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .demo-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .demo-cell { padding: 14px 10px; }
+
+  .dh-panel { width: 280px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+<canvas id="particleCanvas"></canvas>
+
+<!-- 导航栏 -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">雄</div>
+      <span class="nav-logo-text">数绘雄州</span>
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link active">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item">
+        <a href="heritage.html" class="nav-link">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- Hero 开场 -->
+<section class="hero">
+  <div class="hero-bg-img">
+    <img src="vibe_images/hero-xiongan-panorama.webp" alt="雄安城市全景航拍">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-subtitle">AIGC · 雄安文脉 · 数字可视化</div>
+    <h1 class="hero-title">数绘雄州 · 智承非遗</h1>
+    <p class="hero-desc">以人工智能之力，续写千年雄安文化篇章</p>
+  </div>
+  <div class="hero-scroll">
+    <span>向下探索</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- 项目概述 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">PROJECT OVERVIEW</div>
+    <h2 class="section-title">项目概述</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="overview-grid">
+    <div class="overview-text reveal">
+      <h3>AIGC + 雄安文脉 + 数字可视化</h3>
+      <p>本项目以雄安新区非物质文化遗产为核心，融合 AIGC 人工智能生成内容技术，构建数字化非遗保护与创新平台。</p>
+      <p>通过 AI 纹样重构、数字生城市可视化、交互式时间轴等前沿技术手段，让千年雄安文化在数字时代焕发新生。</p>
+      <p>项目涵盖六大非遗项目的深度数字化呈现，打造集文化展示、学术研究、创意创作于一体的综合性数字文化平台。</p>
+    </div>
+    <div class="overview-visual reveal">
+      <div class="overview-icon-card">
+        <span class="icon">🤖</span>
+        <span class="label">AIGC 生成</span>
+      </div>
+      <div class="overview-icon-card">
+        <span class="icon">🏛️</span>
+        <span class="label">非遗数字化</span>
+      </div>
+      <div class="overview-icon-card">
+        <span class="icon">🌐</span>
+        <span class="label">数字孪生</span>
+      </div>
+      <div class="overview-icon-card">
+        <span class="icon">🎨</span>
+        <span class="label">纹样重构</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 全景横幅 -->
+<section class="section">
+  <div class="full-banner reveal">
+    <img src="vibe_images/xiongan-heritage-scroll.webp" alt="雄安非遗全景长卷" style="width:100%;height:340px;object-fit:cover;display:block;">
+    <div class="full-banner-overlay">
+      <h3>千年文脉 · 数字新生</h3>
+      <p>以 AIGC 技术赋能雄安非物质文化遗产的数字化保护与创新传承</p>
+    </div>
+  </div>
+</section>
+
+<!-- 项目亮点 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">HIGHLIGHTS</div>
+    <h2 class="section-title">项目亮点</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="highlights-grid">
+    <div class="highlight-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/highlight-ai-pattern.webp" alt="AI 纹样数字化重构">
+      </div>
+      <div class="card-body">
+        <h4>AI 纹样数字化重构</h4>
+        <p>运用计算机视觉技术，对传统非遗纹样进行采集、灰度处理、像素拆解、矢量化提取与 AI 重构，实现传统纹样的数字化新生。</p>
+      </div>
+    </div>
+    <div class="highlight-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/highlight-digital-twin.webp" alt="数字孪生智慧城市">
+      </div>
+      <div class="card-body">
+        <h4>数字孪生智慧城市</h4>
+        <p>构建雄安新区数字孪生可视化大屏，实时展示千年秀林绿化、白洋淀生态水质、新区产业人才等核心数据指标。</p>
+      </div>
+    </div>
+    <div class="highlight-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/highlight-six-heritage.webp" alt="六大非遗深度呈现">
+      </div>
+      <div class="card-body">
+        <h4>六大非遗深度呈现</h4>
+        <p>涵盖国家级非遗鹰爪翻子拳、西河大鼓，省级非遗白洋淀芦苇画、雄州黑陶、双堂盒子灯、圈头村古乐，每项独立专题页面。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 技术架构 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">TECHNOLOGY</div>
+    <h2 class="section-title">技术架构</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/tech-computer-vision.webp" alt="计算机视觉纹样识别与提取">
+      </div>
+      <div class="card-body">
+        <span class="tech-icon">👁️</span>
+        <h4>计算机视觉</h4>
+        <div class="tech-en">Computer Vision</div>
+        <p>运用深度学习与图像处理技术，对非遗纹样进行自动识别、分类与特征提取，实现传统纹样的精准数字化采集。</p>
+      </div>
+    </div>
+    <div class="tech-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/tech-ai-generation.webp" alt="AI 生成非遗纹样过程">
+      </div>
+      <div class="card-body">
+        <span class="tech-icon">🎨</span>
+        <h4>AI 生成</h4>
+        <div class="tech-en">Stable Diffusion</div>
+        <p>基于扩散模型对传统纹样进行风格迁移与创新生成，在保留传统美学特征的同时创造全新的数字化纹样作品。</p>
+      </div>
+    </div>
+    <div class="tech-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/tech-webgl-city.webp" alt="WebGL 三维城市模型渲染">
+      </div>
+      <div class="card-body">
+        <span class="tech-icon">🌐</span>
+        <h4>数字孪生</h4>
+        <div class="tech-en">WebGL Digital Twin</div>
+        <p>基于 WebGL 技术构建雄安新区三维数字孪生模型，实现城市数据与空间信息的实时可视化呈现。</p>
+      </div>
+    </div>
+    <div class="tech-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/tech-multimodal.webp" alt="AIGC 多模态处理">
+      </div>
+      <div class="card-body">
+        <span class="tech-icon">🤖</span>
+        <h4>多模态处理</h4>
+        <div class="tech-en">AIGC Multimodal</div>
+        <p>整合图像、音频、视频、文本等多模态数据，运用 AIGC 技术实现非遗内容的全方位数字化呈现与智能生成。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 数据统计 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">CULTURAL DATA</div>
+    <h2 class="section-title">雄安文化数据总览</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="2">0</div>
+      <div class="stat-unit">项</div>
+      <div class="stat-label">国家级非遗</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="4">0</div>
+      <div class="stat-unit">项</div>
+      <div class="stat-label">省级非遗</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="1000">0</div>
+      <div class="stat-unit">余年</div>
+      <div class="stat-label">文脉传承</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-number" data-target="7">0</div>
+      <div class="stat-unit">周年</div>
+      <div class="stat-label">新区建设</div>
+    </div>
+  </div>
+</section>
+
+<!-- 文化影响 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">CULTURAL IMPACT</div>
+    <h2 class="section-title">文化影响力</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="impact-grid">
+    <div class="impact-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/impact-media.webp" alt="媒体报道与社会关注">
+      </div>
+      <div class="card-body">
+        <h4>媒体报道与社会关注</h4>
+        <p>项目获得人民日报、新华社、央视新闻等主流媒体广泛关注与报道，引发社会对雄安非遗数字化保护的高度关注，累计媒体报道超过50篇，全网阅读量突破千万。</p>
+      </div>
+    </div>
+    <div class="impact-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/impact-exhibition.webp" alt="专题展览与文化交流">
+      </div>
+      <div class="card-body">
+        <h4>专题展览与文化交流</h4>
+        <p>项目成果已在多个文化展览中展出，包括雄安数字城市体验馆、河北非遗博览会等，累计接待观众超过10万人次，成为雄安文化名片。</p>
+      </div>
+    </div>
+    <div class="impact-card reveal">
+      <div class="card-img">
+        <img class="card-img-real" src="vibe_images/impact-education.webp" alt="教育传承与学术研究">
+      </div>
+      <div class="card-body">
+        <h4>教育传承与学术研究</h4>
+        <p>平台已与中国传媒大学、河北大学等多所高校合作，作为非遗数字化教学案例与研究平台，推动非遗文化的学术研究与教育传承。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 底部纹样 -->
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<!-- 项目演示模态框 -->
+<div id="demoModal" class="demo-modal" onclick="if(event.target===this)this.classList.remove('show')">
+  <div class="demo-modal-content">
+    <button class="demo-modal-close" onclick="document.getElementById('demoModal').classList.remove('show')">✕</button>
+    <h2 class="demo-modal-title">项目演示总览</h2>
+    <p class="demo-modal-desc">12 个页面 · 六大模块 · 一图看懂全站架构</p>
+    <div class="demo-grid">
+      <div class="demo-cell"><div class="demo-emoji">🏛️</div><div class="demo-label">非遗博览</div><div class="demo-sub">6 项非遗独立专题</div></div>
+      <div class="demo-cell"><div class="demo-emoji">📜</div><div class="demo-label">时光回溯</div><div class="demo-sub">宋辽至现代千年变迁</div></div>
+      <div class="demo-cell"><div class="demo-emoji">🌐</div><div class="demo-label">数字孪生大屏</div><div class="demo-sub">实时数据可视化</div></div>
+      <div class="demo-cell"><div class="demo-emoji">🎨</div><div class="demo-label">AIGC 创作工坊</div><div class="demo-sub">AI 纹样生成</div></div>
+      <div class="demo-cell"><div class="demo-emoji">🧬</div><div class="demo-label">AI 纹样重构</div><div class="demo-sub">计算机视觉 + 扩散模型</div></div>
+      <div class="demo-cell"><div class="demo-emoji">🤖</div><div class="demo-label">数字人</div><div class="demo-sub">4 种身份智能问答</div></div>
+    </div>
+    <div class="demo-actions">
+      <a href="heritage.html" class="demo-btn demo-btn-gold">开始探索 →</a>
+    </div>
+  </div>
+</div>
+
+<!-- 数字人 -->
+<div class="digital-human">
+  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header">
+      <span class="dh-panel-title">AI 数字人助手</span>
+      <button class="dh-panel-close" onclick="toggleDH()">✕</button>
+    </div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">青年体验官：</span>你好！我是雄安数字体验官，可以为你介绍项目概况、网站功能和雄安文化。有什么想了解的？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

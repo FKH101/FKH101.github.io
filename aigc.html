@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AIGC 人工智能创作工坊，运用 Stable Diffusion 等技术赋能非遗纹样创新生成。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23f5efe4'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%232c2a27' font-weight='bold'>雄</text></svg>">
+<title>AIGC 创作工坊 — 数绘雄州 · 智承非遗</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+  background: linear-gradient(135deg, #FDF8F0 0%, #F5EDE0 50%, #FDF8F0 100%);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 40% 40%, rgba(181,65,62,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 60%, rgba(245,224,184,0.05) 0%, transparent 50%);
+  z-index: 0;
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+.hero-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 8px;
+  color: rgba(51,51,51,0.12);
+  border: 1px solid rgba(181,65,62,0.2);
+  padding: 8px 28px;
+  border-radius: 24px;
+  margin-bottom: 28px;
+}
+.hero-title {
+  font-size: 60px;
+  font-weight: 900;
+  letter-spacing: 10px;
+  background: linear-gradient(135deg, #8C2B28, #B5413E, #CC524F, #B5413E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(181,65,62,0.2));
+}
+.hero-desc {
+  margin-top: 20px;
+  font-size: 17px;
+  color: rgba(184,168,138,0.5);
+  letter-spacing: 4px;
+}
+
+/* ===== 素材总览 ===== */
+.material-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.material-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.material-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(51,51,51,0.1);
+}
+.material-card .card-img .img-placeholder {
+  min-height: 220px;
+  border: none;
+  border-radius: 0;
+}
+.material-card .card-body {
+  padding: 28px;
+}
+.material-card .card-body h4 {
+  font-size: 18px;
+  color: var(--gold-primary);
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+.material-card .card-body p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.material-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-top: 12px;
+  border: 1px solid rgba(181,65,62,0.2);
+  color: rgba(51,51,51,0.15);
+}
+
+/* ===== AI 生成作品展示 ===== */
+.artwork-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.artwork-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+}
+.artwork-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08);
+}
+.artwork-card .artwork-visual .img-placeholder {
+  min-height: 240px;
+  border: none;
+  border-radius: 0;
+}
+.artwork-card .artwork-info {
+  padding: 24px;
+}
+.artwork-card .artwork-info h4 {
+  font-size: 17px;
+  color: var(--gold-primary);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.artwork-card .artwork-info p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+.artwork-card .artwork-info .artwork-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.artwork-card .artwork-info .artwork-tags span {
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  border: 1px solid rgba(181,65,62,0.15);
+  color: rgba(51,51,51,0.12);
+  background: rgba(181,65,62,0.04);
+}
+
+/* ===== Prompt 展示 ===== */
+.prompt-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.prompt-display {
+  background: rgba(51,51,51,0.12);
+  border: 1px solid rgba(181,65,62,0.15);
+  border-radius: 14px;
+  padding: 32px;
+  font-family: "Courier New", monospace;
+  position: relative;
+}
+.prompt-display .prompt-label {
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: var(--bg-primary);
+  padding: 2px 14px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gold-primary);
+  border: 1px solid rgba(181,65,62,0.2);
+  border-radius: 10px;
+}
+.prompt-display .prompt-text {
+  font-size: 14px;
+  line-height: 2;
+  color: var(--text-secondary);
+}
+.prompt-display .prompt-text .keyword {
+  color: var(--gold-bright);
+  font-weight: 600;
+}
+.prompt-info h3 {
+  font-size: 26px;
+  color: var(--gold-primary);
+  margin-bottom: 18px;
+  letter-spacing: 3px;
+}
+.prompt-info p {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+.prompt-tips {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(181,65,62,0.04);
+  border: 1px solid rgba(181,65,62,0.1);
+  border-radius: 12px;
+}
+.prompt-tips h5 {
+  font-size: 14px;
+  color: var(--gold-primary);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.prompt-tips li {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 2;
+  list-style: none;
+  padding-left: 16px;
+  position: relative;
+}
+.prompt-tips li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--gold-primary);
+}
+
+/* ===== 三阶段创作 ===== */
+.stages-wrap {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+}
+.stage-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  padding: 36px 28px;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+  overflow: hidden;
+}
+.stage-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08);
+}
+.stage-number {
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(135deg, rgba(181,65,62,0.15), rgba(181,65,62,0.05));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.stage-card h4 {
+  font-size: 20px;
+  color: var(--gold-primary);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.stage-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 16px;
+}
+.stage-card .stage-img .img-placeholder {
+  min-height: 180px;
+}
+.stage-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  font-size: 28px;
+  color: rgba(51,51,51,0.08);
+}
+
+/* ===== 创作者说 ===== */
+.creator-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.creator-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+}
+.creator-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08);
+}
+.creator-card .creator-avatar .img-placeholder {
+  min-height: 200px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+.creator-card .creator-role {
+  font-size: 18px;
+  color: var(--gold-primary);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.creator-card .creator-title {
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.creator-card .creator-quote {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  font-style: italic;
+  position: relative;
+  padding: 16px 20px;
+  background: rgba(181,65,62,0.03);
+  border-radius: 10px;
+  border-left: 3px solid rgba(51,51,51,0.08);
+  text-align: left;
+}
+.creator-card .creator-quote::before {
+  content: '"';
+  font-size: 36px;
+  color: rgba(181,65,62,0.2);
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  font-style: normal;
+}
+
+/* ===== 应用场景矩阵 ===== */
+.app-matrix-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+.app-matrix-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.app-matrix-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(51,51,51,0.1);
+}
+.app-matrix-card .card-visual .img-placeholder {
+  min-height: 220px;
+  border: none;
+  border-radius: 0;
+}
+.app-matrix-card .card-body {
+  padding: 28px;
+}
+.app-matrix-card .card-body h4 {
+  font-size: 18px;
+  color: var(--gold-primary);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.app-matrix-card .card-body p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+.app-matrix-card .card-body .app-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.app-matrix-card .card-body .app-tags span {
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  border: 1px solid rgba(181,65,62,0.15);
+  color: rgba(51,51,51,0.12);
+  background: rgba(181,65,62,0.04);
+}
+
+/* ===== 技术演进时间线 ===== */
+.evolution-wrap {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+.evolution-step {
+  flex: 1;
+  min-width: 180px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 14px;
+  padding: 24px 18px;
+  text-align: center;
+  transition: all 0.4s ease;
+  position: relative;
+}
+.evolution-step:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-3px);
+}
+.evolution-step .evo-year {
+  font-size: 22px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold-primary), var(--gold-bright));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+.evolution-step h5 {
+  font-size: 14px;
+  color: var(--gold-primary);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.evolution-step p {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.evolution-step .img-placeholder {
+  min-height: 130px;
+  border-radius: 10px;
+}
+.evolution-arrow {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 20px;
+  color: rgba(181,65,62,0.25);
+  flex-shrink: 0;
+}
+
+/* ===== 全宽横幅 ===== */
+.full-banner {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(181,65,62,0.15);
+}
+.full-banner .img-placeholder {
+  min-height: 360px;
+  border: none;
+  border-radius: 20px;
+}
+.full-banner-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 36px 48px;
+  background: linear-gradient(0deg, rgba(253,248,240,0.65) 0%, transparent 100%);
+}
+.full-banner-overlay h3 {
+  font-size: 24px;
+  color: var(--gold-primary);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+.full-banner-overlay p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+
+/* ===== 技术总结 ===== */
+.tech-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.tech-summary-visual .img-placeholder {
+  min-height: 380px;
+  border-radius: 16px;
+}
+.tech-summary-text h3 {
+  font-size: 28px;
+  color: var(--gold-primary);
+  margin-bottom: 18px;
+  letter-spacing: 3px;
+}
+.tech-summary-text p {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+.tech-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.tech-item:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateX(4px);
+}
+.tech-item .item-icon { font-size: 24px; flex-shrink: 0; }
+.tech-item .item-text { font-size: 14px; color: var(--text-secondary); }
+.tech-item .item-text strong { color: var(--gold-primary); }
+
+/* ===== 响应式 ===== */
+@media (max-width: 1024px) {
+  .hero { min-height: 55vh; }
+  .hero-title { font-size: 44px; letter-spacing: 6px; }
+  .hero-desc { font-size: 15px; }
+  .hero-tag { font-size: 10px; letter-spacing: 5px; padding: 6px 20px; }
+  .material-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .material-card .card-body { padding: 20px; }
+  .material-card .card-body h4 { font-size: 16px; }
+  .material-card .card-body p { font-size: 13px; }
+  .artwork-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .artwork-card .artwork-info { padding: 18px; }
+  .artwork-card .artwork-info h4 { font-size: 15px; }
+  .prompt-showcase { grid-template-columns: 1fr; gap: 28px; }
+  .prompt-display { padding: 24px; }
+  .prompt-info h3 { font-size: 22px; }
+  .stages-wrap { grid-template-columns: 1fr; gap: 20px; }
+  .stage-arrow { transform: rotate(90deg); padding: 12px 0; }
+  .stage-card { padding: 24px 20px; }
+  .stage-number { font-size: 36px; }
+  .creator-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .creator-card { padding: 24px 20px; }
+  .app-matrix-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .app-matrix-card .card-body { padding: 20px; }
+  .evolution-wrap { flex-wrap: wrap; justify-content: center; }
+  .evolution-arrow { transform: rotate(90deg); padding: 8px 0; justify-content: center; }
+  .evolution-step { min-width: 150px; }
+  .tech-summary { grid-template-columns: 1fr; gap: 28px; }
+  .tech-summary-text h3 { font-size: 24px; }
+  .full-banner .img-placeholder { min-height: 260px; }
+  .full-banner-overlay { padding: 24px 28px; }
+  .full-banner-overlay h3 { font-size: 20px; }
+}
+@media (max-width: 768px) {
+  .hero { min-height: 45vh; }
+  .hero-title { font-size: 32px; letter-spacing: 4px; }
+  .hero-desc { font-size: 14px; letter-spacing: 2px; }
+  .material-grid { grid-template-columns: 1fr; gap: 16px; }
+  .material-card .card-img .img-placeholder { min-height: 180px; }
+  .artwork-grid { grid-template-columns: 1fr; gap: 16px; }
+  .artwork-card .artwork-visual .img-placeholder { min-height: 200px; }
+  .prompt-showcase { gap: 20px; }
+  .prompt-display { padding: 20px; }
+  .prompt-display .prompt-text { font-size: 13px; }
+  .prompt-info h3 { font-size: 20px; }
+  .prompt-info p { font-size: 14px; }
+  .prompt-tips { padding: 16px; }
+  .stages-wrap { gap: 16px; }
+  .stage-card { padding: 20px 16px; }
+  .stage-card h4 { font-size: 17px; }
+  .stage-card p { font-size: 13px; }
+  .creator-grid { grid-template-columns: 1fr; gap: 16px; }
+  .creator-card { padding: 20px 16px; }
+  .creator-card .creator-role { font-size: 16px; }
+  .creator-card .creator-quote { font-size: 13px; padding: 14px 16px; }
+  .app-matrix-grid { grid-template-columns: 1fr; gap: 16px; }
+  .evolution-wrap { flex-direction: column; }
+  .evolution-step { min-width: auto; padding: 18px 14px; }
+  .evolution-step .evo-year { font-size: 18px; }
+  .tech-summary { gap: 20px; }
+  .tech-summary-text h3 { font-size: 20px; }
+  .tech-item { padding: 12px 16px; }
+  .full-banner { border-radius: 14px; }
+  .full-banner .img-placeholder { min-height: 200px; }
+  .full-banner-overlay { padding: 20px; }
+  .full-banner-overlay h3 { font-size: 18px; }
+  .full-banner-overlay p { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .hero-title { font-size: 26px; letter-spacing: 3px; }
+  .hero-desc { font-size: 13px; letter-spacing: 1px; }
+  .hero-tag { font-size: 9px; letter-spacing: 3px; padding: 5px 14px; margin-bottom: 18px; }
+  .section-title { font-size: 22px; letter-spacing: 2px; }
+  .section-tag { font-size: 10px; letter-spacing: 3px; }
+  .material-card .card-body { padding: 16px; }
+  .material-card .card-body h4 { font-size: 15px; }
+  .material-card .card-body p { font-size: 12px; line-height: 1.7; }
+  .artwork-card .artwork-info { padding: 14px; }
+  .artwork-card .artwork-info h4 { font-size: 14px; }
+  .artwork-card .artwork-info p { font-size: 12px; }
+  .artwork-card .artwork-info .artwork-tags span { font-size: 10px; padding: 2px 8px; }
+  .prompt-display { padding: 16px; }
+  .prompt-display .prompt-text { font-size: 12px; line-height: 1.8; }
+  .prompt-info h3 { font-size: 18px; }
+  .prompt-info p { font-size: 13px; }
+  .stage-number { font-size: 30px; }
+  .stage-card h4 { font-size: 16px; }
+  .creator-card .creator-quote::before { font-size: 28px; }
+  .app-matrix-card .card-body { padding: 16px; }
+  .app-matrix-card .card-body h4 { font-size: 15px; }
+  .app-matrix-card .card-body .app-tags span { font-size: 10px; }
+  .evolution-step { padding: 14px 12px; }
+  .evolution-step h5 { font-size: 13px; }
+  .evolution-step p { font-size: 11px; }
+  .tech-item { padding: 10px 12px; gap: 10px; }
+  .tech-item .item-icon { font-size: 20px; }
+  .tech-item .item-text { font-size: 12px; }
+  .full-banner-overlay { padding: 14px; }
+  .full-banner-overlay h3 { font-size: 16px; }
+  .full-banner-overlay p { font-size: 12px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #B5413E, #D4A24E, #B5413E);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+
+<canvas id="particleCanvas"></canvas>
+
+<!-- 导航栏 -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">雄</div>
+      <span class="nav-logo-text">数绘雄州</span>
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item">
+        <a href="heritage.html" class="nav-link">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link active">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <span class="current">AIGC 创作工坊</span>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">AIGC WORKSHOP · 人工智能创作</div>
+    <h1 class="hero-title page-hero-title">AIGC 创作工坊</h1>
+    <p class="hero-desc">以 AI 之力，让非遗文化在数字世界焕发新生</p>
+  </div>
+</section>
+
+<!-- 素材总览 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MATERIAL OVERVIEW</div>
+    <h2 class="section-title">非遗素材总览</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="material-grid">
+    <div class="material-card reveal">
+      <div class="card-img">
+        <img src="vibe_images/aigc-source-01.webp" alt="芦苇画素材" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>视觉纹样素材库</h4>
+        <p>涵盖六大非遗项目的纹样、色彩、构图等视觉元素，经高精度扫描与数字化处理后形成标准化素材资源。</p>
+        <span class="material-tag">2,400+ 纹样素材</span>
+      </div>
+    </div>
+    <div class="material-card reveal">
+      <div class="card-img">
+        <img src="vibe_images/aigc-source-02.webp" alt="黑陶拓片" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>三维模型数据库</h4>
+        <p>对非遗器物进行三维激光扫描与摄影测量建模，构建高精度三维模型数据库，支持 360° 全角度观察与研究。</p>
+        <span class="material-tag">180+ 三维模型</span>
+      </div>
+    </div>
+    <div class="material-card reveal">
+      <div class="card-img">
+        <img src="vibe_images/aigc-source-03.webp" alt="技艺纪录片" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>音视频语料库</h4>
+        <p>收录非遗传承人口述历史、技艺操作影像、传统乐曲演奏等音视频资料，为 AI 训练提供多模态数据支撑。</p>
+        <span class="material-tag">500+ 音视频片段</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI 生成作品展示 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">AI GENERATED ARTWORKS</div>
+    <h2 class="section-title">AI 生成作品展示</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="artwork-grid">
+    <div class="artwork-card reveal">
+      <div class="artwork-visual">
+        <img src="vibe_images/aigc-ai-01.webp" alt="芦苇画数字艺术" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="artwork-info">
+        <h4>芦苇纹样重构</h4>
+        <p>AI 深度学习芦苇画的传统编织纹样与水乡意境，生成融合自然曲线与现代数字美学的全新视觉作品。</p>
+        <div class="artwork-tags">
+          <span>风格迁移</span>
+          <span>纹样提取</span>
+          <span>数字重构</span>
+        </div>
+      </div>
+    </div>
+    <div class="artwork-card reveal">
+      <div class="artwork-visual">
+        <img src="vibe_images/aigc-ai-02.webp" alt="黑陶纹饰变体" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="artwork-info">
+        <h4>黑陶纹饰变体</h4>
+        <p>基于参数化设计方法，AI 对黑陶经典回纹与雷纹进行解构与重组，生成兼具古朴韵味与现代感的纹饰变体。</p>
+        <div class="artwork-tags">
+          <span>参数化设计</span>
+          <span>纹饰变体</span>
+          <span>几何重构</span>
+        </div>
+      </div>
+    </div>
+    <div class="artwork-card reveal">
+      <div class="artwork-visual">
+        <img src="vibe_images/aigc-ai-03.webp" alt="盒子灯光影" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="artwork-info">
+        <h4>盒子灯光影艺术</h4>
+        <p>AI 将盒子灯的物理结构与光影效果转化为粒子艺术，在数字空间中重现传统节日灯光的温暖与绚烂。</p>
+        <div class="artwork-tags">
+          <span>粒子艺术</span>
+          <span>光影重构</span>
+          <span>节日美学</span>
+        </div>
+      </div>
+    </div>
+    <div class="artwork-card reveal">
+      <div class="artwork-visual">
+        <img src="vibe_images/aigc-ai-04.webp" alt="古乐旋律" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="artwork-info">
+        <h4>古乐视觉化</h4>
+        <p>AI 将圈头村古乐的旋律、节奏与音色转化为视觉图形，让千年雅乐在数字画布上以色彩与线条的形式绽放。</p>
+        <div class="artwork-tags">
+          <span>音频可视化</span>
+          <span>旋律转译</span>
+          <span>通感艺术</span>
+        </div>
+      </div>
+    </div>
+    <div class="artwork-card reveal">
+      <div class="artwork-visual">
+        <img src="vibe_images/aigc-ai-05.webp" alt="武术线条" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="artwork-info">
+        <h4>武术动态捕捉</h4>
+        <p>AI 基于鹰爪翻子拳的动作捕捉数据，将武术招式转化为流动的动态线条艺术，展现力量与美感的完美融合。</p>
+        <div class="artwork-tags">
+          <span>动作捕捉</span>
+          <span>动态线条</span>
+          <span>力量美学</span>
+        </div>
+      </div>
+    </div>
+    <div class="artwork-card reveal">
+      <div class="artwork-visual">
+        <img src="vibe_images/aigc-ai-06.webp" alt="鼓书声纹" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="artwork-info">
+        <h4>鼓书声纹图案</h4>
+        <p>AI 将西河大鼓的唱腔声纹转化为独特的装饰图案，每一段说唱都对应独一无二的视觉纹样，声音与图像的跨界对话。</p>
+        <div class="artwork-tags">
+          <span>声纹转化</span>
+          <span>装饰图案</span>
+          <span>跨界融合</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Prompt 展示 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">PROMPT DESIGN</div>
+    <h2 class="section-title">AI 提示词工程</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="prompt-showcase">
+    <div class="prompt-display reveal">
+      <div class="prompt-label">PROMPT EXAMPLE</div>
+      <div class="prompt-text">
+        <span class="keyword">风格</span>：中国传统水墨 + 现代数字艺术<br>
+        <span class="keyword">主体</span>：白洋淀芦苇荡中的渔船<br>
+        <span class="keyword">纹样</span>：融合雄州黑陶回纹与芦苇编织纹理<br>
+        <span class="keyword">色调</span>：暗金 + 青绿，低饱和度<br>
+        <span class="keyword">构图</span>：中心对称，留白意境<br>
+        <span class="keyword">细节</span>：水面倒影、晨雾、飞鸟<br>
+        <span class="keyword">渲染</span>：8K 超高清，光线追踪<br>
+        <span class="keyword">情感</span>：宁静、悠远、文化厚重感
+      </div>
+    </div>
+    <div class="prompt-info reveal">
+      <h3>精准提示词驱动创作</h3>
+      <p>AIGC 创作的核心在于提示词（Prompt）的设计。我们通过结构化的提示词框架，将非遗文化的视觉特征、文化内涵与艺术风格转化为 AI 可理解的创作指令。</p>
+      <p>每一个提示词都经过非遗专家与 AI 工程师的共同打磨，确保生成作品既保持传统韵味，又具有现代审美。</p>
+      <div class="prompt-tips">
+        <h5>提示词设计原则</h5>
+        <ul>
+          <li>明确风格定位：传统与现代的平衡点</li>
+          <li>精准色彩描述：使用非遗专属色谱</li>
+          <li>构图文化适配：遵循中国传统美学法则</li>
+          <li>细节层次丰富：从宏观到微观的全链路描述</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 三阶段创作对比 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">CREATION STAGES</div>
+    <h2 class="section-title">三阶段 AI 创作流程</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="stages-wrap">
+    <div class="stage-card reveal">
+      <div class="stage-number">01</div>
+      <h4>素材采集与预处理</h4>
+      <p>对非遗实物、文献、影像进行高精度数字化采集，通过图像增强、去噪、色彩校正等预处理流程，构建标准化训练数据集。</p>
+      <div class="stage-img">
+        <img src="vibe_images/aigc-flow-01.webp" alt="数字化采集" style="width:100%;height:180px;object-fit:cover;display:block;">
+      </div>
+    </div>
+    <div class="stage-arrow">→</div>
+    <div class="stage-card reveal">
+      <div class="stage-number">02</div>
+      <h4>AI 模型训练与生成</h4>
+      <p>基于 Stable Diffusion、LoRA 微调等技术，使用非遗素材对 AI 模型进行专项训练，使模型深度理解非遗纹样的风格特征与文化内涵。</p>
+      <div class="stage-img">
+        <img src="vibe_images/aigc-flow-02.webp" alt="AI训练" style="width:100%;height:180px;object-fit:cover;display:block;">
+      </div>
+    </div>
+    <div class="stage-arrow">→</div>
+    <div class="stage-card reveal">
+      <div class="stage-number">03</div>
+      <h4>人工审核与精修</h4>
+      <p>邀请非遗传承人与艺术专家对 AI 生成作品进行审核，从文化准确性、艺术美感、技术质量三个维度进行评判与精修。</p>
+      <div class="stage-img">
+        <img src="vibe_images/aigc-flow-03.webp" alt="传承人审核" style="width:100%;height:180px;object-fit:cover;display:block;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 创作者说 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">CREATOR STORIES</div>
+    <h2 class="section-title">创作者说</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="creator-grid">
+    <div class="creator-card reveal">
+      <div class="creator-avatar">
+        <img src="vibe_images/aigc-person-01.webp" alt="AI工程师" style="width:100%;height:220px;object-fit:cover;display:block;">
+      </div>
+      <div class="creator-role">AI 工程师</div>
+      <div class="creator-title">AIGC 技术负责人</div>
+      <div class="creator-quote">最大的技术挑战在于如何让 AI 真正"理解"非遗纹样背后的文化含义，而不仅仅是像素级别的模仿。我们设计了文化特征提取模块，将传承人的口述知识编码为模型可理解的约束条件，确保生成作品在形式美感之外更具文化深度。</div>
+    </div>
+    <div class="creator-card reveal">
+      <div class="creator-avatar">
+        <img src="vibe_images/aigc-person-02.webp" alt="传承人" style="width:100%;height:220px;object-fit:cover;display:block;">
+      </div>
+      <div class="creator-role">非遗传承人</div>
+      <div class="creator-title">芦苇画技艺省级代表性传承人</div>
+      <div class="creator-quote">起初我对 AI 持怀疑态度，担心它无法理解手工技艺的温度。但当我看到 AI 生成的纹样中保留了我们芦苇画的曲线韵律，又融入了我从未尝试过的构图方式时，我意识到这是传统与现代的一次真诚对话。</div>
+    </div>
+    <div class="creator-card reveal">
+      <div class="creator-avatar">
+        <img src="vibe_images/aigc-person-03.webp" alt="视觉设计师" style="width:100%;height:220px;object-fit:cover;display:block;">
+      </div>
+      <div class="creator-role">视觉设计师</div>
+      <div class="creator-title">数字美学总监</div>
+      <div class="creator-quote">在 AI 创作中寻找传统美学与现代设计的平衡点是最核心的工作。我们需要确保每一件作品既不会因过度现代化而失去非遗的文化根基，也不会因过于传统而缺乏数字时代的视觉冲击力。这个平衡点，就是"数绘雄州"的美学灵魂。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 应用场景矩阵 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">APPLICATION MATRIX</div>
+    <h2 class="section-title">应用场景矩阵</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="app-matrix-grid">
+    <div class="app-matrix-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/aigc-app-01.webp" alt="文创产品" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>文创产品设计</h4>
+        <p>将 AI 生成的非遗纹样应用于丝巾、茶具、文具等文创产品，实现传统文化元素与现代消费品的创意融合，拓展非遗商业化路径。</p>
+        <div class="app-tags">
+          <span>产品设计</span>
+          <span>纹样授权</span>
+          <span>商业转化</span>
+        </div>
+      </div>
+    </div>
+    <div class="app-matrix-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/aigc-app-02.webp" alt="数字展览" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>数字展览</h4>
+        <p>构建基于 AIGC 内容的沉浸式数字展览空间，观众可在虚拟展厅中与 AI 生成的非遗艺术作品互动，体验传统文化的未来形态。</p>
+        <div class="app-tags">
+          <span>虚拟展厅</span>
+          <span>沉浸体验</span>
+          <span>互动展示</span>
+        </div>
+      </div>
+    </div>
+    <div class="app-matrix-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/aigc-app-03.webp" alt="教育课件" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>教育科普</h4>
+        <p>开发基于 AIGC 的非遗教育课件与互动教材，让学生通过 AI 工具亲手体验纹样创作过程，在动手实践中感受传统文化魅力。</p>
+        <div class="app-tags">
+          <span>教育课件</span>
+          <span>互动教材</span>
+          <span>文化传承</span>
+        </div>
+      </div>
+    </div>
+    <div class="app-matrix-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/aigc-app-04.webp" alt="品牌视觉" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(51,51,51,0.1);">
+      </div>
+      <div class="card-body">
+        <h4>品牌视觉</h4>
+        <p>为雄安新区非遗项目构建统一的品牌视觉识别系统，将 AI 生成的纹样元素融入品牌标识、包装设计等，提升非遗品牌影响力。</p>
+        <div class="app-tags">
+          <span>品牌设计</span>
+          <span>视觉识别</span>
+          <span>IP 打造</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 技术演进时间线 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">TECHNOLOGY EVOLUTION</div>
+    <h2 class="section-title">技术演进</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="evolution-wrap reveal">
+    <div class="evolution-step">
+      <div class="evo-year">2019</div>
+      <h5>基础数字化</h5>
+      <p>高精度扫描与摄影测量，建立非遗素材数字档案</p>
+      <img src="vibe_images/aigc-tech-01.webp" alt="早期采集" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+    </div>
+    <div class="evolution-arrow">→</div>
+    <div class="evolution-step">
+      <div class="evo-year">2020</div>
+      <h5>AI 辅助分析</h5>
+      <p>引入计算机视觉技术，实现纹样自动识别与分类</p>
+      <img src="vibe_images/aigc-tech-02.webp" alt="纹样识别" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+    </div>
+    <div class="evolution-arrow">→</div>
+    <div class="evolution-step">
+      <div class="evo-year">2022</div>
+      <h5>风格迁移生成</h5>
+      <p>基于 GAN 的纹样风格迁移，实现传统纹样的现代风格变体</p>
+      <img src="vibe_images/aigc-tech-03.webp" alt="GAN风格迁移" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+    </div>
+    <div class="evolution-arrow">→</div>
+    <div class="evolution-step">
+      <div class="evo-year">2023</div>
+      <h5>多模态创作</h5>
+      <p>Stable Diffusion + LoRA 微调，实现文本驱动的多模态非遗内容生成</p>
+      <img src="vibe_images/aigc-tech-04.webp" alt="多模态创作" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+    </div>
+    <div class="evolution-arrow">→</div>
+    <div class="evolution-step">
+      <div class="evo-year">2024</div>
+      <h5>全链路 AI 创作</h5>
+      <p>从数据采集到创作输出的完整 AI 管线，支持实时交互与个性化定制</p>
+      <img src="vibe_images/aigc-tech-05.webp" alt="全链路平台" style="width:100%;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(51,51,51,0.08);">
+    </div>
+  </div>
+</section>
+
+<!-- 技术总结 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">TECHNOLOGY</div>
+    <h2 class="section-title">核心技术架构</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tech-summary">
+    <div class="tech-summary-visual reveal">
+      <img src="vibe_images/aigc-arch.webp" alt="技术架构" style="width:100%;display:block;border-radius:14px;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+    <div class="tech-summary-text reveal">
+      <h3>多模态 AI 创作引擎</h3>
+      <p>本平台构建了完整的多模态 AIGC 技术管线，覆盖视觉纹样生成、三维模型重建、音视频内容创作等多个维度。</p>
+      <div class="tech-list">
+        <div class="tech-item">
+          <span class="item-icon">🧠</span>
+          <div class="item-text"><strong>Stable Diffusion + LoRA</strong> — 非遗风格微调生成模型</div>
+        </div>
+        <div class="tech-item">
+          <span class="item-icon">👁️</span>
+          <div class="item-text"><strong>Computer Vision</strong> — 纹样识别、分割与矢量化提取</div>
+        </div>
+        <div class="tech-item">
+          <span class="item-icon">🔄</span>
+          <div class="item-text"><strong>NeRF 三维重建</strong> — 非遗器物高保真三维数字化</div>
+        </div>
+        <div class="tech-item">
+          <span class="item-icon">🎵</span>
+          <div class="item-text"><strong>Audio Generation</strong> — 古乐与鼓书音频风格迁移</div>
+        </div>
+        <div class="tech-item">
+          <span class="item-icon">⚡</span>
+          <div class="item-text"><strong>Real-time Rendering</strong> — WebGL 实时渲染与交互展示</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AIGC 全景横幅 -->
+<section class="section">
+  <div class="full-banner reveal">
+    <img src="vibe_images/aigc-hero.webp" alt="AIGC全景" style="width:100%;height:100%;object-fit:cover;">
+    <div class="full-banner-overlay">
+      <h3>从传统到未来，AI 赋能非遗全链路</h3>
+      <p>以人工智能技术为桥梁，连接千年非遗文化与现代数字创意，构建从数据采集、模型训练到内容生成的完整 AI 创作生态。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 底部纹样 -->
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<!-- 数字人 -->
+<div class="digital-human">
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header">
+      <span class="dh-panel-title">AI 数字人助手</span>
+      <button class="dh-panel-close" onclick="toggleDH()">✕</button>
+    </div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">青年体验官：</span>你好！我是雄安数字体验官，可以为你介绍项目概况、网站功能和雄安文化。有什么想了解的？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

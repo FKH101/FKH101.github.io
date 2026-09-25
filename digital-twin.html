@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="雄安新区数字孪生可视化大屏，实时展示千年秀林、白洋淀生态、产业人才等核心数据。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23f5efe4'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%232c2a27' font-weight='bold'>雄</text></svg>">
+<title>数字孪生大屏 — 数绘雄州 · 智承非遗</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+/* ===== Dashboard Theme Override ===== */
+:root {
+  --dt-bg: #070b14;
+  --dt-panel: rgba(8, 18, 35, 0.85);
+  --dt-border: rgba(0, 210, 200, 0.15);
+  --dt-border-hover: rgba(0, 210, 200, 0.4);
+  --dt-cyan: #00d2c8;
+  --dt-cyan-dim: rgba(0, 210, 200, 0.5);
+  --dt-cyan-glow: rgba(0, 210, 200, 0.08);
+  --dt-teal: #0af5e4;
+  --dt-blue: #1e90ff;
+  --dt-gold: #D4A24E;
+  --dt-text: rgba(180, 220, 225, 0.85);
+  --dt-text-dim: rgba(140, 180, 190, 0.5);
+  --dt-green: #00e676;
+  --dt-purple: #b388ff;
+  --dt-orange: #ffab40;
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+  background: linear-gradient(135deg, #070b14 0%, #0a1628 50%, #070b14 100%);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(245,224,184,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 50%, rgba(30,144,255,0.04) 0%, transparent 50%);
+  z-index: 0;
+}
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(245,224,184,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,224,184,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+.hero-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 8px;
+  color: var(--dt-cyan-dim);
+  border: 1px solid rgba(245,224,184,0.2);
+  padding: 8px 28px;
+  border-radius: 24px;
+  margin-bottom: 28px;
+}
+.hero-title {
+  font-size: 60px;
+  font-weight: 900;
+  letter-spacing: 10px;
+  background: linear-gradient(135deg, #00d2c8, #1e90ff, #0af5e4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(245,224,184,0.2));
+}
+.hero-desc {
+  margin-top: 20px;
+  font-size: 17px;
+  color: var(--dt-text-dim);
+  letter-spacing: 4px;
+}
+
+/* ===== 总控大屏 ===== */
+.dashboard-screen {
+  position: relative;
+  z-index: 2;
+  padding: 60px 32px 80px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.dashboard-screen .screen-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.screen-title {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  background: linear-gradient(135deg, var(--dt-cyan), var(--dt-teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.screen-subtitle {
+  font-size: 13px;
+  color: var(--dt-text-dim);
+  letter-spacing: 4px;
+}
+
+/* 分类按钮 */
+.category-bar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+.cat-btn {
+  padding: 8px 24px;
+  border-radius: 20px;
+  border: 1px solid var(--dt-border);
+  background: transparent;
+  color: var(--dt-text-dim);
+  font-size: 13px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.cat-btn:hover, .cat-btn.active {
+  border-color: var(--dt-cyan);
+  color: var(--dt-cyan);
+  background: var(--dt-cyan-glow);
+  box-shadow: 0 0 16px rgba(245,224,184,0.1);
+}
+
+/* 四面板布局 */
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.data-panel {
+  background: var(--dt-panel);
+  border: 1px solid var(--dt-border);
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.data-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--panel-accent, var(--dt-cyan)), transparent);
+  opacity: 0.6;
+}
+.data-panel:hover {
+  border-color: var(--dt-border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 40px rgba(245,224,184,0.06);
+}
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.panel-title {
+  font-size: 16px;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+.panel-title .icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+.panel-badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+}
+.eco-panel { --panel-accent: #00e676; }
+.eco-panel .panel-title { color: #00e676; }
+.eco-panel .panel-badge { border: 1px solid rgba(0,230,118,0.3); color: rgba(0,230,118,0.7); background: rgba(0,230,118,0.06); }
+
+.econ-panel { --panel-accent: #ffab40; }
+.econ-panel .panel-title { color: #ffab40; }
+.econ-panel .panel-badge { border: 1px solid rgba(255,171,64,0.3); color: rgba(255,171,64,0.7); background: rgba(255,171,64,0.06); }
+
+.culture-panel { --panel-accent: #b388ff; }
+.culture-panel .panel-title { color: #b388ff; }
+.culture-panel .panel-badge { border: 1px solid rgba(179,136,255,0.3); color: rgba(179,136,255,0.7); background: rgba(179,136,255,0.06); }
+
+.city-panel { --panel-accent: #1e90ff; }
+.city-panel .panel-title { color: #1e90ff; }
+.city-panel .panel-badge { border: 1px solid rgba(30,144,255,0.3); color: rgba(30,144,255,0.7); background: rgba(30,144,255,0.06); }
+
+/* 数据行 */
+.metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.metric-row:last-child { border-bottom: none; }
+.metric-label {
+  font-size: 13px;
+  color: var(--dt-text-dim);
+  letter-spacing: 1px;
+  min-width: 100px;
+}
+.metric-value {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  min-width: 70px;
+  text-align: right;
+}
+.eco-panel .metric-value { color: #00e676; }
+.econ-panel .metric-value { color: #ffab40; }
+.culture-panel .metric-value { color: #b388ff; }
+.city-panel .metric-value { color: #1e90ff; }
+
+.metric-unit {
+  font-size: 11px;
+  color: var(--dt-text-dim);
+  margin-left: 4px;
+  font-weight: 400;
+}
+.metric-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 2px;
+  margin: 0 14px;
+  overflow: hidden;
+}
+.metric-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.eco-panel .metric-bar-fill { background: linear-gradient(90deg, rgba(0,230,118,0.3), #00e676); }
+.econ-panel .metric-bar-fill { background: linear-gradient(90deg, rgba(255,171,64,0.3), #ffab40); }
+.culture-panel .metric-bar-fill { background: linear-gradient(90deg, rgba(179,136,255,0.3), #b388ff); }
+.city-panel .metric-bar-fill { background: linear-gradient(90deg, rgba(30,144,255,0.3), #1e90ff); }
+
+/* ===== 中央年份控制器 ===== */
+.year-controller {
+  background: var(--dt-panel);
+  border: 1px solid var(--dt-border);
+  border-radius: 20px;
+  padding: 36px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+.year-controller::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,224,184,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.year-display {
+  font-size: 80px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  background: linear-gradient(135deg, var(--dt-cyan), var(--dt-teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(245,224,184,0.2));
+  line-height: 1;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+.year-desc {
+  font-size: 14px;
+  color: var(--dt-text-dim);
+  letter-spacing: 2px;
+  margin-bottom: 28px;
+  min-height: 22px;
+  transition: all 0.3s ease;
+}
+
+/* 滑块 */
+.year-slider-wrap {
+  position: relative;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+.year-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(245,224,184,0.15), rgba(245,224,184,0.3));
+  outline: none;
+  cursor: pointer;
+}
+.year-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--dt-cyan);
+  border: 3px solid var(--dt-bg);
+  box-shadow: 0 0 16px rgba(245,224,184,0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.year-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 24px rgba(245,224,184,0.6);
+}
+.year-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--dt-cyan);
+  border: 3px solid var(--dt-bg);
+  box-shadow: 0 0 16px rgba(245,224,184,0.4);
+  cursor: pointer;
+}
+.year-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--dt-text-dim);
+  letter-spacing: 1px;
+}
+
+/* 自动播放按钮 */
+.auto-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 28px;
+  border-radius: 24px;
+  border: 1px solid var(--dt-border);
+  background: transparent;
+  color: var(--dt-cyan-dim);
+  font-size: 13px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.auto-play-btn:hover {
+  border-color: var(--dt-cyan);
+  color: var(--dt-cyan);
+  background: var(--dt-cyan-glow);
+}
+.auto-play-btn.playing {
+  border-color: var(--dt-cyan);
+  color: var(--dt-cyan);
+  background: var(--dt-cyan-glow);
+  animation: playPulse 2s ease-in-out infinite;
+}
+@keyframes playPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(245,224,184,0.1); }
+  50% { box-shadow: 0 0 20px rgba(245,224,184,0.25); }
+}
+.play-icon {
+  width: 0;
+  height: 0;
+  border-left: 8px solid currentColor;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  display: inline-block;
+}
+.auto-play-btn.playing .play-icon {
+  width: 8px;
+  height: 10px;
+  border: none;
+  border-left: 3px solid currentColor;
+  border-right: 3px solid currentColor;
+}
+
+/* ===== 应用场景 ===== */
+.scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.scenario-card {
+  background: var(--dt-panel);
+  border: 1px solid var(--dt-border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.scenario-card:hover {
+  border-color: var(--dt-border-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 32px rgba(245,224,184,0.06);
+}
+.scenario-card .card-visual .img-placeholder {
+  min-height: 180px;
+  border: none;
+  border-radius: 0;
+  background: rgba(245,224,184,0.03);
+  border-color: rgba(245,224,184,0.1);
+  color: var(--dt-text-dim);
+}
+.scenario-card .card-body { padding: 22px; }
+.scenario-card .card-body h4 {
+  font-size: 16px;
+  color: var(--dt-cyan);
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+.scenario-card .card-body p {
+  font-size: 13px;
+  color: var(--dt-text-dim);
+  line-height: 1.8;
+}
+.scenario-card .scenario-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.scenario-card .scenario-tags span {
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  border: 1px solid rgba(245,224,184,0.12);
+  color: rgba(245,224,184,0.5);
+  background: rgba(245,224,184,0.03);
+}
+
+/* ===== 时间线（深色科技风） ===== */
+.timeline-section { position: relative; }
+.timeline-wrap {
+  position: relative;
+  padding: 20px 0;
+}
+.timeline-wrap::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, rgba(245,224,184,0.3), rgba(30,144,255,0.3), transparent);
+  transform: translateX(-50%);
+}
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  position: relative;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-item:nth-child(odd) {
+  flex-direction: row;
+  padding-right: calc(50% + 40px);
+  text-align: right;
+}
+.timeline-item:nth-child(even) {
+  flex-direction: row-reverse;
+  padding-left: calc(50% + 40px);
+  text-align: left;
+}
+.timeline-dot {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--dt-cyan);
+  border: 3px solid var(--dt-bg);
+  transform: translateX(-50%);
+  z-index: 2;
+  box-shadow: 0 0 12px rgba(245,224,184,0.4);
+}
+.timeline-content {
+  background: var(--dt-panel);
+  border: 1px solid var(--dt-border);
+  border-radius: 14px;
+  padding: 22px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+.timeline-content:hover {
+  border-color: var(--dt-border-hover);
+  transform: translateY(-2px);
+}
+.timeline-year {
+  font-size: 26px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--dt-cyan), var(--dt-teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.timeline-content h4 {
+  font-size: 15px;
+  color: var(--dt-cyan);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.timeline-content p {
+  font-size: 13px;
+  color: var(--dt-text-dim);
+  line-height: 1.8;
+}
+
+/* ===== 智慧城市面板 ===== */
+.smart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+.smart-text h3 {
+  font-size: 26px;
+  color: var(--dt-cyan);
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+}
+.smart-text p {
+  font-size: 14px;
+  line-height: 2;
+  color: var(--dt-text-dim);
+  margin-bottom: 16px;
+}
+.smart-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 24px;
+}
+.smart-feature {
+  padding: 18px;
+  background: var(--dt-panel);
+  border: 1px solid var(--dt-border);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.smart-feature:hover {
+  border-color: var(--dt-border-hover);
+  transform: translateY(-2px);
+}
+.smart-feature .feat-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+.smart-feature .feat-title { font-size: 13px; color: var(--dt-cyan); letter-spacing: 1px; margin-bottom: 4px; }
+.smart-feature .feat-desc { font-size: 12px; color: var(--dt-text-dim); }
+.smart-visual .img-placeholder {
+  min-height: 380px;
+  border-radius: 16px;
+  background: rgba(245,224,184,0.03);
+  border-color: rgba(245,224,184,0.1);
+  color: var(--dt-text-dim);
+}
+
+/* ===== 技术指标 ===== */
+.tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.tech-card {
+  background: var(--dt-panel);
+  border: 1px solid var(--dt-border);
+  border-radius: 14px;
+  padding: 32px 24px;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.tech-card:hover {
+  border-color: var(--dt-border-hover);
+  transform: translateY(-3px);
+}
+.tech-card h4 {
+  font-size: 15px;
+  color: var(--dt-cyan);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.tech-bar {
+  height: 5px;
+  background: rgba(245,224,184,0.08);
+  border-radius: 3px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.tech-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(245,224,184,0.4), var(--dt-cyan));
+  transition: width 1.5s ease;
+}
+.tech-card .tech-desc {
+  font-size: 13px;
+  color: var(--dt-text-dim);
+  line-height: 1.7;
+}
+
+
+/* ===== Section overrides for dark theme ===== */
+.dashboard-screen ~ .section .section-title {
+  background: linear-gradient(135deg, rgba(245,224,184,0.6), var(--dt-teal), rgba(245,224,184,0.6));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dashboard-screen ~ .section .section-tag {
+  color: var(--dt-text-dim);
+  border-color: var(--dt-border);
+}
+.dashboard-screen ~ .section .section-line {
+  background: linear-gradient(90deg, transparent, var(--dt-cyan), transparent);
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 1024px) {
+  .hero { min-height: 40vh; }
+  .hero-title { font-size: 44px; letter-spacing: 6px; }
+  .hero-desc { font-size: 15px; }
+  .hero-tag { font-size: 10px; letter-spacing: 5px; padding: 6px 20px; }
+  .dashboard-screen { padding: 40px 20px 60px; }
+  .screen-title { font-size: 28px; letter-spacing: 4px; }
+  .screen-subtitle { font-size: 12px; letter-spacing: 2px; }
+  .panel-grid { grid-template-columns: 1fr; gap: 18px; }
+  .data-panel { padding: 22px; }
+  .panel-title { font-size: 15px; }
+  .metric-value { font-size: 18px; }
+  .metric-label { font-size: 12px; min-width: 80px; }
+  .category-bar { gap: 8px; margin-bottom: 24px; }
+  .cat-btn { padding: 6px 16px; font-size: 12px; }
+  .year-controller { padding: 28px 24px; margin-bottom: 32px; }
+  .year-display { font-size: 56px; }
+  .year-desc { font-size: 13px; }
+  .scenario-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .scenario-card .card-body { padding: 18px; }
+  .scenario-card .card-body h4 { font-size: 15px; }
+  .smart-grid { grid-template-columns: 1fr; gap: 24px; }
+  .smart-text h3 { font-size: 22px; }
+  .smart-text p { font-size: 13px; }
+  .smart-features { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .tech-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .tech-card { padding: 24px 18px; }
+  .tech-card h4 { font-size: 14px; }
+  .timeline-item:nth-child(odd),
+  .timeline-item:nth-child(even) {
+    flex-direction: row;
+    padding-right: 0;
+    padding-left: 50px;
+    text-align: left;
+  }
+  .timeline-wrap::before { left: 16px; }
+  .timeline-dot { left: 16px; }
+  .timeline-content { padding: 18px; }
+  .timeline-year { font-size: 22px; }
+  .timeline-content h4 { font-size: 14px; }
+}
+@media (max-width: 768px) {
+  .hero { min-height: 35vh; }
+  .hero-title { font-size: 32px; letter-spacing: 4px; }
+  .hero-desc { font-size: 14px; letter-spacing: 2px; }
+  .dashboard-screen { padding: 30px 16px 48px; }
+  .screen-title { font-size: 22px; letter-spacing: 3px; }
+  .screen-subtitle { font-size: 11px; letter-spacing: 1px; }
+  .category-bar { gap: 6px; margin-bottom: 20px; }
+  .cat-btn { padding: 5px 12px; font-size: 11px; letter-spacing: 1px; }
+  .year-controller { padding: 24px 20px; margin-bottom: 28px; border-radius: 14px; }
+  .year-display { font-size: 44px; }
+  .year-desc { font-size: 12px; margin-bottom: 20px; }
+  .year-labels { font-size: 10px; }
+  .auto-play-btn { padding: 8px 20px; font-size: 12px; }
+  .panel-grid { gap: 14px; }
+  .data-panel { padding: 18px; border-radius: 12px; }
+  .panel-header { margin-bottom: 14px; }
+  .panel-title { font-size: 14px; letter-spacing: 2px; }
+  .metric-row { padding: 8px 0; }
+  .metric-value { font-size: 16px; }
+  .metric-label { font-size: 11px; min-width: 70px; }
+  .metric-bar { margin: 0 10px; }
+  .scenario-grid { grid-template-columns: 1fr; gap: 16px; }
+  .scenario-card .card-body { padding: 16px; }
+  .scenario-card .card-body h4 { font-size: 14px; }
+  .scenario-card .card-body p { font-size: 12px; }
+  .smart-grid { gap: 20px; }
+  .smart-text h3 { font-size: 20px; }
+  .smart-text p { font-size: 13px; line-height: 1.8; }
+  .smart-features { grid-template-columns: 1fr; gap: 10px; }
+  .smart-feature { padding: 14px; }
+  .tech-grid { grid-template-columns: 1fr; gap: 14px; }
+  .tech-card { padding: 20px 16px; }
+  .tech-card h4 { font-size: 14px; }
+  .tech-card .tech-desc { font-size: 12px; }
+  .timeline-item { margin-bottom: 28px; }
+  .timeline-content { padding: 16px; }
+  .timeline-year { font-size: 20px; }
+  .timeline-content h4 { font-size: 13px; }
+  .timeline-content p { font-size: 12px; }
+}
+@media (max-width: 480px) {
+  .hero-title { font-size: 26px; letter-spacing: 3px; }
+  .hero-desc { font-size: 13px; letter-spacing: 1px; }
+  .hero-tag { font-size: 9px; letter-spacing: 3px; padding: 5px 14px; margin-bottom: 18px; }
+  .section-title { font-size: 22px; letter-spacing: 2px; }
+  .section-tag { font-size: 10px; letter-spacing: 3px; }
+  .dashboard-screen { padding: 20px 12px 36px; }
+  .screen-title { font-size: 18px; letter-spacing: 2px; }
+  .category-bar { gap: 4px; }
+  .cat-btn { padding: 4px 10px; font-size: 10px; }
+  .year-controller { padding: 18px 14px; }
+  .year-display { font-size: 36px; }
+  .year-desc { font-size: 11px; }
+  .year-slider-wrap { padding: 0 6px; }
+  .year-labels { font-size: 9px; }
+  .auto-play-btn { padding: 7px 16px; font-size: 11px; }
+  .data-panel { padding: 14px; border-radius: 10px; }
+  .panel-title { font-size: 13px; }
+  .panel-title .icon { font-size: 16px; }
+  .panel-badge { font-size: 10px; padding: 2px 8px; }
+  .metric-row { padding: 6px 0; flex-wrap: wrap; gap: 4px; }
+  .metric-value { font-size: 15px; }
+  .metric-label { font-size: 10px; min-width: 60px; }
+  .metric-unit { font-size: 10px; }
+  .scenario-card .card-body { padding: 14px; }
+  .scenario-card .card-body h4 { font-size: 13px; }
+  .scenario-card .card-body p { font-size: 11px; }
+  .scenario-card .scenario-tags span { font-size: 10px; padding: 2px 6px; }
+  .smart-text h3 { font-size: 18px; }
+  .smart-feature { padding: 12px; }
+  .smart-feature .feat-icon { font-size: 18px; }
+  .smart-feature .feat-title { font-size: 12px; }
+  .smart-feature .feat-desc { font-size: 11px; }
+  .tech-card { padding: 16px 14px; }
+  .tech-card h4 { font-size: 13px; }
+  .tech-card .tech-desc { font-size: 11px; }
+  .tech-bar { height: 4px; }
+  .timeline-content { padding: 14px; }
+  .timeline-year { font-size: 18px; }
+  .timeline-content h4 { font-size: 12px; }
+  .timeline-content p { font-size: 11px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #B5413E, #D4A24E, #B5413E);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+
+<canvas id="particleCanvas"></canvas>
+
+<!-- 导航栏 -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">雄</div>
+      <span class="nav-logo-text">数绘雄州</span>
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item">
+        <a href="heritage.html" class="nav-link">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link active">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <span class="current">数字孪生大屏</span>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">DIGITAL TWIN · 智慧城市</div>
+    <h1 class="hero-title page-hero-title">数字孪生大屏</h1>
+    <p class="hero-desc">构建雄安新区数字孪生体，实时感知城市脉动</p>
+  </div>
+</section>
+
+<!-- 时空演化总控大屏 -->
+<div class="dashboard-screen">
+  <div class="screen-header reveal">
+    <div class="screen-title">时空演化总控大屏</div>
+    <div class="screen-subtitle">四层联动 · 2000—2035 · 地理·城市·人文·经济</div>
+  </div>
+
+  <!-- 分类按钮 -->
+  <div class="category-bar reveal">
+    <button class="cat-btn active" data-cat="all">全部</button>
+    <button class="cat-btn" data-cat="eco">生态</button>
+    <button class="cat-btn" data-cat="city">城市</button>
+    <button class="cat-btn" data-cat="culture">非遗</button>
+    <button class="cat-btn" data-cat="econ">数据</button>
+  </div>
+
+  <!-- 中央年份控制器 -->
+  <div class="year-controller reveal">
+    <div class="year-display" id="yearDisplay">2017</div>
+    <div class="year-desc" id="yearDesc">雄安新区正式设立，物理城市与数字城市同步规划启动</div>
+    <div class="year-slider-wrap">
+      <input type="range" class="year-slider" id="yearSlider" min="2000" max="2035" value="2017" step="1">
+      <div class="year-labels">
+        <span>2000</span>
+        <span>2005</span>
+        <span>2010</span>
+        <span>2017</span>
+        <span>2020</span>
+        <span>2025</span>
+        <span>2030</span>
+        <span>2035</span>
+      </div>
+    </div>
+    <button class="auto-play-btn" id="autoPlayBtn">
+      <span class="play-icon"></span>
+      <span class="play-text">自动播放</span>
+    </button>
+  </div>
+
+  <!-- 四数据面板 -->
+  <div class="panel-grid">
+    <!-- 生态指标 -->
+    <div class="data-panel eco-panel reveal" data-category="eco">
+      <div class="panel-header">
+        <div class="panel-title"><span class="icon">🌿</span>生态指标</div>
+        <span class="panel-badge">ECOLOGY</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">白洋淀水质</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="water" style="width:30%"></div></div>
+        <span class="metric-value" data-metric="water-val">Ⅳ<span class="metric-unit">类</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">绿化覆盖率</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="green" style="width:25%"></div></div>
+        <span class="metric-value" data-metric="green-val">25<span class="metric-unit">%</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">湿地面积</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="wetland" style="width:40%"></div></div>
+        <span class="metric-value" data-metric="wetland-val">180<span class="metric-unit">km²</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">生物多样性</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="bio" style="width:35%"></div></div>
+        <span class="metric-value" data-metric="bio-val">120<span class="metric-unit">种</span></span>
+      </div>
+    </div>
+
+    <!-- 经济科创 -->
+    <div class="data-panel econ-panel reveal" data-category="econ">
+      <div class="panel-header">
+        <div class="panel-title"><span class="icon">📊</span>经济科创</div>
+        <span class="panel-badge">ECONOMY</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">入驻企业</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="company" style="width:10%"></div></div>
+        <span class="metric-value" data-metric="company-val">50<span class="metric-unit">家</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">引进人才</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="talent" style="width:8%"></div></div>
+        <span class="metric-value" data-metric="talent-val">5<span class="metric-unit">万人</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">创新平台</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="platform" style="width:5%"></div></div>
+        <span class="metric-value" data-metric="platform-val">3<span class="metric-unit">个</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">专利数量</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="patent" style="width:8%"></div></div>
+        <span class="metric-value" data-metric="patent-val">80<span class="metric-unit">项</span></span>
+      </div>
+    </div>
+
+    <!-- 人文非遗 -->
+    <div class="data-panel culture-panel reveal" data-category="culture">
+      <div class="panel-header">
+        <div class="panel-title"><span class="icon">🎭</span>人文非遗</div>
+        <span class="panel-badge">CULTURE</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">非遗项目</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="heritage" style="width:60%"></div></div>
+        <span class="metric-value" data-metric="heritage-val">6<span class="metric-unit">项</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">数字化率</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="digitize" style="width:10%"></div></div>
+        <span class="metric-value" data-metric="digitize-val">10<span class="metric-unit">%</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">传承人</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="inheritor" style="width:55%"></div></div>
+        <span class="metric-value" data-metric="inheritor-val">42<span class="metric-unit">人</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">文化活动</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="event" style="width:30%"></div></div>
+        <span class="metric-value" data-metric="event-val">15<span class="metric-unit">场/年</span></span>
+      </div>
+    </div>
+
+    <!-- 城市建筑 -->
+    <div class="data-panel city-panel reveal" data-category="city">
+      <div class="panel-header">
+        <div class="panel-title"><span class="icon">🏗️</span>城市建筑</div>
+        <span class="panel-badge">CITY</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">建筑面积</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="building" style="width:15%"></div></div>
+        <span class="metric-value" data-metric="building-val">200<span class="metric-unit">万m²</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">道路里程</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="road" style="width:20%"></div></div>
+        <span class="metric-value" data-metric="road-val">150<span class="metric-unit">km</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">IoT 传感器</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="iot" style="width:5%"></div></div>
+        <span class="metric-value" data-metric="iot-val">0.5<span class="metric-unit">万个</span></span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">数字覆盖率</span>
+        <div class="metric-bar"><div class="metric-bar-fill" data-metric="coverage" style="width:10%"></div></div>
+        <span class="metric-value" data-metric="coverage-val">10<span class="metric-unit">%</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 数字孪生应用场景 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">APPLICATION SCENARIOS</div>
+    <h2 class="section-title">数字孪生应用场景</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="scenario-grid">
+    <div class="scenario-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/twin-panel-01.webp" alt="智能交通" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.2);">
+      </div>
+      <div class="card-body">
+        <h4>交通管理</h4>
+        <p>基于数字孪生平台实时监测全域交通流量，通过 AI 算法优化信号灯配时，实现拥堵预测与智能疏导。</p>
+        <div class="scenario-tags">
+          <span>车流热力图</span>
+          <span>信号优化</span>
+          <span>拥堵预测</span>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/twin-panel-02.webp" alt="环境监测" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.2);">
+      </div>
+      <div class="card-body">
+        <h4>环境监测</h4>
+        <p>部署全域环境传感器网络，实时采集空气质量、噪音水平、水质指标等数据，构建生态环境数字镜像。</p>
+        <div class="scenario-tags">
+          <span>空气质量</span>
+          <span>噪音监测</span>
+          <span>水质追踪</span>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/twin-panel-03.webp" alt="城市调度" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.2);">
+      </div>
+      <div class="card-body">
+        <h4>应急管理</h4>
+        <p>在数字孪生空间中进行应急预案模拟演练，模拟洪涝、火灾等突发场景，优化应急响应流程。</p>
+        <div class="scenario-tags">
+          <span>预案模拟</span>
+          <span>应急调度</span>
+          <span>风险评估</span>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/twin-panel-04.webp" alt="智慧能源" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.2);">
+      </div>
+      <div class="card-body">
+        <h4>能源管理</h4>
+        <p>实时监测区域能耗与可再生能源发电数据，通过数字孪生模型优化能源调配策略，助力碳中和目标。</p>
+        <div class="scenario-tags">
+          <span>能耗监测</span>
+          <span>清洁能源</span>
+          <span>碳中和</span>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/twin-panel-05.webp" alt="市民服务" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.2);">
+      </div>
+      <div class="card-body">
+        <h4>公共服务</h4>
+        <p>整合政务、医疗、教育等公共服务数据，通过数字孪生平台实现服务资源可视化调配。</p>
+        <div class="scenario-tags">
+          <span>政务服务</span>
+          <span>医疗教育</span>
+          <span>满意度</span>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-card reveal">
+      <div class="card-visual">
+        <img src="vibe_images/twin-panel-06.webp" alt="非遗数字孪生" style="width:100%;display:block;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.2);">
+      </div>
+      <div class="card-body">
+        <h4>文化遗产</h4>
+        <p>将非遗器物与技艺纳入数字孪生体系，通过三维建模与虚拟现实技术，实现非遗文化的数字化永久保存。</p>
+        <div class="scenario-tags">
+          <span>三维建模</span>
+          <span>虚拟展示</span>
+          <span>数字保存</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 建设历程时间线 -->
+<section class="section timeline-section">
+  <div class="section-header reveal">
+    <div class="section-tag">MILESTONES</div>
+    <h2 class="section-title">数字孪生建设历程</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline-wrap reveal">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2017</div>
+        <h4>新区设立，数字孪生概念提出</h4>
+        <p>雄安新区正式设立，在规划之初即引入数字孪生理念，提出"物理城市与数字城市同步规划、同步建设"的创新方针。</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2019</div>
+        <h4>数字孪生城市总体规划发布</h4>
+        <p>《雄安新区数字孪生城市建设总体规划》正式发布，明确了"一中心四平台"的技术架构。</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2021</div>
+        <h4>启动区数字模型初步建成</h4>
+        <p>启动区核心区域的高精度三维数字模型初步建成，实现建筑级 LOD3 精度覆盖，首批物联网传感器接入平台。</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2023</div>
+        <h4>全域数字孪生平台上线运行</h4>
+        <p>覆盖雄安新区全域的数字孪生平台正式上线运行，整合超过 10 万个物联网传感器数据。</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2024</div>
+        <h4>AI 赋能数字孪生升级</h4>
+        <p>引入大语言模型与多模态 AI 技术，实现数字孪生平台的智能化升级，支持自然语言交互查询与智能预警。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 智慧城市面板 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">SMART CITY</div>
+    <h2 class="section-title">智慧城市管理中枢</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="smart-grid">
+    <div class="smart-text reveal">
+      <h3>数字大脑赋能城市治理</h3>
+      <p>雄安新区数字孪生大屏作为智慧城市的"数字大脑"，整合城市规划、交通管理、环境监测、公共服务等多维度数据，实现城市运行状态的全面感知与智能决策。</p>
+      <p>通过物联网传感器网络、5G 通信基站和 AI 算法引擎，城市管理者可以实时掌握城市运行脉搏，精准调配公共资源。</p>
+      <div class="smart-features">
+        <div class="smart-feature">
+          <span class="feat-icon">📡</span>
+          <div class="feat-title">物联网感知</div>
+          <div class="feat-desc">10万+传感器节点全域覆盖</div>
+        </div>
+        <div class="smart-feature">
+          <span class="feat-icon">🚀</span>
+          <div class="feat-title">5G 通信</div>
+          <div class="feat-desc">毫秒级数据传输响应</div>
+        </div>
+        <div class="smart-feature">
+          <span class="feat-icon">🧠</span>
+          <div class="feat-title">AI 决策</div>
+          <div class="feat-desc">智能算法辅助城市管理</div>
+        </div>
+        <div class="smart-feature">
+          <span class="feat-icon">🔗</span>
+          <div class="feat-title">区块链存证</div>
+          <div class="feat-desc">数据可信溯源与安全保障</div>
+        </div>
+      </div>
+    </div>
+    <div class="smart-visual reveal">
+      <img src="vibe_images/twin-hero.webp" alt="指挥中心" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+  </div>
+</section>
+
+<!-- 技术指标 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">TECH SPECS</div>
+    <h2 class="section-title">数字孪生技术指标</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-card reveal">
+      <h4>模型精度</h4>
+      <div class="tech-bar"><div class="tech-bar-fill" style="width:95%"></div></div>
+      <div class="tech-desc">城市建筑模型精度达 95%，支持 LOD1-LOD4 多级细节展示，满足宏观规划与微观管理双重需求</div>
+    </div>
+    <div class="tech-card reveal">
+      <h4>数据刷新频率</h4>
+      <div class="tech-bar"><div class="tech-bar-fill" style="width:90%"></div></div>
+      <div class="tech-desc">核心数据秒级刷新，环境数据分钟级更新，确保数字孪生体与物理城市的高度同步</div>
+    </div>
+    <div class="tech-card reveal">
+      <h4>系统可用性</h4>
+      <div class="tech-bar"><div class="tech-bar-fill" style="width:99%"></div></div>
+      <div class="tech-desc">系统可用性达 99.9%，支持多终端自适应展示，7×24 小时不间断运行保障</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 底部纹样 -->
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<!-- 数字人 -->
+<div class="digital-human">
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header">
+      <span class="dh-panel-title">AI 数字人助手</span>
+      <button class="dh-panel-close" onclick="toggleDH()">✕</button>
+    </div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab active" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">城市规划师：</span>你好！我是雄安城市规划师，专注于数字孪生城市、智慧城市建设与新区发展规划。</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+<script>
+// ===== 时空演化数据 =====
+const yearData = {
+  2000: {
+    desc: '白洋淀水乡原生态风貌，传统农业经济为主',
+    eco: { water: 'Ⅳ', waterPct: 25, green: 25, greenPct: 25, wetland: 180, wetlandPct: 35, bio: 120, bioPct: 30 },
+    econ: { company: 50, companyPct: 5, talent: 5, talentPct: 5, platform: 3, platformPct: 5, patent: 80, patentPct: 5 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 5, digitizePct: 5, inheritor: 45, inheritorPct: 55, event: 10, eventPct: 20 },
+    city: { building: 200, buildingPct: 8, road: 150, roadPct: 10, iot: 0.5, iotPct: 2, coverage: 5, coveragePct: 5 }
+  },
+  2005: {
+    desc: '白洋淀生态治理起步，传统村落文化保存完好',
+    eco: { water: 'Ⅳ', waterPct: 28, green: 28, greenPct: 28, wetland: 185, wetlandPct: 36, bio: 128, bioPct: 32 },
+    econ: { company: 80, companyPct: 8, talent: 8, talentPct: 7, platform: 5, platformPct: 8, patent: 150, patentPct: 8 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 8, digitizePct: 8, inheritor: 44, inheritorPct: 53, event: 12, eventPct: 24 },
+    city: { building: 350, buildingPct: 12, road: 250, roadPct: 15, iot: 1, iotPct: 3, coverage: 8, coveragePct: 8 }
+  },
+  2010: {
+    desc: '区域协同发展推进，生态治理初见成效',
+    eco: { water: 'Ⅲ-Ⅳ', waterPct: 38, green: 32, greenPct: 32, wetland: 190, wetlandPct: 38, bio: 138, bioPct: 35 },
+    econ: { company: 120, companyPct: 12, talent: 12, talentPct: 10, platform: 8, platformPct: 12, patent: 280, patentPct: 15 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 12, digitizePct: 12, inheritor: 43, inheritorPct: 52, event: 18, eventPct: 30 },
+    city: { building: 600, buildingPct: 18, road: 400, roadPct: 22, iot: 2, iotPct: 5, coverage: 12, coveragePct: 12 }
+  },
+  2013: {
+    desc: '雄安三县经济稳步发展，非遗项目活跃传承中',
+    eco: { water: 'Ⅲ-Ⅳ', waterPct: 40, green: 35, greenPct: 35, wetland: 195, wetlandPct: 40, bio: 142, bioPct: 36 },
+    econ: { company: 180, companyPct: 16, talent: 15, talentPct: 12, platform: 10, platformPct: 15, patent: 380, patentPct: 20 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 15, digitizePct: 15, inheritor: 42, inheritorPct: 50, event: 25, eventPct: 38 },
+    city: { building: 900, buildingPct: 25, road: 550, roadPct: 28, iot: 3, iotPct: 8, coverage: 18, coveragePct: 15 }
+  },
+  2017: {
+    desc: '雄安新区正式设立，物理城市与数字城市同步规划启动',
+    eco: { water: 'Ⅲ', waterPct: 50, green: 38, greenPct: 38, wetland: 200, wetlandPct: 42, bio: 155, bioPct: 40 },
+    econ: { company: 200, companyPct: 20, talent: 18, talentPct: 15, platform: 12, platformPct: 18, patent: 500, patentPct: 28 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 20, digitizePct: 20, inheritor: 42, inheritorPct: 50, event: 30, eventPct: 42 },
+    city: { building: 1200, buildingPct: 30, road: 700, roadPct: 35, iot: 5, iotPct: 12, coverage: 25, coveragePct: 22 }
+  },
+  2020: {
+    desc: '启动区全面建设，数字孪生平台架构初步搭建',
+    eco: { water: 'Ⅲ', waterPct: 58, green: 48, greenPct: 48, wetland: 210, wetlandPct: 50, bio: 168, bioPct: 45 },
+    econ: { company: 260, companyPct: 35, talent: 28, talentPct: 28, platform: 25, platformPct: 35, patent: 900, patentPct: 42 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 35, digitizePct: 35, inheritor: 40, inheritorPct: 48, event: 20, eventPct: 35 },
+    city: { building: 2500, buildingPct: 45, road: 1200, roadPct: 50, iot: 20, iotPct: 30, coverage: 40, coveragePct: 38 }
+  },
+  2023: {
+    desc: '全域数字孪生平台上线，千年秀林与白洋淀生态修复成效显著',
+    eco: { water: 'Ⅲ', waterPct: 68, green: 60, greenPct: 60, wetland: 225, wetlandPct: 62, bio: 190, bioPct: 55 },
+    econ: { company: 320, companyPct: 55, talent: 38, talentPct: 48, platform: 42, platformPct: 58, patent: 1500, patentPct: 60 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 55, digitizePct: 55, inheritor: 38, inheritorPct: 45, event: 35, eventPct: 52 },
+    city: { building: 4200, buildingPct: 65, road: 2000, roadPct: 68, iot: 50, iotPct: 55, coverage: 60, coveragePct: 58 }
+  },
+  2025: {
+    desc: '雄安基本建成绿色智慧新城，数字孪生全域深度覆盖',
+    eco: { water: 'Ⅲ', waterPct: 75, green: 68, greenPct: 68, wetland: 232, wetlandPct: 72, bio: 210, bioPct: 65 },
+    econ: { company: 360, companyPct: 70, talent: 45, talentPct: 62, platform: 55, platformPct: 72, patent: 2200, patentPct: 75 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 72, digitizePct: 72, inheritor: 50, inheritorPct: 58, event: 48, eventPct: 65 },
+    city: { building: 5800, buildingPct: 78, road: 2800, roadPct: 80, iot: 80, iotPct: 72, coverage: 75, coveragePct: 72 }
+  },
+  2030: {
+    desc: '现代化经济体系全面形成，非遗数字化保护体系成熟',
+    eco: { water: 'Ⅱ-Ⅲ', waterPct: 85, green: 75, greenPct: 75, wetland: 240, wetlandPct: 82, bio: 235, bioPct: 78 },
+    econ: { company: 400, companyPct: 82, talent: 55, talentPct: 78, platform: 68, platformPct: 85, patent: 3200, patentPct: 88 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 88, digitizePct: 88, inheritor: 65, inheritorPct: 72, event: 60, eventPct: 78 },
+    city: { building: 7500, buildingPct: 88, road: 3500, roadPct: 90, iot: 120, iotPct: 88, coverage: 88, coveragePct: 85 }
+  },
+  2035: {
+    desc: '雄安建成高水平社会主义现代化城市，数字孪生全面赋能',
+    eco: { water: 'Ⅱ', waterPct: 92, green: 82, greenPct: 82, wetland: 250, wetlandPct: 90, bio: 260, bioPct: 88 },
+    econ: { company: 450, companyPct: 92, talent: 65, talentPct: 90, platform: 80, platformPct: 95, patent: 4500, patentPct: 95 },
+    culture: { heritage: 6, heritagePct: 60, digitize: 95, digitizePct: 95, inheritor: 80, inheritorPct: 88, event: 80, eventPct: 90 },
+    city: { building: 9000, buildingPct: 95, road: 4200, roadPct: 95, iot: 150, iotPct: 95, coverage: 95, coveragePct: 95 }
+  }
+};
+
+const keyYears = [2000, 2005, 2010, 2013, 2017, 2020, 2023, 2025, 2030, 2035];
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+function getInterpolatedData(year) {
+  let lower = keyYears[0], upper = keyYears[keyYears.length - 1];
+  for (let i = 0; i < keyYears.length - 1; i++) {
+    if (year >= keyYears[i] && year <= keyYears[i + 1]) {
+      lower = keyYears[i];
+      upper = keyYears[i + 1];
+      break;
+    }
+  }
+  if (lower === upper) return yearData[lower];
+
+  const t = (year - lower) / (upper - lower);
+  const dL = yearData[lower];
+  const dU = yearData[upper];
+
+  function lerpCat(cat) {
+    const result = {};
+    for (const key of Object.keys(dL[cat])) {
+      const vL = dL[cat][key];
+      const vU = dU[cat][key];
+      if (typeof vL === 'number') {
+        result[key] = Math.round(lerp(vL, vU, t));
+      } else {
+        result[key] = t < 0.5 ? vL : vU;
+      }
+    }
+    return result;
+  }
+
+  return {
+    desc: t < 0.5 ? dL.desc : dU.desc,
+    eco: lerpCat('eco'),
+    econ: lerpCat('econ'),
+    culture: lerpCat('culture'),
+    city: lerpCat('city')
+  };
+}
+
+function updateDashboard(year) {
+  const data = getInterpolatedData(year);
+  document.getElementById('yearDisplay').textContent = year;
+  document.getElementById('yearDesc').textContent = data.desc;
+
+  // 生态
+  const eco = data.eco;
+  updateMetric('water', eco.waterPct);
+  document.querySelector('[data-metric="water-val"]').innerHTML = eco.water + '<span class="metric-unit">类</span>';
+  updateMetric('green', eco.greenPct);
+  document.querySelector('[data-metric="green-val"]').innerHTML = eco.green + '<span class="metric-unit">%</span>';
+  updateMetric('wetland', eco.wetlandPct);
+  document.querySelector('[data-metric="wetland-val"]').innerHTML = eco.wetland + '<span class="metric-unit">km²</span>';
+  updateMetric('bio', eco.bioPct);
+  document.querySelector('[data-metric="bio-val"]').innerHTML = eco.bio + '<span class="metric-unit">种</span>';
+
+  // 经济
+  const econ = data.econ;
+  updateMetric('company', econ.companyPct);
+  document.querySelector('[data-metric="company-val"]').innerHTML = econ.company + '<span class="metric-unit">家</span>';
+  updateMetric('talent', econ.talentPct);
+  document.querySelector('[data-metric="talent-val"]').innerHTML = econ.talent + '<span class="metric-unit">万人</span>';
+  updateMetric('platform', econ.platformPct);
+  document.querySelector('[data-metric="platform-val"]').innerHTML = econ.platform + '<span class="metric-unit">个</span>';
+  updateMetric('patent', econ.patentPct);
+  document.querySelector('[data-metric="patent-val"]').innerHTML = econ.patent + '<span class="metric-unit">项</span>';
+
+  // 文化
+  const culture = data.culture;
+  updateMetric('heritage', culture.heritagePct);
+  document.querySelector('[data-metric="heritage-val"]').innerHTML = culture.heritage + '<span class="metric-unit">项</span>';
+  updateMetric('digitize', culture.digitizePct);
+  document.querySelector('[data-metric="digitize-val"]').innerHTML = culture.digitize + '<span class="metric-unit">%</span>';
+  updateMetric('inheritor', culture.inheritorPct);
+  document.querySelector('[data-metric="inheritor-val"]').innerHTML = culture.inheritor + '<span class="metric-unit">人</span>';
+  updateMetric('event', culture.eventPct);
+  document.querySelector('[data-metric="event-val"]').innerHTML = culture.event + '<span class="metric-unit">场/年</span>';
+
+  // 城市
+  const city = data.city;
+  updateMetric('building', city.buildingPct);
+  document.querySelector('[data-metric="building-val"]').innerHTML = city.building + '<span class="metric-unit">万m²</span>';
+  updateMetric('road', city.roadPct);
+  document.querySelector('[data-metric="road-val"]').innerHTML = city.road + '<span class="metric-unit">km</span>';
+  updateMetric('iot', city.iotPct);
+  document.querySelector('[data-metric="iot-val"]').innerHTML = city.iot + '<span class="metric-unit">万个</span>';
+  updateMetric('coverage', city.coveragePct);
+  document.querySelector('[data-metric="coverage-val"]').innerHTML = city.coverage + '<span class="metric-unit">%</span>';
+}
+
+function updateMetric(name, pct) {
+  const bar = document.querySelector(`[data-metric="${name}"]`);
+  if (bar) bar.style.width = pct + '%';
+}
+
+// 滑块事件
+const slider = document.getElementById('yearSlider');
+slider.addEventListener('input', () => {
+  updateDashboard(parseInt(slider.value));
+});
+
+// 自动播放
+let autoPlayInterval = null;
+const autoPlayBtn = document.getElementById('autoPlayBtn');
+autoPlayBtn.addEventListener('click', () => {
+  if (autoPlayInterval) {
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = null;
+    autoPlayBtn.classList.remove('playing');
+    autoPlayBtn.querySelector('.play-text').textContent = '自动播放';
+  } else {
+    autoPlayBtn.classList.add('playing');
+    autoPlayBtn.querySelector('.play-text').textContent = '暂停';
+    if (parseInt(slider.value) >= 2035) slider.value = 2000;
+    autoPlayInterval = setInterval(() => {
+      let val = parseInt(slider.value) + 1;
+      if (val > 2035) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+        autoPlayBtn.classList.remove('playing');
+        autoPlayBtn.querySelector('.play-text').textContent = '自动播放';
+        return;
+      }
+      slider.value = val;
+      updateDashboard(val);
+    }, 150);
+  }
+});
+
+// 分类按钮
+document.querySelectorAll('.cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    document.querySelectorAll('.data-panel').forEach(panel => {
+      if (cat === 'all') {
+        panel.style.display = '';
+        panel.style.opacity = '1';
+      } else {
+        if (panel.dataset.category === cat) {
+          panel.style.display = '';
+          panel.style.opacity = '1';
+        } else {
+          panel.style.opacity = '0.15';
+        }
+      }
+    });
+  });
+});
+
+// 初始化
+updateDashboard(2017);
+
+// ===== 时间线滚动动画 =====
+(function() {
+  const items = document.querySelectorAll('.timeline-item');
+  if (!items.length) return;
+  items.forEach(item => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(30px)';
+    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  });
+  const tlObserver = new IntersectionObserver((entries) => {
+    const visible = entries.filter(e => e.isIntersecting);
+    visible.forEach((entry, i) => {
+      setTimeout(() => {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }, i * 150);
+      tlObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.15 });
+  items.forEach(item => tlObserver.observe(item));
+})();
+
+// ===== 时间线节点脉冲 =====
+(function() {
+  const dots = document.querySelectorAll('.timeline-dot');
+  dots.forEach((dot, i) => {
+    dot.style.animation = `pulse 2s ease-in-out ${i * 0.3}s infinite`;
+  });
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(245,224,184,0.4), 0 0 0 0 rgba(245,224,184,0.3); }
+      50% { box-shadow: 0 0 16px rgba(245,224,184,0.6), 0 0 0 8px rgba(245,224,184,0); }
+    }
+  `;
+  document.head.appendChild(style);
+})();
+
+// ===== 时间线卡片鼠标光效 =====
+(function() {
+  document.querySelectorAll('.timeline-content').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(245,224,184,0.06), var(--dt-panel) 60%)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.background = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>

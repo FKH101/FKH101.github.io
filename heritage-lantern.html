@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="双堂盒子灯，省级非物质文化遗产。雄县双堂村传统花灯技艺。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23f5efe4'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%232c2a27' font-weight='bold'>雄</text></svg>">
+<title>双堂盒子灯 · 非遗博览</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+.page-hero { position: relative; height: 55vh; display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2; margin-top: 72px; }
+.page-hero-bg { position: absolute; inset: 0; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.1) 0%, rgba(253,248,240,0.65) 100%); z-index: 1; }
+.page-hero-content { position: relative; z-index: 2; text-align: center; }
+.page-hero-content h1 { font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #8b4513, #cd853f, #B5413E, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 8px; filter: drop-shadow(0 0 30px rgba(205,133,63,0.2)); }
+.page-hero-content p { margin-top: 18px; font-size: 17px; color: var(--text-dim); letter-spacing: 5px; }
+.page-hero-content .badge { display: inline-block; margin-top: 16px; padding: 6px 20px; border: 1px solid #cd853f; border-radius: 20px; font-size: 12px; color: #cd853f; letter-spacing: 3px; }
+
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; padding: 80px 0; }
+.detail-grid.reverse { direction: rtl; }
+.detail-grid.reverse > * { direction: ltr; }
+.detail-text h3 { font-size: 28px; color: var(--gold-primary); margin-bottom: 20px; letter-spacing: 3px; }
+.detail-text p { font-size: 15px; color: var(--text-secondary); line-height: 2.2; margin-bottom: 16px; }
+
+/* 机关拆解 */
+.mechanism-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.mechanism-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 32px; text-align: center; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.mechanism-card:hover { border-color: var(--border-gold-hover); transform: translateY(-6px); }
+.mechanism-card .mech-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+.mechanism-card h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 12px; letter-spacing: 2px; }
+.mechanism-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 分层结构 */
+.layers-container { position: relative; max-width: 600px; margin: 0 auto; }
+.layer-item {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  padding: 24px 28px; margin-bottom: 16px; display: flex; align-items: center; gap: 20px;
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.layer-item:hover { border-color: var(--border-gold-hover); transform: translateX(8px); }
+.layer-num { font-size: 28px; font-weight: 900; color: rgba(181,65,62,0.2); min-width: 50px; }
+.layer-info h4 { font-size: 17px; color: var(--gold-primary); margin-bottom: 6px; letter-spacing: 2px; }
+.layer-info p { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+
+.steps-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.step-mini { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 12px; padding: 20px 16px; text-align: center; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
+.step-mini:hover { border-color: var(--border-gold-hover); }
+.step-mini .s-num { font-size: 24px; font-weight: 900; color: rgba(181,65,62,0.2); margin-bottom: 8px; }
+.step-mini h5 { font-size: 14px; color: var(--gold-primary); margin-bottom: 6px; letter-spacing: 1px; }
+.step-mini p { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+/* 过渡横幅 */
+.transition-banner { padding: 0; margin: 0; }
+.transition-banner .img-placeholder { border-radius: 0; min-height: 28vh; }
+
+/* 灯型展示 */
+.lantern-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.lantern-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.lantern-card:hover { border-color: var(--border-gold-hover); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08); }
+.lantern-card .lantern-img { width: 100%; }
+.lantern-card .lantern-info { padding: 24px; }
+.lantern-card .lantern-info h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.lantern-card .lantern-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 匠人访谈 */
+.interview-container {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  padding: 40px; max-width: 900px; margin: 0 auto;
+}
+.interview-header { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid var(--border-gold); }
+.interview-portrait { width: 140px; }
+.interview-name h4 { font-size: 22px; color: var(--gold-primary); margin-bottom: 6px; letter-spacing: 2px; }
+.interview-name p { font-size: 14px; color: #cd853f; letter-spacing: 1px; }
+.qa-item { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid rgba(181,65,62,0.1); }
+.qa-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.qa-q { font-size: 16px; color: var(--gold-primary); margin-bottom: 12px; letter-spacing: 1px; font-weight: 700; }
+.qa-q::before { content: "Q"; display: inline-block; width: 28px; height: 28px; line-height: 28px; text-align: center; background: rgba(205,133,63,0.15); border-radius: 6px; font-size: 13px; margin-right: 10px; color: #cd853f; }
+.qa-a { font-size: 14px; color: var(--text-secondary); line-height: 2; padding-left: 38px; }
+.qa-a::before { content: "A"; display: inline-block; width: 28px; height: 28px; line-height: 28px; text-align: center; background: rgba(181,65,62,0.1); border-radius: 6px; font-size: 13px; margin-right: 10px; color: var(--gold-primary); float: left; margin-left: -38px; }
+
+/* 纹样赏析 */
+.pattern-grid-lantern { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.pattern-card-lantern {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  overflow: hidden; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.pattern-card-lantern:hover { border-color: var(--border-gold-hover); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(181,65,62,0.12), 0 4px 16px rgba(212,162,78,0.08); }
+.pattern-card-lantern .pattern-img { width: 100%; }
+.pattern-card-lantern .pattern-info { padding: 20px; text-align: center; }
+.pattern-card-lantern .pattern-info h4 { font-size: 16px; color: var(--gold-primary); margin-bottom: 8px; letter-spacing: 2px; }
+.pattern-card-lantern .pattern-info p { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 1024px) {
+  .page-hero { height: 45vh; }
+  .page-hero-content h1 { font-size: 40px; letter-spacing: 5px; }
+  .page-hero-content p { font-size: 15px; letter-spacing: 3px; }
+  .detail-grid { gap: 32px; padding: 60px 0; }
+  .detail-text h3 { font-size: 24px; }
+  .mechanism-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .lantern-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .steps-row { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .pattern-grid-lantern { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .interview-container { padding: 32px; }
+}
+
+@media (max-width: 768px) {
+  .page-hero { height: 38vh; margin-top: 60px; }
+  .page-hero-content h1 { font-size: 30px; letter-spacing: 4px; }
+  .page-hero-content p { font-size: 14px; letter-spacing: 2px; margin-top: 12px; }
+  .page-hero-content .badge { font-size: 11px; padding: 5px 16px; }
+  .detail-grid { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+  .detail-grid.reverse { direction: ltr; }
+  .detail-text h3 { font-size: 22px; }
+  .detail-text p { font-size: 14px; line-height: 2; }
+  .mechanism-grid { grid-template-columns: 1fr; gap: 18px; }
+  .mechanism-card { padding: 24px; }
+  .mechanism-card h4 { font-size: 17px; }
+  .layers-container { max-width: 100%; }
+  .layer-item { padding: 18px 20px; gap: 14px; }
+  .layer-num { font-size: 22px; min-width: 40px; }
+  .layer-info h4 { font-size: 15px; }
+  .layer-info p { font-size: 12px; }
+  .steps-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .step-mini { padding: 16px 12px; }
+  .lantern-grid { grid-template-columns: 1fr; gap: 18px; }
+  .lantern-card .lantern-info { padding: 20px; }
+  .lantern-card .lantern-info h4 { font-size: 17px; }
+  .interview-container { padding: 24px; }
+  .interview-header { grid-template-columns: 1fr; gap: 16px; text-align: center; }
+  .interview-portrait { width: 100px; margin: 0 auto; }
+  .interview-portrait img { width: 100px !important; height: 100px !important; }
+  .interview-name h4 { font-size: 20px; }
+  .qa-q { font-size: 15px; }
+  .qa-a { font-size: 13px; padding-left: 38px; }
+  .pattern-grid-lantern { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .transition-banner .img-placeholder { min-height: 20vh; }
+}
+
+@media (max-width: 480px) {
+  .page-hero { height: 32vh; }
+  .page-hero-content h1 { font-size: 24px; letter-spacing: 3px; }
+  .page-hero-content p { font-size: 12px; letter-spacing: 1px; }
+  .page-hero-content .badge { font-size: 10px; padding: 4px 12px; letter-spacing: 2px; }
+  .detail-grid { gap: 18px; padding: 30px 0; }
+  .detail-text h3 { font-size: 20px; letter-spacing: 2px; }
+  .detail-text p { font-size: 13px; line-height: 1.9; }
+  .mechanism-card { padding: 20px; }
+  .mechanism-card .mech-icon { font-size: 32px; }
+  .mechanism-card h4 { font-size: 16px; }
+  .layer-item { padding: 14px 16px; gap: 12px; flex-direction: column; text-align: center; }
+  .layer-num { font-size: 20px; }
+  .steps-row { grid-template-columns: 1fr; gap: 10px; }
+  .step-mini { padding: 14px 10px; }
+  .step-mini .s-num { font-size: 20px; }
+  .lantern-card .lantern-info { padding: 16px; }
+  .interview-container { padding: 18px; }
+  .qa-q { font-size: 14px; }
+  .qa-a { font-size: 12px; }
+  .pattern-grid-lantern { grid-template-columns: 1fr; gap: 14px; }
+  .pattern-card-lantern .pattern-info { padding: 16px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #B5413E, #D4A24E, #B5413E);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-icon">雄</div><span class="nav-logo-text">数绘雄州</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item"><a href="heritage.html" class="nav-link active">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <a href="heritage.html">非遗博览</a>
+  <span class="sep">/</span>
+  <span class="current">双堂盒子灯</span>
+</div>
+
+<!-- 灯火全景 -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="vibe_images/lantern-hero-01.webp" alt="盒子灯全景" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1 class="page-hero-title">双堂盒子灯</h1>
+    <p>机关巧夺天工 · 灯火映照千年</p>
+    <span class="badge">省级非物质文化遗产</span>
+  </div>
+</section>
+
+<!-- 历史溯源 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">HISTORY</div>
+    <h2 class="section-title">历史溯源</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-text reveal">
+      <h3>灯彩艺术的机械奇迹</h3>
+      <p>双堂盒子灯起源于明清时期的冀中平原，是华北地区最具特色的传统灯彩艺术之一。"双堂"指灯体分为内外两层，"盒子"形容其层层嵌套的结构特点。</p>
+      <p>盒子灯的制作融合了纸扎、木工、机械、绘画等多种技艺，灯体由竹木框架支撑，外彩绘纸面，内部设置精巧的机械传动装置。点燃后，各层灯体依次旋转展开，呈现"灯中有灯、景中有景"的奇妙效果。</p>
+      <p>每逢元宵佳节，双堂盒子灯便是庙会上的主角。一盏大型盒子灯可高达数米，层层展开后呈现戏曲人物、花鸟鱼虫、神话故事等丰富场景，令人叹为观止。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/lantern-history-01.webp" alt="庙会盒子灯" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/lantern-banner-01.webp" alt="灯彩长卷" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 灯彩文化 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">LANTERN CULTURE</div>
+    <h2 class="section-title">灯彩文化</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="reveal" style="margin-bottom: 40px;">
+    <img src="vibe_images/lantern-culture-01.webp" alt="庙会灯会" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+  <div class="detail-grid">
+    <div class="detail-text reveal">
+      <h3>灯火里的华夏文明</h3>
+      <p>中国灯彩艺术源远流长，始于汉代，兴于唐宋，盛于明清。从最初的照明实用功能，逐渐演变为集工艺美学、机械巧思、民俗文化于一体的综合性艺术形式。花灯不仅是节庆的装饰，更承载着人们对光明、团圆、吉祥的美好祈愿。</p>
+      <p>华北地区的灯彩文化尤具特色。每逢元宵佳节，从城镇到乡村，处处张灯结彩。庙会灯市是百姓最重要的文化娱乐活动之一，各式花灯争奇斗艳——宫灯庄重典雅、走马灯灵动有趣、龙灯气势磅礴、盒子灯机关精妙，共同构成了华北民间灯彩的璀璨画卷。</p>
+      <p>灯彩制作技艺涵盖了竹扎、纸糊、绸裱、彩绘、剪纸、机械传动等多种传统工艺，是民间智慧的集中体现。2008年，灯彩艺术被列入国家级非物质文化遗产名录，双堂盒子灯作为华北灯彩的杰出代表，以其独特的机械结构在众多灯彩技艺中独树一帜。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/lantern-culture-02.webp" alt="古代灯会" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/lantern-banner-02.webp" alt="四种灯型" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 经典灯型展示 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">LANTERN TYPES</div>
+    <h2 class="section-title">经典灯型展示</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="lantern-grid">
+    <div class="lantern-card reveal">
+      <div class="lantern-img"><img src="vibe_images/lantern-type-01.webp" alt="六角宫灯" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="lantern-info">
+        <h4>六角宫灯</h4>
+        <p>六面体框架结构，每面裱糊绢纱并绘制山水花鸟图案。灯体庄重典雅，底部垂挂丝质流苏，是传统节庆与宫廷装饰的标志性灯具。制作讲究对称之美，六面图案相互呼应。</p>
+      </div>
+    </div>
+    <div class="lantern-card reveal">
+      <div class="lantern-img"><img src="vibe_images/lantern-type-02.webp" alt="走马灯" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="lantern-info">
+        <h4>走马灯</h4>
+        <p>利用热气流驱动内部转轮旋转，使灯面上的剪纸人物连续投射在灯纱上，形成"灯转景移"的动态效果。常见题材有三国故事、西游记等，是中国最早的"动画"装置之一。</p>
+      </div>
+    </div>
+    <div class="lantern-card reveal">
+      <div class="lantern-img"><img src="vibe_images/lantern-type-03.webp" alt="龙灯" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="lantern-info">
+        <h4>龙灯</h4>
+        <p>以竹篾扎制龙身骨架，外覆绸布并绘鳞甲纹样，每节内置烛光或LED灯源。舞龙时，龙身随鼓乐起伏翻腾，在夜色中呈现巨龙飞舞的壮观景象，是庙会庆典的重头节目。</p>
+      </div>
+    </div>
+    <div class="lantern-card reveal">
+      <div class="lantern-img"><img src="vibe_images/lantern-type-04.webp" alt="盒子灯" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="lantern-info">
+        <h4>盒子灯</h4>
+        <p>双堂盒子灯是华北灯彩的巅峰之作。灯体由多层嵌套结构组成，点燃后各层依次旋转展开，呈现"灯中有灯、景中有景"的奇妙效果。大型盒子灯高达数米，展开后呈现戏曲人物、神话故事等丰富场景。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/lantern-banner-03.webp" alt="灯匠工坊" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 机械机关拆解 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MECHANISM</div>
+    <h2 class="section-title">机械机关拆解</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="mechanism-grid">
+    <div class="mechanism-card reveal">
+      <img src="vibe_images/lantern-mech-01.webp" alt="齿轮传动" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:16px;display:block;">
+      <h4>齿轮传动系统</h4>
+      <p>灯体内部设置精密木质齿轮组，通过热力驱动或手动旋转，实现各层灯体的有序转动。齿轮咬合精度决定运转的流畅度。</p>
+    </div>
+    <div class="mechanism-card reveal">
+      <img src="vibe_images/lantern-mech-02.webp" alt="分层展开" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:16px;display:block;">
+      <h4>分层展开机构</h4>
+      <p>采用伞骨式展开结构，各层灯体由内向外依次展开，如同花朵绽放。每层展开角度经过精确计算，确保互不干涉。</p>
+    </div>
+    <div class="mechanism-card reveal">
+      <img src="vibe_images/lantern-mech-03.webp" alt="热力驱动" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:16px;display:block;">
+      <h4>热力驱动装置</h4>
+      <p>利用蜡烛或油灯的热力产生上升气流，驱动顶部风车旋转，进而带动齿轮系统运转。这是古人智慧的热力学应用。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 分层结构科普 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">STRUCTURE</div>
+    <h2 class="section-title">分层结构科普</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="layers-container">
+    <div class="layer-item reveal">
+      <div class="layer-num">L1</div>
+      <div class="layer-info"><h4>基座层</h4><p>竹木框架搭建的稳固底座，承载整盏灯的重量，底部设置蜡烛或油灯位置。</p></div>
+    </div>
+    <div class="layer-item reveal">
+      <div class="layer-num">L2</div>
+      <div class="layer-info"><h4>内层灯体</h4><p>第一层旋转灯体，绘制核心图案（如龙凤、戏曲人物），通过齿轮与基座连接。</p></div>
+    </div>
+    <div class="layer-item reveal">
+      <div class="layer-num">L3</div>
+      <div class="layer-info"><h4>中层灯体</h4><p>第二层灯体，图案与内层呼应，展开后形成双层画面叠加的视觉效果。</p></div>
+    </div>
+    <div class="layer-item reveal">
+      <div class="layer-num">L4</div>
+      <div class="layer-info"><h4>外层灯罩</h4><p>最外层装饰灯罩，绘制边框纹样与辅助图案，保护内部结构，增强整体美感。</p></div>
+    </div>
+    <div class="layer-item reveal">
+      <div class="layer-num">L5</div>
+      <div class="layer-info"><h4>顶部风车</h4><p>灯体顶部的风车装置，受热气流驱动旋转，是整个机械系统的动力来源。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/lantern-banner-04.webp" alt="制作流程" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 制作流程 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">PRODUCTION</div>
+    <h2 class="section-title">制作流程</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="steps-row">
+    <div class="step-mini reveal"><img src="vibe_images/lantern-step-01.webp" alt="流程" style="width:100%;height:90px;object-fit:cover;border-radius:6px;margin-bottom:8px;">
+    <div class="s-num">01</div><h5>设计图稿</h5><p>绘制灯体展开图与图案设计</p></div>
+    <div class="step-mini reveal"><img src="vibe_images/lantern-step-02.webp" alt="流程" style="width:100%;height:90px;object-fit:cover;border-radius:6px;margin-bottom:8px;">
+    <div class="s-num">02</div><h5>搭建框架</h5><p>竹木材料搭建灯体骨架</p></div>
+    <div class="step-mini reveal"><img src="vibe_images/lantern-step-03.webp" alt="流程" style="width:100%;height:90px;object-fit:cover;border-radius:6px;margin-bottom:8px;">
+    <div class="s-num">03</div><h5>制作机关</h5><p>雕刻安装齿轮传动装置</p></div>
+    <div class="step-mini reveal"><img src="vibe_images/lantern-step-04.webp" alt="流程" style="width:100%;height:90px;object-fit:cover;border-radius:6px;margin-bottom:8px;">
+    <div class="s-num">04</div><h5>裱糊彩绘</h5><p>糊纸面并绘制精美图案</p></div>
+    <div class="step-mini reveal"><img src="vibe_images/lantern-step-05.webp" alt="流程" style="width:100%;height:90px;object-fit:cover;border-radius:6px;margin-bottom:8px;">
+    <div class="s-num">05</div><h5>组装调试</h5><p>各层组装并调试运转效果</p></div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/lantern-banner-05.webp" alt="元宵仪式" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 节日灯俗 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">FESTIVAL CUSTOMS</div>
+    <h2 class="section-title">节日灯俗</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="reveal" style="margin-bottom: 40px;">
+    <img src="vibe_images/lantern-festival-01.webp" alt="点亮全景" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+  <div class="detail-grid">
+    <div class="detail-text reveal">
+      <h3>灯火里的乡愁与团圆</h3>
+      <p>在冀中平原的传统民俗中，灯会与年节密不可分。从腊月到正月十五，各村各镇轮流举办灯会，盒子灯是压轴节目。元宵之夜，村中广场搭起灯棚，各式花灯争奇斗艳，而最大的盒子灯则安置在广场中央，等待点燃的高光时刻。</p>
+      <p>盒子灯的点亮仪式充满庄严感。由村中德高望重的长者主持，在锣鼓声中点燃灯芯。随着火焰升腾，各层灯体依次旋转展开，每展开一层，围观人群便爆发出一阵喝彩。灯体上呈现的戏曲人物、花鸟虫鱼在夜色中栩栩如生，宛如一场立体的光影大戏。</p>
+      <p>除元宵外，盒子灯还在庙会、丰收庆典、祈福仪式等重要场合出现。灯俗不仅丰富了乡村的文化生活，更承载着人们对美好生活的期盼。"灯"与"丁"谐音，点灯寓意人丁兴旺，盒子灯层层展开则象征生活步步高升、层层向好。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/lantern-festival-02.webp" alt="庙会灯市" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 匠人访谈 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">ARTISAN INTERVIEW</div>
+    <h2 class="section-title">匠人访谈</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="interview-container reveal">
+    <div class="interview-header">
+      <div class="interview-portrait">
+        <img src="vibe_images/lantern-interview-01.webp" alt="陈万禄" style="width:140px;height:140px;object-fit:cover;border-radius:50%;display:block;">
+      </div>
+      <div class="interview-name">
+        <h4>陈万禄</h4>
+        <p>双堂盒子灯省级代表性传承人 · 从业五十二年</p>
+      </div>
+    </div>
+    <div class="qa-item">
+      <p class="qa-q">您是从什么时候开始学习制作盒子灯的？</p>
+      <p class="qa-a">我十四岁就跟着父亲学做灯了。那时候村里每逢过年都要出盒子灯，我从小看着灯一层层展开，觉得神奇极了。父亲说，做灯要先学会做人——心要正，手要稳，急不得。这句话我记了一辈子。</p>
+    </div>
+    <div class="qa-item">
+      <p class="qa-q">盒子灯最难的工序是什么？</p>
+      <p class="qa-a">最难的是齿轮的计算和安装。每一层展开的角度、速度都要精确配合，差一点就会卡住或者展开不匀。这些全靠经验，没有公式可以套。我做了五十多年，现在闭着眼睛都能算出齿轮的齿数和间距。</p>
+    </div>
+    <div class="qa-item">
+      <p class="qa-q">您觉得盒子灯最吸引人的地方在哪里？</p>
+      <p class="qa-a">是那种"层层有惊喜"的感觉。你看它外表就是一个方方正正的灯架子，可一点着，一层一层展开，每一层都有不同的画面——这一层是三国人物，下一层是花鸟鱼虫，再下一层是神话故事。就像打开一个又一个惊喜，观众每次都忍不住叫好。</p>
+    </div>
+    <div class="qa-item">
+      <p class="qa-q">现在传承情况怎么样？有什么困难？</p>
+      <p class="qa-a">说实话，困难不小。年轻人愿意学这个的不多了，做灯又苦又累，还要耐得住寂寞。不过这两年好了一些，政府重视非遗保护，学校也请我去讲课。我还收了几个徒弟，其中一个才二十出头，手很巧，我很看好他。</p>
+    </div>
+    <div class="qa-item">
+      <p class="qa-q">对盒子灯的未来有什么期望？</p>
+      <p class="qa-a">我希望这门手艺不要断在我手里。传统的东西不能丢，但也要跟上时代。现在有人提议用LED灯代替蜡烛，用电脑辅助设计图案，我觉得都可以尝试。只要盒子灯还能一层层展开，还能让人看了叫好，这门手艺就活着。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/lantern-banner-06.webp" alt="纹样合集" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 盒子灯纹样赏析 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">PATTERN APPRECIATION</div>
+    <h2 class="section-title">盒子灯纹样赏析</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="pattern-grid-lantern">
+    <div class="pattern-card-lantern reveal">
+      <div class="pattern-img"><img src="vibe_images/lantern-pattern-01.webp" alt="龙凤呈祥" style="width:100%;height:160px;object-fit:cover;display:block;"></div>
+      <div class="pattern-info">
+        <h4>龙凤呈祥纹</h4>
+        <p>龙纹刚健、凤纹柔美，二者交织象征阴阳和谐、天下太平。此纹常用于盒子灯最内层，寓意"核心吉祥"。</p>
+      </div>
+    </div>
+    <div class="pattern-card-lantern reveal">
+      <div class="pattern-img"><img src="vibe_images/lantern-pattern-02.webp" alt="牡丹富贵" style="width:100%;height:160px;object-fit:cover;display:block;"></div>
+      <div class="pattern-info">
+        <h4>牡丹富贵纹</h4>
+        <p>牡丹为"花中之王"，象征富贵荣华。灯面上的牡丹纹以工笔技法绘制，花瓣层叠、枝叶舒展，展现盛世繁华之意。</p>
+      </div>
+    </div>
+    <div class="pattern-card-lantern reveal">
+      <div class="pattern-img"><img src="vibe_images/lantern-pattern-03.webp" alt="福禄寿喜" style="width:100%;height:160px;object-fit:cover;display:block;"></div>
+      <div class="pattern-info">
+        <h4>福禄寿喜纹</h4>
+        <p>以蝙蝠（福）、鹿（禄）、桃（寿）、喜鹊（喜）四种吉祥元素组合而成，是民间最受欢迎的纹样之一，寄托了人们对美好生活的全部期盼。</p>
+      </div>
+    </div>
+    <div class="pattern-card-lantern reveal">
+      <div class="pattern-img"><img src="vibe_images/lantern-pattern-04.webp" alt="花鸟争春" style="width:100%;height:160px;object-fit:cover;display:block;"></div>
+      <div class="pattern-info">
+        <h4>花鸟争春纹</h4>
+        <p>以四季花卉与飞鸟为主题，梅花报春、兰草幽香、竹影婆娑、菊花傲霜，配以灵动的飞鸟，呈现自然万物的生机与和谐之美。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI 新文创灯景 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">AI CREATION</div>
+    <h2 class="section-title">AI 新文创灯景</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid">
+    <div class="reveal">
+      <img src="vibe_images/lantern-ai-01.webp" alt="AI文创灯景" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+    <div class="detail-text reveal">
+      <h3>传统灯彩的数字新生</h3>
+      <p>运用 AIGC 技术，对双堂盒子灯的传统纹样与结构进行数字化重构，生成符合现代审美的文创灯景设计方案。</p>
+      <p>AI 可以模拟盒子灯层层展开的动态效果，生成3D可视化模型，让观众在数字空间中体验盒子灯的魅力。同时，AI 生成的新纹样可应用于现代灯具设计，让传统灯彩艺术融入当代生活。</p>
+      <p>通过 LED 智能控制技术与传统机械结构的结合，新型盒子灯可实现编程控制的灯光变化效果，在保留传统韵味的同时增添科技美感。</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<div class="digital-human">
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header"><span class="dh-panel-title">AI 数字人助手</span><button class="dh-panel-close" onclick="toggleDH()">✕</button></div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">非遗匠人：</span>欢迎了解双堂盒子灯！这是融合机械机关与纸扎工艺的传统灯彩，层层嵌套、机关联动。想了解哪方面？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍🎨</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

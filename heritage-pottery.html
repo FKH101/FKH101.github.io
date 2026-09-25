@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="雄州黑陶，省级非物质文化遗产。传承千年，以"黑如漆、亮如镜、薄如纸、硬如瓷"著称，是北方陶艺的瑰宝。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23FAF8F5'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%23D4A24E' font-weight='bold'>雄</text></svg>">
+<title>雄州黑陶 · 非遗博览</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+.page-hero { position: relative; height: 55vh; display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2; margin-top: 72px; }
+.page-hero-bg { position: absolute; inset: 0; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.1) 0%, rgba(253,248,240,0.65) 100%); z-index: 1; }
+.page-hero-content { position: relative; z-index: 2; text-align: center; }
+.page-hero-content h1 { font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #F5E6C8, #D4A24E, #B8860B, #F5E6C8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 8px; filter: drop-shadow(0 0 30px rgba(139,115,85,0.2)); }
+.page-hero-content p { margin-top: 18px; font-size: 17px; color: var(--text-dim); letter-spacing: 5px; }
+.page-hero-content .badge { display: inline-block; margin-top: 16px; padding: 6px 20px; border: 1px solid #8b7355; border-radius: 20px; font-size: 12px; color: #8b7355; letter-spacing: 3px; }
+
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; padding: 80px 0; }
+.detail-grid.reverse { direction: rtl; }
+.detail-grid.reverse > * { direction: ltr; }
+.detail-text h3 { font-size: 28px; color: var(--gold-primary); margin-bottom: 20px; letter-spacing: 3px; }
+.detail-text p { font-size: 15px; color: var(--text-secondary); line-height: 2.2; margin-bottom: 16px; }
+
+.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.step-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 28px 20px; text-align: center; transition: all 0.4s ease; }
+.step-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); }
+.step-num { font-size: 36px; font-weight: 900; color: rgba(56,80,88,0.15); margin-bottom: 12px; }
+.step-card h4 { font-size: 16px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.step-card p { font-size: 13px; color: var(--text-dim); line-height: 1.8; }
+
+.pattern-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.pattern-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.4s ease; }
+.pattern-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); }
+.pattern-card .pattern-img { width: 100%; }
+.pattern-card .pattern-name { padding: 16px; text-align: center; font-size: 14px; color: var(--gold-primary); letter-spacing: 2px; }
+
+.vessel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.vessel-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.4s ease; }
+.vessel-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(51,51,51,0.1); }
+.vessel-card .vessel-img { width: 100%; }
+.vessel-card .vessel-info { padding: 24px; }
+.vessel-card h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 8px; letter-spacing: 2px; }
+.vessel-card p { font-size: 13px; color: var(--text-dim); line-height: 1.8; }
+
+/* 过渡横幅 */
+.transition-banner { padding: 0; margin: 0; }
+.transition-banner .img-placeholder { border-radius: 0; min-height: 28vh; }
+
+/* 窑址探秘双图 */
+.kiln-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+
+/* 名匠风采 */
+.master-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.master-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  overflow: hidden; transition: all 0.4s ease;
+}
+.master-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(51,51,51,0.1); }
+.master-card .master-img { width: 100%; }
+.master-card .master-info { padding: 24px; }
+.master-card .master-info h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 4px; letter-spacing: 2px; }
+.master-card .master-info .master-title { font-size: 13px; color: #8b7355; margin-bottom: 12px; display: block; letter-spacing: 1px; }
+.master-card .master-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+.master-card .master-quote { font-size: 13px; color: var(--text-dim); font-style: italic; border-top: 1px solid var(--border-gold); margin-top: 12px; padding-top: 12px; line-height: 1.7; }
+
+/* 名陶对比 */
+.compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.compare-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  overflow: hidden; transition: all 0.4s ease;
+}
+.compare-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(51,51,51,0.1); }
+.compare-card .compare-img { width: 100%; }
+.compare-card .compare-info { padding: 24px; }
+.compare-card .compare-info h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.compare-card .compare-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 茶器扩展 */
+.tea-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.tea-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  overflow: hidden; transition: all 0.4s ease;
+}
+.tea-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(51,51,51,0.1); }
+.tea-card .tea-img { width: 100%; }
+.tea-card .tea-info { padding: 24px; }
+.tea-card .tea-info h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 8px; letter-spacing: 2px; }
+.tea-card .tea-info p { font-size: 13px; color: var(--text-dim); line-height: 1.8; }
+
+/* 数字化保护 */
+.digital-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.digital-card {
+  background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px;
+  overflow: hidden; transition: all 0.4s ease;
+}
+.digital-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(51,51,51,0.1); }
+.digital-card .digital-img { width: 100%; }
+.digital-card .digital-info { padding: 24px; }
+.digital-card .digital-info h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.digital-card .digital-info p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 1024px) {
+  .page-hero { height: 45vh; }
+  .page-hero-content h1 { font-size: 40px; letter-spacing: 5px; }
+  .page-hero-content p { font-size: 15px; letter-spacing: 3px; }
+  .detail-grid { gap: 32px; padding: 60px 0; }
+  .detail-text h3 { font-size: 24px; }
+  .steps-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pattern-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .vessel-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .kiln-grid { gap: 18px; }
+  .master-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .compare-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .tea-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .digital-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+@media (max-width: 768px) {
+  .page-hero { height: 38vh; margin-top: 60px; }
+  .page-hero-content h1 { font-size: 30px; letter-spacing: 4px; }
+  .page-hero-content p { font-size: 14px; letter-spacing: 2px; margin-top: 12px; }
+  .page-hero-content .badge { font-size: 11px; padding: 5px 16px; }
+  .detail-grid { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+  .detail-grid.reverse { direction: ltr; }
+  .detail-text h3 { font-size: 22px; }
+  .detail-text p { font-size: 14px; line-height: 2; }
+  .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .step-card { padding: 20px 14px; }
+  .step-num { font-size: 28px; }
+  .step-card h4 { font-size: 15px; }
+  .step-card p { font-size: 12px; }
+  .pattern-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .vessel-grid { grid-template-columns: 1fr; gap: 18px; }
+  .vessel-card .vessel-info { padding: 20px; }
+  .kiln-grid { grid-template-columns: 1fr; gap: 16px; }
+  .master-grid { grid-template-columns: 1fr; gap: 18px; }
+  .master-card .master-info { padding: 20px; }
+  .master-card .master-info h4 { font-size: 17px; }
+  .compare-grid { grid-template-columns: 1fr; gap: 18px; }
+  .compare-card .compare-info { padding: 20px; }
+  .tea-grid { grid-template-columns: 1fr; gap: 18px; }
+  .tea-card .tea-info { padding: 20px; }
+  .digital-grid { grid-template-columns: 1fr; gap: 18px; }
+  .digital-card .digital-info { padding: 20px; }
+  .transition-banner .img-placeholder { min-height: 20vh; }
+}
+
+@media (max-width: 480px) {
+  .page-hero { height: 32vh; }
+  .page-hero-content h1 { font-size: 24px; letter-spacing: 3px; }
+  .page-hero-content p { font-size: 12px; letter-spacing: 1px; }
+  .page-hero-content .badge { font-size: 10px; padding: 4px 12px; letter-spacing: 2px; }
+  .detail-grid { gap: 18px; padding: 30px 0; }
+  .detail-text h3 { font-size: 20px; letter-spacing: 2px; }
+  .detail-text p { font-size: 13px; line-height: 1.9; }
+  .steps-grid { grid-template-columns: 1fr; gap: 12px; }
+  .step-card { padding: 18px 12px; }
+  .pattern-grid { grid-template-columns: 1fr; gap: 12px; }
+  .vessel-card .vessel-info { padding: 16px; }
+  .vessel-card h4 { font-size: 16px; }
+  .master-card .master-info { padding: 16px; }
+  .compare-card .compare-info { padding: 16px; }
+  .tea-card .tea-info { padding: 16px; }
+  .digital-card .digital-info { padding: 16px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #385058, #87A89C, #385058);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-icon">雄</div><span class="nav-logo-text">数绘雄州</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item"><a href="heritage.html" class="nav-link active">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <a href="heritage.html">非遗博览</a>
+  <span class="sep">/</span>
+  <span class="current">雄州黑陶</span>
+</div>
+
+<!-- 陶纹全景 -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="vibe_images/pottery-hero-01.webp" alt="黑陶全景" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1 class="page-hero-title">雄州黑陶</h1>
+    <p>黑如漆 · 亮如镜 · 薄如纸 · 硬如瓷</p>
+    <span class="badge">省级非物质文化遗产</span>
+  </div>
+</section>
+
+<!-- 千年历史 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">HISTORY</div>
+    <h2 class="section-title">千年陶史</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid">
+    <div class="reveal">
+      <img src="vibe_images/pottery-history-01.webp" alt="历史演变" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+    <div class="detail-text reveal">
+      <h3>源远流长的陶艺传承</h3>
+      <p>雄州黑陶的历史可追溯至新石器时代的龙山文化，距今已有四千余年。雄安地区地处华北平原，土质肥沃，富含铁元素的黏土为黑陶制作提供了得天独厚的原料条件。</p>
+      <p>黑陶的核心工艺在于"渗碳烧制"——在陶器烧制过程中，通过封闭窑炉、投入松枝等含碳物质，使碳微粒渗入陶坯表面，形成独特的乌黑光泽。这一工艺对火候、时间的把控要求极高，差之毫厘则色泽全异。</p>
+      <p>明清时期，雄州黑陶工艺达到巅峰，器型丰富、纹样精美，成为北方陶艺的代表。如今，黑陶技艺在传承中创新，既保留古法工艺，又融入现代审美，创作出兼具传统韵味与时代气息的陶艺作品。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/pottery-banner-01.webp" alt="拉坯瞬间" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 八道古法工序 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">CRAFT PROCESS</div>
+    <h2 class="section-title">八道古法工序</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card reveal"><img src="vibe_images/pottery-step-01.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">01</div><h4>选土</h4><p>选取当地富含铁元素的优质黏土，去除杂质，确保陶土纯净细腻。</p></div>
+    <div class="step-card reveal"><img src="vibe_images/pottery-step-02.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">02</div><h4>练泥</h4><p>反复揉捏摔打陶土，排出空气，使泥料均匀柔韧，达到最佳可塑性。</p></div>
+    <div class="step-card reveal"><img src="vibe_images/pottery-step-03.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">03</div><h4>拉坯</h4><p>在转轮上手工拉制陶坯，凭手感控制器型，展现匠人多年积累的技艺功底。</p></div>
+    <div class="step-card reveal"><img src="vibe_images/pottery-step-04.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">04</div><h4>修坯</h4><p>待坯体半干时，用工具精细修整器型，使线条流畅、厚薄均匀。</p></div>
+    <div class="step-card reveal"><img src="vibe_images/pottery-step-05.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">05</div><h4>刻纹</h4><p>在坯体表面刻划传统纹样，如云纹、回纹、鱼纹等，纹样蕴含吉祥寓意。</p></div>
+    <div class="step-card reveal"><img src="vibe_images/pottery-step-06.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">06</div><h4>晾干</h4><p>自然阴干数日，使坯体水分均匀蒸发，避免烧制时开裂变形。</p></div>
+    <div class="step-card reveal"><img src="vibe_images/pottery-step-07.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">07</div><h4>烧制</h4><p>入窑高温烧制，关键阶段投入松枝渗碳，控制窑内气氛，形成乌黑光泽。</p></div>
+    <div class="step-card reveal"><img src="vibe_images/pottery-step-08.webp" alt="工序" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-bottom:12px;">
+      <div class="step-num">08</div><h4>打磨</h4><p>出窑后精细打磨抛光，使黑陶表面呈现"亮如镜"的光泽效果。</p></div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/pottery-banner-02.webp" alt="刻纹微距" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 纹样拆解 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">PATTERNS</div>
+    <h2 class="section-title">经典纹样拆解</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="pattern-grid">
+    <div class="pattern-card reveal">
+      <div class="pattern-img"><img src="vibe_images/pottery-pattern-01.webp" alt="祥云纹" style="width:100%;height:140px;object-fit:cover;display:block;"></div>
+      <div class="pattern-name">祥云纹</div>
+    </div>
+    <div class="pattern-card reveal">
+      <div class="pattern-img"><img src="vibe_images/pottery-pattern-02.webp" alt="回字纹" style="width:100%;height:140px;object-fit:cover;display:block;"></div>
+      <div class="pattern-name">回字纹</div>
+    </div>
+    <div class="pattern-card reveal">
+      <div class="pattern-img"><img src="vibe_images/pottery-pattern-03.webp" alt="双鱼纹" style="width:100%;height:140px;object-fit:cover;display:block;"></div>
+      <div class="pattern-name">双鱼纹</div>
+    </div>
+    <div class="pattern-card reveal">
+      <div class="pattern-img"><img src="vibe_images/pottery-pattern-04.webp" alt="莲瓣纹" style="width:100%;height:140px;object-fit:cover;display:block;"></div>
+      <div class="pattern-name">莲瓣纹</div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/pottery-banner-03.webp" alt="器物群像" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 器型展示 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">VESSELS</div>
+    <h2 class="section-title">经典器型展示</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="vessel-grid">
+    <div class="vessel-card reveal">
+      <div class="vessel-img"><img src="vibe_images/pottery-vessel-01.webp" alt="高足杯" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
+      <div class="vessel-info"><h4>高足杯</h4><p>造型优雅，杯身薄如蛋壳，高足挺立，是黑陶工艺水平的极致体现。</p></div>
+    </div>
+    <div class="vessel-card reveal">
+      <div class="vessel-img"><img src="vibe_images/pottery-vessel-02.webp" alt="双耳瓶" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
+      <div class="vessel-info"><h4>双耳瓶</h4><p>瓶身圆润饱满，双耳对称，纹饰精美，兼具实用与观赏价值。</p></div>
+    </div>
+    <div class="vessel-card reveal">
+      <div class="vessel-img"><img src="vibe_images/pottery-vessel-03.webp" alt="三足鼎" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
+      <div class="vessel-info"><h4>三足鼎</h4><p>仿青铜器造型，庄重威严，纹样古朴，体现黑陶对传统礼器文化的传承。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/pottery-banner-04.webp" alt="古窑址远景" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 窑址探秘 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">ANCIENT KILNS</div>
+    <h2 class="section-title">窑址探秘</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="kiln-grid">
+    <div class="reveal">
+      <img src="vibe_images/pottery-kiln-01.webp" alt="考古现场" style="width:100%;border-radius:14px;display:block;">
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/pottery-kiln-02.webp" alt="窑炉复原" style="width:100%;border-radius:14px;display:block;">
+    </div>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-text reveal">
+      <h3>地下陶史的考古发现</h3>
+      <p>在雄安地区的考古发掘中，多处古代窑址的发现为黑陶历史提供了珍贵的实物证据。这些窑址分布在雄县、安新、容城三县交界地带，已确认的古代窑场遗址达十余处，时间跨度从新石器时代直至明清。</p>
+      <p>考古出土的黑陶碎片显示，古代雄州窑工已掌握了极为精湛的渗碳烧制技术。部分残片的厚度不足2毫米，与文献中"薄如纸"的记载完全吻合。窑炉结构为典型的馒头窑形制，窑壁以耐火砖砌成，底部设有通风孔道，顶部可封闭以实现渗碳效果。</p>
+      <p>窑址中还发现了大量刻有纹样的陶范和模具，表明当时已存在标准化的纹样生产体系。这些考古发现不仅印证了雄州黑陶的悠久历史，也为现代黑陶工艺的复原与创新提供了重要的参考依据。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/pottery-kiln-03.webp" alt="碎片对比" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/pottery-banner-05.webp" alt="名匠群像" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 名匠风采 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MASTER ARTISANS</div>
+    <h2 class="section-title">名匠风采</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="master-grid">
+    <div class="master-card reveal">
+      <div class="master-img"><img src="vibe_images/pottery-master-01.webp" alt="张师傅" style="width:100%;height:260px;object-fit:cover;display:block;"></div>
+      <div class="master-info">
+        <h4>张师傅</h4>
+        <span class="master-title">拉坯大师 · 从业四十余年</span>
+        <p>张师傅是雄州黑陶拉坯技艺的顶尖高手。四十余年的拉坯生涯，使他的双手对泥料的厚薄、器型的弧度有着超乎常人的精准感知。一件高足杯的杯壁，他能在旋转中一气呵成拉至不足3毫米的均匀厚度，堪称"手中有尺、心中有度"。</p>
+        <p class="master-quote">"拉坯讲究的是心手合一，泥在手中转，心要跟着静下来。"</p>
+      </div>
+    </div>
+    <div class="master-card reveal">
+      <div class="master-img"><img src="vibe_images/pottery-master-02.webp" alt="李师傅" style="width:100%;height:260px;object-fit:cover;display:block;"></div>
+      <div class="master-info">
+        <h4>李师傅</h4>
+        <span class="master-title">刻纹名家 · 省级工艺美术大师</span>
+        <p>李师傅师承家族刻纹技艺，擅长在黑陶表面刻划各类传统纹样。他的刻纹刀法刚柔并济，线条流畅而富有力度，尤以"游丝描"技法著称——能在黑陶表面刻出细如发丝、连绵不断的纹样线条。其创作的《九龙戏珠》纹样黑陶瓶被誉为当代黑陶刻纹的巅峰之作。</p>
+        <p class="master-quote">"刻纹如书法，一笔一划都不能含糊，刀刀见功夫。"</p>
+      </div>
+    </div>
+    <div class="master-card reveal">
+      <div class="master-img"><img src="vibe_images/pottery-master-03.webp" alt="王师傅" style="width:100%;height:260px;object-fit:cover;display:block;"></div>
+      <div class="master-info">
+        <h4>王师傅</h4>
+        <span class="master-title">烧制专家 · 国家级非遗传承人</span>
+        <p>王师傅是雄州黑陶渗碳烧制技艺的当代传人。烧制是黑陶制作中最关键的环节，火候的微小变化便会影响最终色泽。王师傅凭数十年经验，仅凭观察火焰颜色便能判断窑内温度，精确控制渗碳时机。他复原了失传已久的"二次渗碳"古法，使黑陶呈现出更加深邃温润的墨色光泽。</p>
+        <p class="master-quote">"烧窑如同养育孩子，火候不到不成器，火候过了则前功尽弃。"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/pottery-banner-06.webp" alt="名陶对比" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 黑陶与其他名陶对比 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">COMPARISON</div>
+    <h2 class="section-title">黑陶与其他名陶对比</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="compare-grid">
+    <div class="compare-card reveal">
+      <div class="compare-img"><img src="vibe_images/pottery-compare-01.webp" alt="vs青瓷" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="compare-info">
+        <h4>vs 龙泉青瓷</h4>
+        <p>龙泉青瓷以青绿色釉面著称，追求"如玉般"的温润质感；雄州黑陶则以无釉渗碳工艺形成乌黑光泽，追求"如墨般"的深沉内敛。两者一青一黑，代表了中国陶瓷审美中"南秀北朴"的两大风格传统。</p>
+      </div>
+    </div>
+    <div class="compare-card reveal">
+      <div class="compare-img"><img src="vibe_images/pottery-compare-02.webp" alt="vs白瓷" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="compare-info">
+        <h4>vs 景德镇白瓷</h4>
+        <p>景德镇白瓷以高岭土为原料，经高温烧制后洁白如玉，重在彩绘装饰；雄州黑陶以本地黏土为原料，以渗碳着色，重在器型与纹刻。白瓷如宣纸上的工笔画，黑陶则如金石上的篆刻，各有千秋。</p>
+      </div>
+    </div>
+    <div class="compare-card reveal">
+      <div class="compare-img"><img src="vibe_images/pottery-compare-03.webp" alt="vs紫砂" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="compare-info">
+        <h4>vs 宜兴紫砂</h4>
+        <p>宜兴紫砂以独特的双气孔结构闻名，是泡茶的上佳器具；雄州黑陶质地更为致密坚硬，表面光泽如漆。紫砂追求"养壶"的岁月之美，黑陶则追求出窑即成的完美黑色。两者同为中国陶艺瑰宝，各具风采。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅 -->
+<div class="transition-banner">
+  <img src="vibe_images/pottery-banner-07.webp" alt="茶器全套" style="width:100%;min-height:28vh;object-fit:cover;display:block;">
+</div>
+
+<!-- 黑陶茶器 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">TEA WARE</div>
+    <h2 class="section-title">黑陶茶器</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tea-grid">
+    <div class="tea-card reveal">
+      <div class="tea-img"><img src="vibe_images/pottery-tea-01.webp" alt="黑陶茶壶" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="tea-info">
+        <h4>黑陶茶壶</h4>
+        <p>壶身以传统云纹装饰，壶嘴出水流畅，壶盖密封严实。黑陶特有的微孔结构能吸附茶香，长期使用后壶内自成茶韵。壶型设计融合汉唐古韵与宋代美学，是品茗雅集的绝佳器具。</p>
+      </div>
+    </div>
+    <div class="tea-card reveal">
+      <div class="tea-img"><img src="vibe_images/pottery-tea-02.webp" alt="黑陶茶杯" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="tea-info">
+        <h4>黑陶茶杯</h4>
+        <p>杯壁薄至2毫米，手感温润细腻。杯底刻有莲瓣纹饰，与黑色釉面相映成趣。黑陶茶杯导热缓慢，能保持茶汤温度，同时其独特的材质能使茶汤口感更加醇厚柔和。</p>
+      </div>
+    </div>
+    <div class="tea-card reveal">
+      <div class="tea-img"><img src="vibe_images/pottery-tea-03.webp" alt="黑陶茶宠" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="tea-info">
+        <h4>黑陶茶宠</h4>
+        <p>以金蟾、貔貅等吉祥造型为原型，手工捏塑而成。黑陶茶宠经茶水长年浇淋，表面会逐渐形成温润的包浆，色泽愈发深沉油亮，是茶席上兼具趣味与收藏价值的雅玩之物。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 工艺传承 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">INHERITANCE</div>
+    <h2 class="section-title">工艺传承与创新</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid reverse">
+    <div class="detail-text reveal">
+      <h3>守正创新 · 薪火相传</h3>
+      <p>雄州黑陶的传承面临现代化冲击，年轻一代对传统手工艺的兴趣减弱，传承人老龄化问题突出。为此，当地政府与非遗保护机构采取多项措施：建立黑陶传习所、开展校园非遗课程、举办黑陶文化节等。</p>
+      <p>在创新方面，黑陶艺人将传统工艺与现代设计结合，创作出符合当代审美的茶具、花器、装饰品等文创产品。同时，运用3D扫描技术对经典器型进行数字化保存，为后续研究与复原提供数据支撑。</p>
+      <p>本项目通过 AI 纹样重构技术，对黑陶表面纹样进行数字化提取与再创作，生成可用于现代设计的纹样素材库，让千年陶纹在数字时代焕发新的生命力。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/pottery-inheritance-01.webp" alt="匠人工作" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 数字化保护 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">DIGITAL PRESERVATION</div>
+    <h2 class="section-title">数字化保护</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="digital-grid">
+    <div class="digital-card reveal">
+      <div class="digital-img"><img src="vibe_images/pottery-digital-01.webp" alt="3D扫描" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="digital-info">
+        <h4>3D 扫描建模</h4>
+        <p>运用高精度三维激光扫描技术，对经典黑陶器物进行全方位数字化建模，精确记录器型的每一处曲线与细节，为永久保存和学术研究提供可靠的数据基础。</p>
+      </div>
+    </div>
+    <div class="digital-card reveal">
+      <div class="digital-img"><img src="vibe_images/pottery-digital-02.webp" alt="数字档案库" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="digital-info">
+        <h4>数字档案库</h4>
+        <p>建立系统化的黑陶数字档案库，涵盖器物图像、纹样数据、工艺记录、传承人口述史等多维度信息。通过结构化分类与智能检索，为研究者和爱好者提供便捷的查阅平台。</p>
+      </div>
+    </div>
+    <div class="digital-card reveal">
+      <div class="digital-img"><img src="vibe_images/pottery-digital-03.webp" alt="AI复原" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="digital-info">
+        <h4>AI 辅助复原</h4>
+        <p>利用人工智能算法对残损黑陶器物的纹样进行智能分析与复原推演，结合历史数据库中的同类纹样进行匹配与补全，为文物修复工作提供科学参考方案。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<div class="digital-human">
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header"><span class="dh-panel-title">AI 数字人助手</span><button class="dh-panel-close" onclick="toggleDH()">✕</button></div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">非遗匠人：</span>欢迎了解雄州黑陶！这是传承四千余年的陶艺瑰宝，以渗碳烧制技法创造乌黑光泽。想了解哪方面？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍🎨</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>

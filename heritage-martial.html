@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="鹰爪翻子拳，国家级非物质文化遗产。雄县传统武术。">
+<!-- favicon：金色"雄"字 -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23FAF8F5'/><text x='32' y='44' text-anchor='middle' font-size='32' font-family='SimSun,serif' fill='%23D4A24E' font-weight='bold'>雄</text></svg>">
+<title>鹰爪翻子拳 · 非遗博览</title>
+<link rel="stylesheet" href="styles.css?v=1790317000">
+<style>
+.page-hero { position: relative; height: 55vh; display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2; margin-top: 72px; }
+.page-hero-bg { position: absolute; inset: 0; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.1) 0%, rgba(253,248,240,0.65) 100%); z-index: 1; }
+.page-hero-content { position: relative; z-index: 2; text-align: center; }
+.page-hero-content h1 { font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #8b0000, #cd5c5c, #385058, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 8px; filter: drop-shadow(0 0 30px rgba(205,92,92,0.2)); }
+.page-hero-content p { margin-top: 18px; font-size: 17px; color: var(--text-dim); letter-spacing: 5px; }
+.page-hero-content .badge { display: inline-block; margin-top: 16px; padding: 6px 20px; border: 1px solid #cd5c5c; border-radius: 20px; font-size: 12px; color: #cd5c5c; letter-spacing: 3px; }
+
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; padding: 80px 0; }
+.detail-grid.reverse { direction: rtl; }
+.detail-grid.reverse > * { direction: ltr; }
+.detail-text h3 { font-size: 28px; color: var(--gold-primary); margin-bottom: 20px; letter-spacing: 3px; }
+.detail-text p { font-size: 15px; color: var(--text-secondary); line-height: 2.2; margin-bottom: 16px; }
+
+/* 招式演示 */
+.moves-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.move-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.4s ease; }
+.move-card:hover { border-color: var(--border-gold-hover); transform: translateY(-4px); box-shadow: 0 0 30px rgba(56,80,88,0.08); }
+.move-card .move-img { width: 100%; position: relative; }
+.move-card .move-img::after {
+  content: '▶ 动态演示';
+  position: absolute; bottom: 12px; right: 12px;
+  background: rgba(56,80,88,0.8); color: #0c0b0a;
+  padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 600;
+}
+.move-card .move-body { padding: 24px; }
+.move-card h4 { font-size: 20px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.move-card .move-en { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; letter-spacing: 1px; }
+.move-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 拳法体系 */
+.system-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.system-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 32px; transition: all 0.4s ease; }
+.system-card:hover { border-color: var(--border-gold-hover); }
+.system-card h4 { font-size: 20px; color: var(--gold-primary); margin-bottom: 14px; letter-spacing: 2px; }
+.system-card p { font-size: 14px; color: var(--text-secondary); line-height: 2; }
+
+/* 过渡横幅 */
+.trans-banner { position: relative; height: 260px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0; }
+.trans-banner-bg { position: absolute; inset: 0; }
+.trans-banner-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(253,248,240,0.3) 0%, rgba(253,248,240,0.2) 50%, rgba(253,248,240,0.3) 100%); z-index: 1; }
+.trans-banner-text { position: relative; z-index: 2; text-align: center; }
+.trans-banner-text h3 { font-size: 28px; color: var(--gold-primary); letter-spacing: 6px; font-weight: 700; }
+.trans-banner-text p { font-size: 14px; color: var(--text-dim); margin-top: 10px; letter-spacing: 3px; }
+
+/* 传承谱系 */
+.lineage-section { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: flex-start; }
+.master-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+.master-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.4s ease; text-align: center; }
+.master-card:hover { border-color: #cd5c5c; transform: translateY(-4px); box-shadow: 0 0 24px rgba(205,92,92,0.1); }
+.master-card .master-portrait { width: 100%; }
+.master-card .master-info { padding: 20px 16px; }
+.master-card .master-era { font-size: 11px; color: #cd5c5c; letter-spacing: 2px; margin-bottom: 6px; }
+.master-card h5 { font-size: 16px; color: var(--gold-primary); margin-bottom: 8px; letter-spacing: 2px; }
+.master-card p { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+/* 训练体系 */
+.training-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.training-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; overflow: hidden; transition: all 0.4s ease; }
+.training-card:hover { border-color: #cd5c5c; transform: translateY(-4px); box-shadow: 0 0 24px rgba(205,92,92,0.1); }
+.training-card .training-img { width: 100%; }
+.training-card .training-body { padding: 24px; }
+.training-card h4 { font-size: 18px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.training-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+/* 武术精神 */
+.virtue-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+.virtue-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 14px; padding: 32px 20px; text-align: center; transition: all 0.4s ease; }
+.virtue-card:hover { border-color: #cd5c5c; transform: translateY(-4px); box-shadow: 0 0 24px rgba(205,92,92,0.1); }
+.virtue-card .virtue-char { font-size: 48px; color: #cd5c5c; font-weight: 900; margin-bottom: 8px; display: block; }
+.virtue-card .virtue-en { font-size: 11px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
+.virtue-card h5 { font-size: 16px; color: var(--gold-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.virtue-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+
+/* 赛事与传播 */
+.competition-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 1024px) {
+  .page-hero { height: 45vh; }
+  .page-hero-content h1 { font-size: 40px; letter-spacing: 5px; }
+  .page-hero-content p { font-size: 15px; letter-spacing: 3px; }
+  .detail-grid { gap: 32px; padding: 60px 0; }
+  .detail-text h3 { font-size: 24px; }
+  .moves-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .system-cards { gap: 20px; }
+  .trans-banner { height: 200px; }
+  .trans-banner-text h3 { font-size: 24px; }
+  .lineage-section { gap: 32px; }
+  .master-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .training-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .virtue-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .competition-grid { gap: 32px; }
+}
+
+@media (max-width: 768px) {
+  .page-hero { height: 38vh; margin-top: 60px; }
+  .page-hero-content h1 { font-size: 30px; letter-spacing: 4px; }
+  .page-hero-content p { font-size: 14px; letter-spacing: 2px; margin-top: 12px; }
+  .page-hero-content .badge { font-size: 11px; padding: 5px 16px; }
+  .detail-grid { grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
+  .detail-grid.reverse { direction: ltr; }
+  .detail-text h3 { font-size: 22px; }
+  .detail-text p { font-size: 14px; line-height: 2; }
+  .moves-grid { grid-template-columns: 1fr; gap: 18px; }
+  .move-card .move-body { padding: 20px; }
+  .move-card h4 { font-size: 18px; }
+  .system-cards { grid-template-columns: 1fr; gap: 18px; }
+  .system-card { padding: 24px; }
+  .system-card h4 { font-size: 18px; }
+  .trans-banner { height: 180px; }
+  .trans-banner-text h3 { font-size: 20px; letter-spacing: 4px; }
+  .trans-banner-text p { font-size: 12px; letter-spacing: 2px; }
+  .lineage-section { grid-template-columns: 1fr; gap: 24px; }
+  .master-cards { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .master-card .master-info { padding: 16px 12px; }
+  .master-card h5 { font-size: 15px; }
+  .training-grid { grid-template-columns: 1fr; gap: 18px; }
+  .training-card .training-body { padding: 20px; }
+  .training-card h4 { font-size: 17px; }
+  .virtue-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .virtue-card { padding: 24px 16px; }
+  .virtue-card .virtue-char { font-size: 38px; }
+  .virtue-card h5 { font-size: 15px; }
+  .competition-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+
+@media (max-width: 480px) {
+  .page-hero { height: 32vh; }
+  .page-hero-content h1 { font-size: 24px; letter-spacing: 3px; }
+  .page-hero-content p { font-size: 12px; letter-spacing: 1px; }
+  .page-hero-content .badge { font-size: 10px; padding: 4px 12px; letter-spacing: 2px; }
+  .detail-grid { gap: 18px; padding: 30px 0; }
+  .detail-text h3 { font-size: 20px; letter-spacing: 2px; }
+  .detail-text p { font-size: 13px; line-height: 1.9; }
+  .moves-grid { gap: 14px; }
+  .move-card .move-body { padding: 16px; }
+  .move-card h4 { font-size: 17px; }
+  .system-card { padding: 20px; }
+  .system-card h4 { font-size: 17px; }
+  .trans-banner { height: 150px; }
+  .trans-banner-text h3 { font-size: 18px; letter-spacing: 3px; }
+  .trans-banner-text p { font-size: 11px; }
+  .master-cards { grid-template-columns: 1fr; gap: 12px; }
+  .training-card .training-body { padding: 16px; }
+  .virtue-grid { grid-template-columns: 1fr; gap: 12px; }
+  .virtue-card { padding: 20px 14px; }
+  .virtue-card .virtue-char { font-size: 34px; }
+  .competition-grid { gap: 18px; }
+}
+</style>
+<!-- 滚动进度条 -->
+<style>
+  #scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #385058, #87A89C, #385058);
+    box-shadow: 0 0 10px rgba(51,51,51,0.15);
+    z-index: 99999; width: 0%;
+    transition: width 0.1s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress"></div>
+<canvas id="particleCanvas"></canvas>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-icon">雄</div><span class="nav-logo-text">数绘雄州</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+      <li class="nav-item"><a href="timeline.html" class="nav-link">时光回溯</a></li>
+      <li class="nav-item"><a href="heritage.html" class="nav-link active">非遗博览</a>
+        <div class="dropdown">
+          <a href="heritage-reed.html">白洋淀芦苇画</a>
+          <a href="heritage-pottery.html">雄州黑陶</a>
+          <a href="heritage-lantern.html">双堂盒子灯</a>
+          <a href="heritage-music.html">圈头村古乐</a>
+          <a href="heritage-martial.html">鹰爪翻子拳</a>
+          <a href="heritage-drum.html">西河大鼓</a>
+        </div>
+      </li>
+      <li class="nav-item"><a href="inheritor.html" class="nav-link">传承人</a></li>
+      <li class="nav-item"><a href="digital-twin.html" class="nav-link">数字孪生大屏</a></li>
+      <li class="nav-item"><a href="aigc.html" class="nav-link">AIGC 创作工坊</a></li>
+      <li class="nav-item"><a href="pattern-lab.html" class="nav-link">AI 纹样重构实验室</a></li>
+      <li class="nav-item"><a href="news.html" class="nav-link">新闻动态</a></li>
+      <li class="nav-item"><a href="policy.html" class="nav-link">政策法规</a></li>
+    </ul>
+    <button class="nav-search-btn" id="searchBtn" aria-label="搜索">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 搜索弹窗 -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索非遗项目、纹样、传承人..." autocomplete="off">
+      <button class="search-close" id="searchClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">输入关键词搜索非遗内容</div>
+    </div>
+  </div>
+</div>
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+  <a href="index.html">首页</a>
+  <span class="sep">/</span>
+  <a href="heritage.html">非遗博览</a>
+  <span class="sep">/</span>
+  <span class="current">鹰爪翻子拳</span>
+</div>
+
+<!-- 武术开篇 -->
+<section class="page-hero">
+  <div class="page-hero-bg">
+    <img src="vibe_images/martial-hero-01.webp" alt="武者招式" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1 class="page-hero-title">鹰爪翻子拳</h1>
+    <p>鹰爪擒拿刚猛 · 翻子连击如风</p>
+    <span class="badge">国家级非物质文化遗产</span>
+  </div>
+</section>
+
+<!-- 拳种溯源 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">ORIGIN</div>
+    <h2 class="section-title">拳种溯源</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid">
+    <div class="detail-text reveal">
+      <h3>刚柔并济的北派武术</h3>
+      <p>鹰爪翻子拳是国家级非物质文化遗产，起源于清代，融合了鹰爪拳的擒拿技法与翻子拳的快速连击特点，形成了独特的武术体系。</p>
+      <p>鹰爪拳以模仿鹰的捕食动作为核心，强调手指的抓、拿、锁、扣技法，手法凌厉如鹰爪出击。翻子拳则以"翻"为名，讲究拳法如翻掌般快速连贯，一招未落一招又起，令对手防不胜防。</p>
+      <p>两种拳法融合后，鹰爪翻子拳既有鹰爪拳的刚猛擒拿，又有翻子拳的灵活多变，刚柔并济、快慢相间，成为北派武术的杰出代表。2008年，鹰爪翻子拳被列入国家级非物质文化遗产名录。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/martial-origin-01.webp" alt="历史老拳师" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：拳法精要 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/martial-banner-01.webp" alt="拳法精要" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>鹰爪如钩 · 翻子似风</h3>
+    <p>擒拿锁扣 · 连续快打 · 步法灵动 · 内外兼修</p>
+  </div>
+</div>
+
+<!-- 拳法体系 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">SYSTEM</div>
+    <h2 class="section-title">拳法体系</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="system-cards">
+    <div class="system-card reveal">
+      <h4>鹰爪技法</h4>
+      <p>以五指模拟鹰爪，运用抓、拿、锁、扣、劈、挑等手法，攻击对手关节、穴位等薄弱环节。强调指力训练，要求习练者具备强大的握力与指力。</p>
+    </div>
+    <div class="system-card reveal">
+      <h4>翻子拳法</h4>
+      <p>以快速连击为核心，拳出如翻掌，一招紧接一招，连绵不绝。讲究"快、准、狠"，在对手来不及反应之际完成连续打击。</p>
+    </div>
+    <div class="system-card reveal">
+      <h4>步法身法</h4>
+      <p>步法灵活多变，以马步、弓步、虚步为基础，配合身体的拧转闪躲，实现攻防转换。身法要求"身随步走、步随身换"。</p>
+    </div>
+    <div class="system-card reveal">
+      <h4>内功心法</h4>
+      <p>注重内外兼修，通过站桩、吐纳等内功训练，增强体质与内力。强调"以意导气、以气催力"，使外在技法与内在功力相辅相成。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：招式演示 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/martial-banner-02.webp" alt="六大招式" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>六大招式 · 动态演示</h3>
+    <p>擒拿 · 连拳 · 锁扣 · 展翅 · 劈打 · 落地</p>
+  </div>
+</div>
+
+<!-- 六大招式动态演示 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">SIX MOVES</div>
+    <h2 class="section-title">六大招式演示</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="moves-grid">
+    <div class="move-card reveal">
+      <div class="move-img"><img src="vibe_images/martial-move-01.webp" alt="鹰爪擒拿" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="move-body">
+        <h4>鹰爪擒拿</h4>
+        <div class="move-en">Eagle Claw Grasp</div>
+        <p>五指如鹰爪般扣住对手手腕，顺势扭转锁关节，是鹰爪翻子拳的标志性技法。</p>
+      </div>
+    </div>
+    <div class="move-card reveal">
+      <div class="move-img"><img src="vibe_images/martial-move-02.webp" alt="翻子连拳" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="move-body">
+        <h4>翻子连拳</h4>
+        <div class="move-en">Flipping Continuous Punch</div>
+        <p>双拳交替快速出击，如翻掌般连绵不绝，令对手难以招架。</p>
+      </div>
+    </div>
+    <div class="move-card reveal">
+      <div class="move-img"><img src="vibe_images/martial-move-03.webp" alt="锁喉扣腕" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="move-body">
+        <h4>锁喉扣腕</h4>
+        <div class="move-en">Throat Lock & Wrist Hold</div>
+        <p>近身缠斗技法，一手锁喉一手扣腕，控制对手行动自由。</p>
+      </div>
+    </div>
+    <div class="move-card reveal">
+      <div class="move-img"><img src="vibe_images/martial-move-04.webp" alt="鹰展翅" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="move-body">
+        <h4>鹰展翅</h4>
+        <div class="move-en">Eagle Spreads Wings</div>
+        <p>双臂如鹰展翅般展开，既可用于防御格挡，也可顺势转为攻击。</p>
+      </div>
+    </div>
+    <div class="move-card reveal">
+      <div class="move-img"><img src="vibe_images/martial-move-05.webp" alt="翻身劈打" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="move-body">
+        <h4>翻身劈打</h4>
+        <div class="move-en">Turning Chop Strike</div>
+        <p>身体翻转之际，掌如刀劈，借转身之力增强打击力度。</p>
+      </div>
+    </div>
+    <div class="move-card reveal">
+      <div class="move-img"><img src="vibe_images/martial-move-06.webp" alt="鹰落地" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="move-body">
+        <h4>鹰落地</h4>
+        <div class="move-en">Eagle Lands</div>
+        <p>收势动作，下盘稳固如鹰落地，体现武术"起如风、落如松"的要诀。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：传承之路 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/martial-banner-03.webp" alt="历代传人" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>薪火相传 · 代代宗师</h3>
+    <p>从清代创始到当代传承 · 百年武术精神不灭</p>
+  </div>
+</div>
+
+<!-- 传承谱系 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">LINEAGE</div>
+    <h2 class="section-title">传承谱系</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="lineage-section">
+    <div class="detail-text reveal">
+      <h3>百年传承 · 四代宗师</h3>
+      <p>鹰爪翻子拳的传承脉络清晰可考，自清代创始以来，历经四代代表性传承人的不懈努力，这一武术体系得以完整保存并不断发展壮大。</p>
+      <p>每一代传人都对拳法进行了不同程度的完善与创新。清末创始人陈正清融合鹰爪与翻子两派之长，奠定了拳法基础；民国时期刘德宽在京津冀一带广泛授徒，扩大了拳种影响力。</p>
+      <p>新中国成立后，张占魁积极推动武术的规范化与竞技化改革，将鹰爪翻子拳引入体育院校教学体系。当代传承人李志强致力于非遗保护与国际化推广，使这一传统武术走向世界舞台。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/martial-lineage-01.webp" alt="传承谱系" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+  <div class="master-cards">
+    <div class="master-card reveal">
+      <div class="master-portrait"><img src="vibe_images/martial-master-01.webp" alt="陈正清" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="master-info">
+        <div class="master-era">清末 · 创始人</div>
+        <h5>陈正清</h5>
+        <p>鹰爪翻子拳创始人，精通鹰爪拳与翻子拳，将两派技法融为一体，创立独特的武术体系，在冀中一带享有盛名。</p>
+      </div>
+    </div>
+    <div class="master-card reveal">
+      <div class="master-portrait"><img src="vibe_images/martial-master-02.webp" alt="刘德宽" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="master-info">
+        <div class="master-era">民国 · 传承人</div>
+        <h5>刘德宽</h5>
+        <p>民国时期重要传承人，在京津冀地区广泛授徒，培养了大批弟子。参与中央国术馆活动，推动了拳种的规范化发展。</p>
+      </div>
+    </div>
+    <div class="master-card reveal">
+      <div class="master-portrait"><img src="vibe_images/martial-master-03.webp" alt="张占魁" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="master-info">
+        <div class="master-era">新中国 · 传承人</div>
+        <h5>张占魁</h5>
+        <p>新中国成立后的重要传承人，积极推动武术竞技化改革，将鹰爪翻子拳引入体育院校教学体系，培养了众多武术人才。</p>
+      </div>
+    </div>
+    <div class="master-card reveal">
+      <div class="master-portrait"><img src="vibe_images/martial-master-04.webp" alt="李志强" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="master-info">
+        <div class="master-era">当代 · 国家级传承人</div>
+        <h5>李志强</h5>
+        <p>当代国家级代表性传承人，致力于非遗保护与国际化推广，多次率队参加国际武术交流，使鹰爪翻子拳走向世界。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：训练之法 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/martial-banner-04.webp" alt="晨练场景" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>冬练三九 · 夏练三伏</h3>
+    <p>站桩筑基 · 指力锤炼 · 套路精熟 · 对拆实战</p>
+  </div>
+</div>
+
+<!-- 训练体系 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">TRAINING SYSTEM</div>
+    <h2 class="section-title">训练体系</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="training-grid">
+    <div class="training-card reveal">
+      <div class="training-img"><img src="vibe_images/martial-train-01.webp" alt="站桩功" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="training-body">
+        <h4>站桩功</h4>
+        <p>武术基本功之首，通过长时间保持特定姿势，锻炼下盘稳定性与内力。鹰爪翻子拳的站桩讲究"三尖相照、六合归一"，是培养整劲的基础。</p>
+      </div>
+    </div>
+    <div class="training-card reveal">
+      <div class="training-img"><img src="vibe_images/martial-train-02.webp" alt="指力训练" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="training-body">
+        <h4>指力训练</h4>
+        <p>鹰爪技法的核心训练，通过抓握陶罐（坛子功）、捏石球、抓沙袋等方式，强化五指抓拿力量。日积月累，方能练就"指透骨"的鹰爪功夫。</p>
+      </div>
+    </div>
+    <div class="training-card reveal">
+      <div class="training-img"><img src="vibe_images/martial-train-03.webp" alt="套路练习" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="training-body">
+        <h4>套路练习</h4>
+        <p>将散手招式编为固定套路，通过反复练习形成肌肉记忆。鹰爪翻子拳共有十余套传统套路，由简入繁，循序渐进地提升习练者的技击能力。</p>
+      </div>
+    </div>
+    <div class="training-card reveal">
+      <div class="training-img"><img src="vibe_images/martial-train-04.webp" alt="对拆实战" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="training-body">
+        <h4>对拆实战</h4>
+        <p>套路纯熟后进入对拆阶段，两人按照预设攻防进行实战模拟。通过反复拆招，理解每一招式的实战含义，培养临敌应变的实战能力。</p>
+      </div>
+    </div>
+    <div class="training-card reveal">
+      <div class="training-img"><img src="vibe_images/martial-train-05.webp" alt="器械训练" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="training-body">
+        <h4>器械训练</h4>
+        <p>鹰爪翻子拳的器械体系包括刀、枪、剑、棍等多种兵器。器械训练强调"械随身走、身随械转"，将拳法技法延伸至器械运用之中。</p>
+      </div>
+    </div>
+    <div class="training-card reveal">
+      <div class="training-img"><img src="vibe_images/martial-train-06.webp" alt="内功修炼" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="training-body">
+        <h4>内功修炼</h4>
+        <p>通过吐纳、静坐、导引等内功修炼方法，调和气血，培养内劲。内功修炼讲究"以意导气、以气催力"，是达到"内外合一"境界的关键。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：武德精神 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/martial-banner-05.webp" alt="武馆内景" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>未曾学艺先学礼 · 未曾习武先习德</h3>
+    <p>忠义为本 · 礼信为先 · 止戈为武 · 以武修身</p>
+  </div>
+</div>
+
+<!-- 武术文化 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MARTIAL CULTURE</div>
+    <h2 class="section-title">武术文化精神</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-grid reverse">
+    <div class="detail-text reveal">
+      <h3>武德并重 · 以武修身</h3>
+      <p>鹰爪翻子拳不仅是一门武术技艺，更承载着中国传统的武德文化。习武之人讲究"未曾学艺先学礼，未曾习武先习德"，将道德修养置于技艺之上。</p>
+      <p>鹰爪翻子拳的传承强调师徒制，师父不仅传授技艺，更教导做人道理。"止戈为武"的理念贯穿始终，武术的最终目的不是争斗，而是强身健体、修身养性、保家卫国。</p>
+      <p>在当代，鹰爪翻子拳通过进校园、进社区等方式扩大传播，同时运用动作捕捉技术对招式进行数字化记录，为武术文化的传承与推广提供科技支撑。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/martial-culture-01.webp" alt="传承活动" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+</section>
+
+<!-- 武术精神 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">MARTIAL VIRTUES</div>
+    <h2 class="section-title">武术精神</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="detail-text reveal" style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+    <p>鹰爪翻子拳的武德训诫以"忠、义、礼、信"四字为核心，这不仅是习武之人的行为准则，更是中华传统美德在武术文化中的集中体现。每一代传人都将这四种品德作为授徒的首要标准。</p>
+  </div>
+  <div class="reveal" style="margin-bottom: 32px;">
+    <img src="vibe_images/martial-virtue-01.webp" alt="武德匾额" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+  <div class="virtue-grid">
+    <div class="virtue-card reveal">
+      <span class="virtue-char">忠</span>
+      <div class="virtue-en">Loyalty</div>
+      <h5>忠于家国</h5>
+      <p>习武首在忠诚——忠于国家、忠于师门、忠于本心。鹰爪翻子拳历来强调"武术报国"，鼓励弟子在国家危难之际挺身而出。</p>
+    </div>
+    <div class="virtue-card reveal">
+      <span class="virtue-char">义</span>
+      <div class="virtue-en">Righteousness</div>
+      <h5>义薄云天</h5>
+      <p>义者，宜也。习武之人当明辨是非，见义勇为。以武扶弱、以武止暴，是鹰爪翻子拳"义"之精神的最高体现。</p>
+    </div>
+    <div class="virtue-card reveal">
+      <span class="virtue-char">礼</span>
+      <div class="virtue-en">Propriety</div>
+      <h5>以礼为先</h5>
+      <p>武术讲究"抱拳礼"，以礼始以礼终。习武先学礼，尊重师长、尊重对手、尊重规则，是武德修养的外在表现。</p>
+    </div>
+    <div class="virtue-card reveal">
+      <span class="virtue-char">信</span>
+      <div class="virtue-en">Trust</div>
+      <h5>信守承诺</h5>
+      <p>一诺千金，言出必行。师徒之间的信任、同门之间的信义，是武术传承得以延续的根基。失信之人，不可入门。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 过渡横幅：赛场风云 -->
+<div class="trans-banner">
+  <div class="trans-banner-bg">
+    <img src="vibe_images/martial-banner-06.webp" alt="比赛瞬间" style="width:100%;height:100%;object-fit:cover;display:block;">
+  </div>
+  <div class="trans-banner-overlay"></div>
+  <div class="trans-banner-text">
+    <h3>赛场争锋 · 名扬四海</h3>
+    <p>国内获奖 · 国际交流 · 媒体传播 · 文化输出</p>
+  </div>
+</div>
+
+<!-- 赛事与传播 -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag">COMPETITION & SPREAD</div>
+    <h2 class="section-title">赛事与传播</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="competition-grid">
+    <div class="detail-text reveal">
+      <h3>从乡村到世界的传播之路</h3>
+      <p>鹰爪翻子拳在各类全国武术比赛中屡获佳绩，多次在全国传统武术锦标赛、全国农民运动会等赛事中摘金夺银，充分展示了这一传统拳种的竞技实力。</p>
+      <p>在国际交流方面，鹰爪翻子拳已走出国门，先后赴日本、韩国、东南亚及欧美多国进行武术文化交流表演。其独特的擒拿技法和快速连击风格，受到国际武术界的广泛关注与好评。</p>
+      <p>近年来，通过纪录片拍摄、短视频传播、网络直播等新媒体手段，鹰爪翻子拳的影响力不断扩大。多部武术纪录片对鹰爪翻子拳进行了专题报道，让更多人了解这一珍贵的武术文化遗产。</p>
+    </div>
+    <div class="reveal">
+      <img src="vibe_images/martial-competition-01.webp" alt="比赛获奖" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    </div>
+  </div>
+  <div class="reveal" style="margin-top: 32px;">
+    <img src="vibe_images/martial-intl-01.webp" alt="国际交流" style="width:100%;border-radius:14px;display:block;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="sf-top-border"></div>
+  <div class="sf-inner">
+    <div class="sf-cols">
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">友</span>友情链接</h4>
+        <ul class="sf-friends">
+          <li><a href="https://www.mct.gov.cn/" target="_blank" rel="noopener">中华人民共和国文化和旅游部</a></li>
+          <li><a href="https://www.ncha.gov.cn/" target="_blank" rel="noopener">国家文物局</a></li>
+          <li><a href="https://www.ihchina.cn/" target="_blank" rel="noopener">中国非物质文化遗产网</a></li>
+          <li><a href="https://whly.hebei.gov.cn/" target="_blank" rel="noopener">河北省文化和旅游厅</a></li>
+          <li><a href="http://www.xiongan.gov.cn/" target="_blank" rel="noopener">中国雄安官网</a></li>
+          <li><a href="https://www.unesco.org/zh" target="_blank" rel="noopener">联合国教科文组织</a></li>
+        </ul>
+      </div>
+      <div class="sf-divider-v"></div>
+      <div class="sf-col">
+        <h4 class="sf-h"><span class="sf-seal">遗</span>雄安非遗项目</h4>
+        <ul class="sf-projects">
+          <li><a href="heritage-reed.html">白洋淀芦苇画</a></li>
+          <li><a href="heritage-pottery.html">雄州黑陶</a></li>
+          <li><a href="heritage-lantern.html">双堂盒子灯</a></li>
+          <li><a href="heritage-music.html">圈头村古乐</a></li>
+          <li><a href="heritage-martial.html">鹰爪翻子拳</a></li>
+          <li><a href="heritage-drum.html">西河大鼓</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sf-rule"></div>
+  <div class="sf-meta">
+    <div class="sf-navlinks">
+      <a href="index.html">网站首页</a><i>·</i><a href="heritage.html">非遗博览</a><i>·</i><a href="inheritor.html">传承人</a><i>·</i><a href="news.html">新闻动态</a><i>·</i><a href="policy.html">政策法规</a>
+    </div>
+    <p>作品名称：数绘雄州 · 智承非遗 — AIGC 赋能雄安非物质文化遗产数字化创新平台</p>
+    <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
+    <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
+    <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+  </div>
+  <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="sfCrenel" width="26" height="10" patternUnits="userSpaceOnUse">
+        <rect x="3" y="2" width="12" height="8" fill="#6E4A32"/>
+      </pattern>
+    </defs>
+    <rect x="0" y="40" width="1200" height="8" fill="url(#sfCrenel)"/>
+    <rect x="0" y="46" width="1200" height="28" fill="#6E4A32"/>
+    <rect x="584" y="36" width="32" height="14" rx="14" fill="#2E1F16"/>
+    <path d="M360 46 Q357 41 367 42 L386 34 Q400 30 414 34 L433 42 Q443 41 440 46 Z" fill="#385058"/>
+    <path d="M760 46 Q757 41 767 42 L786 34 Q800 30 814 34 L833 42 Q843 41 840 46 Z" fill="#8A5A3B"/>
+    <path d="M150 46 Q145 36 161 39 L188 26 Q210 20 232 26 L259 39 Q275 36 270 46 Z" fill="#8A5A3B"/>
+    <rect x="186" y="38" width="48" height="8" fill="#B5413E"/>
+    <path d="M930 46 Q925 36 941 39 L968 26 Q990 20 1012 26 L1039 39 Q1055 36 1050 46 Z" fill="#385058"/>
+    <rect x="966" y="38" width="48" height="8" fill="#B5413E"/>
+    <rect x="562" y="30" width="76" height="14" fill="#B5413E"/>
+    <path d="M528 46 Q523 35 540 38 L574 23 Q600 16 626 23 L660 38 Q677 35 672 46 Z" fill="#7A3A33"/>
+    <rect x="576" y="16" width="48" height="12" fill="#9C8578"/>
+    <path d="M552 30 Q548 22 563 24 L585 13 Q600 8 615 13 L637 24 Q652 22 648 30 Z" fill="#385058"/>
+    <rect x="598" y="4" width="4" height="9" fill="#D4A24E"/>
+    <circle cx="600" cy="4" r="2.6" fill="#D4A24E"/>
+  </svg>
+</footer>
+
+<div class="digital-human">
+  <div class="dh-panel" id="dhPanel">
+    <div class="dh-panel-header"><span class="dh-panel-title">AI 数字人助手</span><button class="dh-panel-close" onclick="toggleDH()">✕</button></div>
+    <div class="dh-identity-tabs">
+      <button class="dh-identity-tab active" data-identity="artisan">非遗匠人</button>
+      <button class="dh-identity-tab" data-identity="youth">青年体验官</button>
+      <button class="dh-identity-tab" data-identity="scholar">历史学者</button>
+      <button class="dh-identity-tab" data-identity="planner">城市规划师</button>
+    </div>
+    <div class="dh-chat-area" id="dhChatArea">
+      <div class="dh-chat-msg"><span class="role">非遗匠人：</span>欢迎了解鹰爪翻子拳！这是国家级非遗武术项目，融合鹰爪擒拿与翻子连击，刚柔并济。想了解哪方面？</div>
+    </div>
+    <div class="dh-input-area">
+      <input class="dh-input" id="dhInput" placeholder="输入你的问题..." onkeydown="if(event.key==='Enter')sendDH()">
+      <button class="dh-send" onclick="sendDH()">发送</button>
+    </div>
+  </div>
+  <div class="dh-avatar" onclick="toggleDH()">🧑‍🎨</div>
+</div>
+
+<script src="app.js?v=1790317800"></script>
+</body>
+</html>
