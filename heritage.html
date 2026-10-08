@@ -197,6 +197,20 @@
 }
 .quote-card .quote-text { font-size: 16px; color: var(--text-secondary); line-height: 2; margin-bottom: 16px; padding-left: 20px; }
 .quote-card .quote-author { font-size: 14px; color: var(--gold-primary); letter-spacing: 2px; padding-left: 20px; }
+.quote-card:hover {
+  border-color: var(--border-gold-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(51,51,51,0.08);
+}
+
+/* Link reset for <a> cards */
+a.inheritor-card, a.digital-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+.category-card { cursor: pointer; }
 
 /*  inline image between paragraphs */
 .inline-img { margin: 24px 0; }
@@ -969,62 +983,7 @@
     <h2 class="section-title">六大非遗展厅</h2>
     <div class="section-line"></div>
   </div>
-  <div class="hall-grid">
-    <a href="heritage-reed.html" class="hall-card reveal">
-      <div class="hall-img"><img src="vibe_images/heritage-hall-01.webp" alt="芦苇画" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
-      <div class="hall-body">
-        <span class="hall-tag provincial">省级非遗</span>
-        <h3>白洋淀芦苇画</h3>
-        <div class="slogan">"芦苇为笔，水韵为墨，绘就淀泊千年风华"</div>
-        <p>以白洋淀天然芦苇为原料，经七道古法工序，将平凡芦苇化为精美艺术品，展现水乡独特韵味。</p>
-      </div>
-    </a>
-    <a href="heritage-pottery.html" class="hall-card reveal">
-      <div class="hall-img"><img src="vibe_images/heritage-hall-02.webp" alt="黑陶" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
-      <div class="hall-body">
-        <span class="hall-tag provincial">省级非遗</span>
-        <h3>雄州黑陶</h3>
-        <div class="slogan">"黑如漆、亮如镜、薄如纸、硬如瓷"</div>
-        <p>传承千年的黑陶工艺，以独特的渗碳烧制技法，创造出色泽乌黑、质地细腻的陶器艺术珍品。</p>
-      </div>
-    </a>
-    <a href="heritage-lantern.html" class="hall-card reveal">
-      <div class="hall-img"><img src="vibe_images/heritage-hall-03.webp" alt="盒子灯" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
-      <div class="hall-body">
-        <span class="hall-tag provincial">省级非遗</span>
-        <h3>双堂盒子灯</h3>
-        <div class="slogan">"机关巧夺天工，灯火映照千年"</div>
-        <p>融合机械机关与纸扎工艺的传统灯彩，层层嵌套、机关联动，点亮时呈现震撼的视觉盛宴。</p>
-      </div>
-    </a>
-    <a href="heritage-music.html" class="hall-card reveal">
-      <div class="hall-img"><img src="vibe_images/heritage-hall-04.webp" alt="古乐" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
-      <div class="hall-body">
-        <span class="hall-tag provincial">省级非遗</span>
-        <h3>圈头村古乐</h3>
-        <div class="slogan">"礼乐传千年，古韵绕梁间"</div>
-        <p>源自宋代宫廷音乐的民间古乐，五大乐器合奏，曲调庄重典雅，是北方民间礼乐文化的活化石。</p>
-      </div>
-    </a>
-    <a href="heritage-martial.html" class="hall-card reveal">
-      <div class="hall-img"><img src="vibe_images/heritage-hall-05.webp" alt="武术" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
-      <div class="hall-body">
-        <span class="hall-tag">国家级非遗</span>
-        <h3>鹰爪翻子拳</h3>
-        <div class="slogan">"鹰爪擒拿刚猛，翻子连击如风"</div>
-        <p>融合鹰爪拳擒拿技法与翻子拳快速连击的传统武术，刚柔并济，是北方武术的杰出代表。</p>
-      </div>
-    </a>
-    <a href="heritage-drum.html" class="hall-card reveal">
-      <div class="hall-img"><img src="vibe_images/heritage-hall-06.webp" alt="大鼓" style="width:100%;height:220px;object-fit:cover;display:block;"></div>
-      <div class="hall-body">
-        <span class="hall-tag">国家级非遗</span>
-        <h3>西河大鼓</h3>
-        <div class="slogan">"一鼓一板说古今，三弦伴奏唱千秋"</div>
-        <p>华北地区最具代表性的曲艺形式之一，以说唱结合、伴奏丰富著称，传承数百年的民间说书艺术。</p>
-      </div>
-    </a>
-  </div>
+  <div class="hall-grid" id="hallGrid"></div>
 </section>
 
 <!-- 传承人风采 -->
@@ -1034,74 +993,7 @@
     <h2 class="section-title">非遗传承人风采</h2>
     <div class="section-line"></div>
   </div>
-  <div class="inheritor-grid">
-    <div class="inheritor-card reveal">
-      <div class="inheritor-img">
-        <img src="vibe_images/heritage-inheritor-01.webp" alt="芦苇画传承人" style="width:100%;height:280px;object-fit:cover;display:block;">
-      </div>
-      <div class="inheritor-body">
-        <h4>刘永利</h4>
-        <div class="inheritor-title">省级非遗代表性传承人</div>
-        <div class="inheritor-heritage">白洋淀芦苇画</div>
-        <div class="inheritor-quote">"每一根芦苇都有灵性，我要做的是让它们在水中重新绽放。"</div>
-      </div>
-    </div>
-    <div class="inheritor-card reveal">
-      <div class="inheritor-img">
-        <img src="vibe_images/heritage-inheritor-02.webp" alt="黑陶传承人" style="width:100%;height:280px;object-fit:cover;display:block;">
-      </div>
-      <div class="inheritor-body">
-        <h4>张福来</h4>
-        <div class="inheritor-title">省级非遗代表性传承人</div>
-        <div class="inheritor-heritage">雄州黑陶</div>
-        <div class="inheritor-quote">"火候是黑陶的灵魂，差一分则色不正，多一刻则质不坚。"</div>
-      </div>
-    </div>
-    <div class="inheritor-card reveal">
-      <div class="inheritor-img">
-        <img src="vibe_images/heritage-inheritor-03.webp" alt="盒子灯传承人" style="width:100%;height:280px;object-fit:cover;display:block;">
-      </div>
-      <div class="inheritor-body">
-        <h4>王淑芳</h4>
-        <div class="inheritor-title">省级非遗代表性传承人</div>
-        <div class="inheritor-heritage">双堂盒子灯</div>
-        <div class="inheritor-quote">"盒子灯机关之精妙，犹如微缩的宇宙。每一层转动都是古人对光明的向往。"</div>
-      </div>
-    </div>
-    <div class="inheritor-card reveal">
-      <div class="inheritor-img">
-        <img src="vibe_images/heritage-inheritor-04.webp" alt="古乐传承人" style="width:100%;height:280px;object-fit:cover;display:block;">
-      </div>
-      <div class="inheritor-body">
-        <h4>赵洪亮</h4>
-        <div class="inheritor-title">省级非遗代表性传承人</div>
-        <div class="inheritor-heritage">圈头村古乐</div>
-        <div class="inheritor-quote">"古乐声声穿越千年，我们不是在演奏音乐，而是在与古人对话。"</div>
-      </div>
-    </div>
-    <div class="inheritor-card reveal">
-      <div class="inheritor-img">
-        <img src="vibe_images/heritage-inheritor-05.webp" alt="武术传承人" style="width:100%;height:280px;object-fit:cover;display:block;">
-      </div>
-      <div class="inheritor-body">
-        <h4>李佩瑶</h4>
-        <div class="inheritor-title">国家级非遗代表性传承人</div>
-        <div class="inheritor-heritage">鹰爪翻子拳</div>
-        <div class="inheritor-quote">"武术不只是技击，更是一种精神传承。每一招每一式都承载着先辈的智慧。"</div>
-      </div>
-    </div>
-    <div class="inheritor-card reveal">
-      <div class="inheritor-img">
-        <img src="vibe_images/heritage-inheritor-06.webp" alt="大鼓传承人" style="width:100%;height:280px;object-fit:cover;display:block;">
-      </div>
-      <div class="inheritor-body">
-        <h4>赵连萍</h4>
-        <div class="inheritor-title">国家级非遗代表性传承人</div>
-        <div class="inheritor-heritage">西河大鼓</div>
-        <div class="inheritor-quote">"一鼓一板说尽人间百态，三弦伴奏唱遍古今传奇。这是属于我们中国人的说唱艺术。"</div>
-      </div>
-    </div>
-  </div>
+  <div class="inheritor-grid" id="inheritorGrid"></div>
 </section>
 
 <!-- 文化价值总述 -->
@@ -1111,21 +1003,7 @@
     <h2 class="section-title">非遗文化价值总述</h2>
     <div class="section-line"></div>
   </div>
-  <div class="value-card reveal">
-    <h3>雄安非遗体系 · 地域特色 · 传承意义</h3>
-    <p>雄安新区非物质文化遗产体系完整、类型丰富，涵盖传统美术（芦苇画、黑陶）、传统音乐（圈头村古乐）、传统体育（鹰爪翻子拳）、曲艺（西河大鼓）、民俗（双堂盒子灯）五大类别，形成了独具特色的地域文化图谱。</p>
-    <div class="inline-img">
-      <img src="vibe_images/heritage-value-01.webp" alt="五大类别" style="width:100%;border-radius:8px;display:block;">
-    </div>
-    <p>这些非遗项目根植于白洋淀水乡生态与冀中平原农耕文明，承载着雄安人民千年来对自然的敬畏、对生活的热爱、对艺术的追求。每一项非遗都是地域文化的基因密码，是连接过去与未来的文化桥梁。</p>
-    <div class="inline-img">
-      <img src="vibe_images/heritage-value-02.webp" alt="水乡生态关系" style="width:100%;border-radius:8px;display:block;">
-    </div>
-    <p>在数字化时代，非遗保护面临传承人流失、技艺失传的严峻挑战。本项目运用 AIGC 技术，对非遗纹样进行数字化采集与 AI 重构，对非遗技艺进行可视化记录与交互式展示，为非遗保护提供科技赋能的创新路径。</p>
-    <div class="inline-img">
-      <img src="vibe_images/heritage-value-03.webp" alt="AIGC赋能流程" style="width:100%;border-radius:8px;display:block;">
-    </div>
-  </div>
+  <div class="value-card reveal" id="valueCard"></div>
 </section>
 
 <!-- 非遗类别体系 -->
@@ -1135,63 +1013,7 @@
     <h2 class="section-title">非遗类别体系</h2>
     <div class="section-line"></div>
   </div>
-  <div class="category-grid">
-    <div class="category-card reveal">
-      <div class="category-img">
-        <img src="vibe_images/heritage-category-01.webp" alt="传统美术" style="width:100%;height:140px;object-fit:cover;display:block;">
-      </div>
-      <div class="category-body">
-        <span class="cat-icon">🎨</span>
-        <h4>传统美术</h4>
-        <p>以芦苇画、黑陶为代表，展现水乡人民将自然材料化为艺术精品的卓越创造力。</p>
-        <div class="cat-items">芦苇画 / 雄州黑陶</div>
-      </div>
-    </div>
-    <div class="category-card reveal">
-      <div class="category-img">
-        <img src="vibe_images/heritage-category-02.webp" alt="传统音乐" style="width:100%;height:140px;object-fit:cover;display:block;">
-      </div>
-      <div class="category-body">
-        <span class="cat-icon">🎵</span>
-        <h4>传统音乐</h4>
-        <p>圈头村古乐，源自宋代宫廷音乐的民间活化石，五大乐器合奏，曲调庄重典雅。</p>
-        <div class="cat-items">圈头村古乐</div>
-      </div>
-    </div>
-    <div class="category-card reveal">
-      <div class="category-img">
-        <img src="vibe_images/heritage-category-03.webp" alt="传统体育" style="width:100%;height:140px;object-fit:cover;display:block;">
-      </div>
-      <div class="category-body">
-        <span class="cat-icon">🥋</span>
-        <h4>传统体育</h4>
-        <p>鹰爪翻子拳，融合擒拿与连击的传统武术，刚柔并济，是北方武术的杰出代表。</p>
-        <div class="cat-items">鹰爪翻子拳</div>
-      </div>
-    </div>
-    <div class="category-card reveal">
-      <div class="category-img">
-        <img src="vibe_images/heritage-category-04.webp" alt="曲艺" style="width:100%;height:140px;object-fit:cover;display:block;">
-      </div>
-      <div class="category-body">
-        <span class="cat-icon">🎤</span>
-        <h4>曲艺</h4>
-        <p>西河大鼓，华北地区最具代表性的曲艺形式，说唱结合，传承数百年的民间说书艺术。</p>
-        <div class="cat-items">西河大鼓</div>
-      </div>
-    </div>
-    <div class="category-card reveal">
-      <div class="category-img">
-        <img src="vibe_images/heritage-category-05.webp" alt="民俗" style="width:100%;height:140px;object-fit:cover;display:block;">
-      </div>
-      <div class="category-body">
-        <span class="cat-icon">🏮</span>
-        <h4>民俗</h4>
-        <p>双堂盒子灯，融合机械机关与纸扎工艺的传统灯彩，是民间信仰与节庆文化的重要载体。</p>
-        <div class="cat-items">双堂盒子灯</div>
-      </div>
-    </div>
-  </div>
+  <div class="category-grid" id="categoryGrid"></div>
 </section>
 
 <!-- 数字化保护成果 -->
@@ -1201,38 +1023,7 @@
     <h2 class="section-title">数字化保护成果</h2>
     <div class="section-line"></div>
   </div>
-  <div class="digital-grid">
-    <div class="digital-card reveal">
-      <div class="card-img">
-        <img src="vibe_images/heritage-digital-01.webp" alt="纹样采集" style="width:100%;height:200px;object-fit:cover;display:block;">
-      </div>
-      <div class="card-body">
-        <h4>纹样数字化采集</h4>
-        <p>运用计算机视觉技术，对六大非遗项目的传统纹样进行系统性采集与数字化建档，建立雄安非遗纹样数据库。</p>
-        <div class="digital-stat">2,400+ <span>件纹样已入库</span></div>
-      </div>
-    </div>
-    <div class="digital-card reveal">
-      <div class="card-img">
-        <img src="vibe_images/heritage-digital-02.webp" alt="AI纹样创新" style="width:100%;height:200px;object-fit:cover;display:block;">
-      </div>
-      <div class="card-body">
-        <h4>AI 纹样创新生成</h4>
-        <p>基于 Stable Diffusion 模型，对传统纹样进行风格迁移与创新生成，在保留传统美学特征的同时创造全新的数字化纹样作品。</p>
-        <div class="digital-stat">8,600+ <span>幅 AI 生成作品</span></div>
-      </div>
-    </div>
-    <div class="digital-card reveal">
-      <div class="card-img">
-        <img src="vibe_images/heritage-digital-03.webp" alt="技艺记录" style="width:100%;height:200px;object-fit:cover;display:block;">
-      </div>
-      <div class="card-body">
-        <h4>技艺数字化记录</h4>
-        <p>对非遗传承人的核心技艺进行多角度影像记录与动作捕捉，建立非遗技艺数字档案，为后世传承留存珍贵的数字资料。</p>
-        <div class="digital-stat">360+ <span>小时影像记录</span></div>
-      </div>
-    </div>
-  </div>
+  <div class="digital-grid" id="digitalGrid"></div>
 </section>
 
 <!-- 匠人语录 -->
@@ -1242,24 +1033,7 @@
     <h2 class="section-title">非遗匠人精神语录</h2>
     <div class="section-line"></div>
   </div>
-  <div class="quotes-wall">
-    <div class="quote-card reveal">
-      <div class="quote-text">芦苇本是无情物，巧手翻作有情画。每一根芦苇都承载着白洋淀的水韵风华。</div>
-      <div class="quote-author">—— 白洋淀芦苇画传承人</div>
-    </div>
-    <div class="quote-card reveal">
-      <div class="quote-text">黑陶之美，在于火候的精准把握。差一分则色不正，多一刻则质不坚。这是千年传承的匠心。</div>
-      <div class="quote-author">—— 雄州黑陶老艺人</div>
-    </div>
-    <div class="quote-card reveal">
-      <div class="quote-text">盒子灯机关之精妙，犹如微缩的宇宙。每一层转动，都是古人对光明的向往。</div>
-      <div class="quote-author">—— 双堂盒子灯制作匠人</div>
-    </div>
-    <div class="quote-card reveal">
-      <div class="quote-text">古乐声声，穿越千年。我们不是在演奏音乐，而是在与古人对话。</div>
-      <div class="quote-author">—— 圈头村古乐社传人</div>
-    </div>
-  </div>
+  <div class="quotes-wall" id="quotesWall"></div>
 </section>
 
 <footer class="site-footer">
@@ -1300,6 +1074,7 @@
     <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
     <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
     <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+    <p style="margin-top:8px;"><a href="admin.html" style="color:var(--gold-primary);opacity:0.5;font-size:11px;letter-spacing:1px;text-decoration:none;transition:opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">内容管理后台</a></p>
   </div>
   <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
@@ -1345,6 +1120,104 @@
   <div class="dh-avatar" onclick="toggleDH()">🧑🎨</div>
 </div>
 
+<script src="data/loader.js"></script>
+<script>
+(function(){
+  var esc = XionganData.escHTML;
+  XionganData.onReady(function(data){
+    // 六大展厅
+    var hallEl = document.getElementById('hallGrid');
+    if(hallEl){
+      hallEl.innerHTML = (data.heritage||[]).map(function(h){
+        var tagClass = h.level==='国家级非遗' ? 'hall-tag' : 'hall-tag provincial';
+        return '<a href="'+esc(h.detailPage)+'" class="hall-card reveal">'
+          +'<div class="hall-img"><img src="'+esc(h.image)+'" alt="'+esc(h.name)+'" data-lightbox="'+esc(h.image)+'" data-lightbox-alt="'+esc(h.name)+'" style="width:100%;height:220px;object-fit:cover;display:block;" onclick="event.preventDefault();openLightbox(\''+esc(h.image)+'\',\''+esc(h.name)+'\')"></div>'
+          +'<div class="hall-body">'
+          +'<span class="'+tagClass+'">'+esc(h.level)+'</span>'
+          +'<h3>'+esc(h.name)+'</h3>'
+          +'<div class="slogan">"'+esc(h.slogan)+'"</div>'
+          +'<p>'+esc(h.description)+'</p>'
+          +'</div></a>';
+      }).join('');
+    }
+    // 传承人
+    var inhEl = document.getElementById('inheritorGrid');
+    if(inhEl){
+      inhEl.innerHTML = (data.inheritors||[]).map(function(n){
+        var link = n.detailPage || 'inheritor.html';
+        return '<a class="inheritor-card reveal" href="'+esc(link)+'">'
+          +'<div class="inheritor-img"><img src="'+esc(n.portrait)+'" alt="'+esc(n.name)+'" data-lightbox="'+esc(n.portrait)+'" data-lightbox-alt="'+esc(n.name)+'" style="width:100%;height:280px;object-fit:cover;display:block;" onclick="event.preventDefault();openLightbox(\''+esc(n.portrait)+'\',\''+esc(n.name)+'\')"></div>'
+          +'<div class="inheritor-body">'
+          +'<h4>'+esc(n.name)+'</h4>'
+          +'<div class="inheritor-title">'+esc(n.title)+'</div>'
+          +'<div class="inheritor-heritage">'+esc(n.heritage)+'</div>'
+          +'<div class="inheritor-quote">"'+esc(n.quote)+'"</div>'
+          +'</div></a>';
+      }).join('');
+    }
+    // 价值总述
+    var valEl = document.getElementById('valueCard');
+    if(valEl && data.valueSection){
+      var v = data.valueSection;
+      var html = '<h3>'+esc(v.title)+'</h3>';
+      v.paragraphs.forEach(function(p,i){
+        html += '<p>'+esc(p)+'</p>';
+        if(v.images && v.images[i]){
+          html += '<div class="inline-img"><img src="'+esc(v.images[i])+'" alt="" data-lightbox="'+esc(v.images[i])+'" data-lightbox-alt="" style="width:100%;border-radius:8px;display:block;cursor:zoom-in;" onclick="openLightbox(\''+esc(v.images[i])+'\',\'\')"></div>';
+        }
+      });
+      valEl.innerHTML = html;
+    }
+    // 类别体系
+    var catEl = document.getElementById('categoryGrid');
+    if(catEl){
+      catEl.innerHTML = (data.categories||[]).map(function(c,i){
+        return '<div class="category-card reveal" style="cursor:pointer;" data-cat-idx="'+i+'">'
+          +'<div class="category-img"><img src="'+esc(c.image)+'" alt="'+esc(c.name)+'" data-lightbox="'+esc(c.image)+'" data-lightbox-alt="'+esc(c.name)+'" style="width:100%;height:140px;object-fit:cover;display:block;" onclick="event.stopPropagation();openLightbox(\''+esc(c.image)+'\',\''+esc(c.name)+'\')"></div>'
+          +'<div class="category-body">'
+          +'<span class="cat-icon">'+c.icon+'</span>'
+          +'<h4>'+esc(c.name)+'</h4>'
+          +'<p>'+esc(c.description)+'</p>'
+          +'<div class="cat-items">'+esc(c.items)+'</div>'
+          +'</div></div>';
+      }).join('');
+      catEl.addEventListener('click',function(e){
+        var card = e.target.closest('[data-cat-idx]');
+        if(!card) return;
+        var idx = parseInt(card.getAttribute('data-cat-idx'),10);
+        var c = (data.categories||[])[idx];
+        if(c) openDetail({image:c.image,tag:c.icon+' '+c.name,title:c.name,description:c.description+'\n\n代表项目：'+c.items});
+      });
+    }
+    // 数字化成果
+    var digLinks = ['pattern-lab.html','aigc.html','digital-twin.html'];
+    var digEl = document.getElementById('digitalGrid');
+    if(digEl){
+      digEl.innerHTML = (data.digitalPreservation||[]).map(function(d,i){
+        var link = digLinks[i] || 'aigc.html';
+        return '<a class="digital-card reveal" href="'+esc(link)+'">'
+          +'<div class="card-img"><img src="'+esc(d.image)+'" alt="'+esc(d.title)+'" data-lightbox="'+esc(d.image)+'" data-lightbox-alt="'+esc(d.title)+'" style="width:100%;height:200px;object-fit:cover;display:block;" onclick="event.preventDefault();openLightbox(\''+esc(d.image)+'\',\''+esc(d.title)+'\')"></div>'
+          +'<div class="card-body">'
+          +'<h4>'+esc(d.title)+'</h4>'
+          +'<p>'+esc(d.description)+'</p>'
+          +'<div class="digital-stat">'+esc(d.stat)+' <span>'+esc(d.statLabel)+'</span></div>'
+          +'</div></a>';
+      }).join('');
+    }
+    // 匠人语录
+    var qEl = document.getElementById('quotesWall');
+    if(qEl){
+      qEl.innerHTML = (data.quotes||[]).map(function(q){
+        return '<div class="quote-card reveal">'
+          +'<div class="quote-text">'+esc(q.text)+'</div>'
+          +'<div class="quote-author">—— '+esc(q.author)+'</div>'
+          +'</div>';
+      }).join('');
+    }
+    if(typeof initReveal==='function') initReveal();
+  });
+})();
+</script>
 <script src="app.js?v=1790317800"></script>
 </body>
 </html>

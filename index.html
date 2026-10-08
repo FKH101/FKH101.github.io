@@ -331,6 +331,14 @@
 .highlight-card .card-body p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; transition: opacity 0.5s ease 0.1s; }
 .highlight-card:hover .card-body h4 { color: var(--gold-bright); }
 
+/* Link reset for <a> cards */
+a.overview-icon-card, a.highlight-card, a.tech-card, a.impact-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
 /* ===== 搜索 ===== */
 .nav-search-btn {
   background: none; border: none; cursor: pointer;
@@ -613,22 +621,22 @@
       <p>项目涵盖六大非遗项目的深度数字化呈现，打造集文化展示、学术研究、创意创作于一体的综合性数字文化平台。</p>
     </div>
     <div class="overview-visual reveal">
-      <div class="overview-icon-card">
+      <a href="aigc.html" class="overview-icon-card">
         <span class="icon">🤖</span>
         <span class="label">AIGC 生成</span>
-      </div>
-      <div class="overview-icon-card">
+      </a>
+      <a href="heritage.html" class="overview-icon-card">
         <span class="icon">🏛️</span>
         <span class="label">非遗数字化</span>
-      </div>
-      <div class="overview-icon-card">
+      </a>
+      <a href="digital-twin.html" class="overview-icon-card">
         <span class="icon">🌐</span>
         <span class="label">数字孪生</span>
-      </div>
-      <div class="overview-icon-card">
+      </a>
+      <a href="pattern-lab.html" class="overview-icon-card">
         <span class="icon">🎨</span>
         <span class="label">纹样重构</span>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -636,7 +644,7 @@
 <!-- 全景横幅 -->
 <section class="section">
   <div class="full-banner reveal">
-    <img src="vibe_images/xiongan-heritage-scroll.webp" alt="雄安非遗全景长卷" style="width:100%;height:340px;object-fit:cover;display:block;">
+    <img src="vibe_images/xiongan-heritage-scroll.webp" alt="雄安非遗全景长卷" data-lightbox="vibe_images/xiongan-heritage-scroll.webp" data-lightbox-alt="雄安非遗全景长卷" style="width:100%;height:340px;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox('vibe_images/xiongan-heritage-scroll.webp','雄安非遗全景长卷')">
     <div class="full-banner-overlay">
       <h3>千年文脉 · 数字新生</h3>
       <p>以 AIGC 技术赋能雄安非物质文化遗产的数字化保护与创新传承</p>
@@ -652,33 +660,33 @@
     <div class="section-line"></div>
   </div>
   <div class="highlights-grid">
-    <div class="highlight-card reveal">
+    <a href="pattern-lab.html" class="highlight-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/highlight-ai-pattern.webp" alt="AI 纹样数字化重构">
+        <img class="card-img-real" src="vibe_images/highlight-ai-pattern.webp" alt="AI 纹样数字化重构" data-lightbox="vibe_images/highlight-ai-pattern.webp" data-lightbox-alt="AI 纹样数字化重构" onclick="event.preventDefault();openLightbox('vibe_images/highlight-ai-pattern.webp','AI 纹样数字化重构')">
       </div>
       <div class="card-body">
         <h4>AI 纹样数字化重构</h4>
         <p>运用计算机视觉技术，对传统非遗纹样进行采集、灰度处理、像素拆解、矢量化提取与 AI 重构，实现传统纹样的数字化新生。</p>
       </div>
-    </div>
-    <div class="highlight-card reveal">
+    </a>
+    <a href="digital-twin.html" class="highlight-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/highlight-digital-twin.webp" alt="数字孪生智慧城市">
+        <img class="card-img-real" src="vibe_images/highlight-digital-twin.webp" alt="数字孪生智慧城市" data-lightbox="vibe_images/highlight-digital-twin.webp" data-lightbox-alt="数字孪生智慧城市" onclick="event.preventDefault();openLightbox('vibe_images/highlight-digital-twin.webp','数字孪生智慧城市')">
       </div>
       <div class="card-body">
         <h4>数字孪生智慧城市</h4>
         <p>构建雄安新区数字孪生可视化大屏，实时展示千年秀林绿化、白洋淀生态水质、新区产业人才等核心数据指标。</p>
       </div>
-    </div>
-    <div class="highlight-card reveal">
+    </a>
+    <a href="heritage.html" class="highlight-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/highlight-six-heritage.webp" alt="六大非遗深度呈现">
+        <img class="card-img-real" src="vibe_images/highlight-six-heritage.webp" alt="六大非遗深度呈现" data-lightbox="vibe_images/highlight-six-heritage.webp" data-lightbox-alt="六大非遗深度呈现" onclick="event.preventDefault();openLightbox('vibe_images/highlight-six-heritage.webp','六大非遗深度呈现')">
       </div>
       <div class="card-body">
         <h4>六大非遗深度呈现</h4>
         <p>涵盖国家级非遗鹰爪翻子拳、西河大鼓，省级非遗白洋淀芦苇画、雄州黑陶、双堂盒子灯、圈头村古乐，每项独立专题页面。</p>
       </div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -690,9 +698,9 @@
     <div class="section-line"></div>
   </div>
   <div class="tech-grid">
-    <div class="tech-card reveal">
+    <a href="pattern-lab.html" class="tech-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/tech-computer-vision.webp" alt="计算机视觉纹样识别与提取">
+        <img class="card-img-real" src="vibe_images/tech-computer-vision.webp" alt="计算机视觉纹样识别与提取" data-lightbox="vibe_images/tech-computer-vision.webp" data-lightbox-alt="计算机视觉纹样识别与提取" onclick="event.preventDefault();openLightbox('vibe_images/tech-computer-vision.webp','计算机视觉纹样识别与提取')">
       </div>
       <div class="card-body">
         <span class="tech-icon">👁️</span>
@@ -700,10 +708,10 @@
         <div class="tech-en">Computer Vision</div>
         <p>运用深度学习与图像处理技术，对非遗纹样进行自动识别、分类与特征提取，实现传统纹样的精准数字化采集。</p>
       </div>
-    </div>
-    <div class="tech-card reveal">
+    </a>
+    <a href="aigc.html" class="tech-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/tech-ai-generation.webp" alt="AI 生成非遗纹样过程">
+        <img class="card-img-real" src="vibe_images/tech-ai-generation.webp" alt="AI 生成非遗纹样过程" data-lightbox="vibe_images/tech-ai-generation.webp" data-lightbox-alt="AI 生成非遗纹样过程" onclick="event.preventDefault();openLightbox('vibe_images/tech-ai-generation.webp','AI 生成非遗纹样过程')">
       </div>
       <div class="card-body">
         <span class="tech-icon">🎨</span>
@@ -711,10 +719,10 @@
         <div class="tech-en">Stable Diffusion</div>
         <p>基于扩散模型对传统纹样进行风格迁移与创新生成，在保留传统美学特征的同时创造全新的数字化纹样作品。</p>
       </div>
-    </div>
-    <div class="tech-card reveal">
+    </a>
+    <a href="digital-twin.html" class="tech-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/tech-webgl-city.webp" alt="WebGL 三维城市模型渲染">
+        <img class="card-img-real" src="vibe_images/tech-webgl-city.webp" alt="WebGL 三维城市模型渲染" data-lightbox="vibe_images/tech-webgl-city.webp" data-lightbox-alt="WebGL 三维城市模型渲染" onclick="event.preventDefault();openLightbox('vibe_images/tech-webgl-city.webp','WebGL 三维城市模型渲染')">
       </div>
       <div class="card-body">
         <span class="tech-icon">🌐</span>
@@ -722,10 +730,10 @@
         <div class="tech-en">WebGL Digital Twin</div>
         <p>基于 WebGL 技术构建雄安新区三维数字孪生模型，实现城市数据与空间信息的实时可视化呈现。</p>
       </div>
-    </div>
-    <div class="tech-card reveal">
+    </a>
+    <a href="aigc.html" class="tech-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/tech-multimodal.webp" alt="AIGC 多模态处理">
+        <img class="card-img-real" src="vibe_images/tech-multimodal.webp" alt="AIGC 多模态处理" data-lightbox="vibe_images/tech-multimodal.webp" data-lightbox-alt="AIGC 多模态处理" onclick="event.preventDefault();openLightbox('vibe_images/tech-multimodal.webp','AIGC 多模态处理')">
       </div>
       <div class="card-body">
         <span class="tech-icon">🤖</span>
@@ -733,7 +741,7 @@
         <div class="tech-en">AIGC Multimodal</div>
         <p>整合图像、音频、视频、文本等多模态数据，运用 AIGC 技术实现非遗内容的全方位数字化呈现与智能生成。</p>
       </div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -776,33 +784,33 @@
     <div class="section-line"></div>
   </div>
   <div class="impact-grid">
-    <div class="impact-card reveal">
+    <a href="news.html" class="impact-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/impact-media.webp" alt="媒体报道与社会关注">
+        <img class="card-img-real" src="vibe_images/impact-media.webp" alt="媒体报道与社会关注" data-lightbox="vibe_images/impact-media.webp" data-lightbox-alt="媒体报道与社会关注" onclick="event.preventDefault();openLightbox('vibe_images/impact-media.webp','媒体报道与社会关注')">
       </div>
       <div class="card-body">
         <h4>媒体报道与社会关注</h4>
         <p>项目获得人民日报、新华社、央视新闻等主流媒体广泛关注与报道，引发社会对雄安非遗数字化保护的高度关注，累计媒体报道超过50篇，全网阅读量突破千万。</p>
       </div>
-    </div>
-    <div class="impact-card reveal">
+    </a>
+    <a href="news.html" class="impact-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/impact-exhibition.webp" alt="专题展览与文化交流">
+        <img class="card-img-real" src="vibe_images/impact-exhibition.webp" alt="专题展览与文化交流" data-lightbox="vibe_images/impact-exhibition.webp" data-lightbox-alt="专题展览与文化交流" onclick="event.preventDefault();openLightbox('vibe_images/impact-exhibition.webp','专题展览与文化交流')">
       </div>
       <div class="card-body">
         <h4>专题展览与文化交流</h4>
         <p>项目成果已在多个文化展览中展出，包括雄安数字城市体验馆、河北非遗博览会等，累计接待观众超过10万人次，成为雄安文化名片。</p>
       </div>
-    </div>
-    <div class="impact-card reveal">
+    </a>
+    <a href="news.html" class="impact-card reveal">
       <div class="card-img">
-        <img class="card-img-real" src="vibe_images/impact-education.webp" alt="教育传承与学术研究">
+        <img class="card-img-real" src="vibe_images/impact-education.webp" alt="教育传承与学术研究" data-lightbox="vibe_images/impact-education.webp" data-lightbox-alt="教育传承与学术研究" onclick="event.preventDefault();openLightbox('vibe_images/impact-education.webp','教育传承与学术研究')">
       </div>
       <div class="card-body">
         <h4>教育传承与学术研究</h4>
         <p>平台已与中国传媒大学、河北大学等多所高校合作，作为非遗数字化教学案例与研究平台，推动非遗文化的学术研究与教育传承。</p>
       </div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -845,6 +853,7 @@
     <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
     <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
     <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+    <p style="margin-top:8px;"><a href="admin.html" style="color:var(--gold-primary);opacity:0.5;font-size:11px;letter-spacing:1px;text-decoration:none;transition:opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">内容管理后台</a></p>
   </div>
   <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>

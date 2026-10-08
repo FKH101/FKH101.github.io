@@ -543,6 +543,34 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
   });
 });
 
+// ===== 触摸设备下拉菜单支持 =====
+document.querySelectorAll('.nav-item').forEach(item => {
+  const dropdown = item.querySelector('.dropdown');
+  if (dropdown) {
+    item.addEventListener('click', function(e) {
+      // 仅在触摸设备或窄屏时拦截
+      if (window.innerWidth <= 1024 || 'ontouchstart' in window) {
+        if (e.target === this || e.target.classList.contains('nav-link')) {
+          e.preventDefault();
+          // 关闭其他下拉
+          document.querySelectorAll('.nav-item.dropdown-open').forEach(other => {
+            if (other !== this) other.classList.remove('dropdown-open');
+          });
+          this.classList.toggle('dropdown-open');
+        }
+      }
+    });
+  }
+});
+// 点击页面其他地方关闭下拉
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-item')) {
+    document.querySelectorAll('.nav-item.dropdown-open').forEach(item => {
+      item.classList.remove('dropdown-open');
+    });
+  }
+});
+
 // ===== 返回顶部按钮 =====
 window.addEventListener('scroll', () => {
   const btn = document.getElementById('backToTop');
@@ -732,4 +760,174 @@ if (typeof identityData !== 'undefined') {
     document.addEventListener('pointerdown', g, { once: true });
     play();
   }
+})();
+
+// ===== 图片放大 Lightbox =====
+(function(){
+  var overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.innerHTML = '<button class="lightbox-close">&times;</button>'
+    +'<span class="lightbox-hint">点击图片关闭</span>'
+    +'<img src="" alt="">'
+    +'<div class="lightbox-caption"></div>';
+  document.body.appendChild(overlay);
+
+  var img = overlay.querySelector('img');
+  var caption = overlay.querySelector('.lightbox-caption');
+  var closeBtn = overlay.querySelector('.lightbox-close');
+
+  function openLightbox(src, alt) {
+    img.src = src;
+    img.alt = alt || '';
+    caption.textContent = alt || '';
+    caption.style.display = alt ? 'block' : 'none';
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+    setTimeout(function(){ img.src = ''; }, 350);
+  }
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay || e.target === closeBtn || e.target === img) {
+      closeLightbox();
+    }
+  });
+  closeBtn.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('show')) closeLightbox();
+  });
+
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest('[data-lightbox]');
+    if (el) {
+      e.preventDefault();
+      e.stopPropagation();
+      var src = el.getAttribute('data-lightbox') || el.src;
+      var alt = el.getAttribute('data-lightbox-alt') || el.alt || '';
+      openLightbox(src, alt);
+    }
+  });
+
+  window.openLightbox = openLightbox;
+  window.closeLightbox = closeLightbox;
+})();
+
+// ===== 自动给所有图片加 lightbox =====
+(function(){
+  function addAutoLightbox() {
+    document.querySelectorAll('img').forEach(function(img) {
+      if (img.hasAttribute('data-lightbox')) return;
+      if (!img.src || img.src.indexOf('data:') === 0) return;
+      if (img.closest('.lightbox-overlay')) return;
+      img.setAttribute('data-lightbox', img.src);
+      img.setAttribute('data-lightbox-alt', img.alt || '');
+      img.style.cursor = 'zoom-in';
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addAutoLightbox);
+  } else {
+    addAutoLightbox();
+  }
+  // 动态内容加载后也执行
+  var origObserver = window.MutationObserver;
+  if (origObserver) {
+    var observer = new origObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        m.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1) {
+            if (node.tagName === 'IMG' && !node.hasAttribute('data-lightbox') && node.src && node.src.indexOf('data:') !== 0) {
+              node.setAttribute('data-lightbox', node.src);
+              node.setAttribute('data-lightbox-alt', node.alt || '');
+              node.style.cursor = 'zoom-in';
+            }
+            node.querySelectorAll && node.querySelectorAll('img').forEach(function(img) {
+              if (!img.hasAttribute('data-lightbox') && img.src && img.src.indexOf('data:') !== 0) {
+                img.setAttribute('data-lightbox', img.src);
+                img.setAttribute('data-lightbox-alt', img.alt || '');
+                img.style.cursor = 'zoom-in';
+              }
+            });
+          }
+        });
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+})();
+
+// ===== 详情弹窗 Detail Modal =====
+(function(){
+  var overlay = document.createElement('div');
+  overlay.className = 'detail-modal-overlay';
+  overlay.innerHTML = '<div class="detail-modal-box" style="position:relative;">'
+    +'<button class="detail-modal-close">&times;</button>'
+    +'<img class="detail-modal-img" src="" alt="">'
+    +'<div class="detail-modal-content">'
+    +'<div class="dm-tag"></div>'
+    +'<h3></h3>'
+    +'<p></p>'
+    +'</div>'
+    +'<div class="detail-modal-footer"></div>'
+    +'</div>';
+  document.body.appendChild(overlay);
+
+  var box = overlay.querySelector('.detail-modal-box');
+  var mImg = overlay.querySelector('.detail-modal-img');
+  var mTag = overlay.querySelector('.dm-tag');
+  var mTitle = overlay.querySelector('h3');
+  var mDesc = overlay.querySelector('p');
+  var mFooter = overlay.querySelector('.detail-modal-footer');
+  var mClose = overlay.querySelector('.detail-modal-close');
+
+  function openDetail(data) {
+    mImg.src = data.image || '';
+    mImg.style.display = data.image ? 'block' : 'none';
+    mTag.textContent = data.tag || '';
+    mTag.style.display = data.tag ? 'inline-block' : 'none';
+    mTitle.textContent = data.title || '';
+    mDesc.innerHTML = data.description || '';
+    if (data.link) {
+      mFooter.innerHTML = '<a href="'+data.link+'">查看详情 →</a>';
+      mFooter.style.display = 'flex';
+    } else {
+      mFooter.innerHTML = '';
+      mFooter.style.display = 'none';
+    }
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDetail() {
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeDetail();
+  });
+  mClose.addEventListener('click', closeDetail);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('show')) closeDetail();
+  });
+
+  document.addEventListener('click', function(e) {
+    var el = e.target.closest('[data-modal]');
+    if (el) {
+      e.preventDefault();
+      var raw = el.getAttribute('data-modal');
+      if (raw && raw !== 'true') {
+        try {
+          var data = JSON.parse(raw);
+          openDetail(data);
+          return;
+        } catch(ex) {}
+      }
+    }
+  });
+
+  window.openDetail = openDetail;
+  window.closeDetail = closeDetail;
 })();

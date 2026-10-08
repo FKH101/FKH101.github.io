@@ -9,6 +9,22 @@
 <title>刘永利 · 白洋淀芦苇画省级非遗代表性传承人</title>
 <link rel="stylesheet" href="styles.css?v=1790317000">
 <style>
+/* ===== 作品卡片交互增强 ===== */
+.master-work-card { cursor: pointer; }
+.master-work-card:hover {
+  box-shadow: 0 8px 28px rgba(181,65,62,0.1);
+}
+.master-skill-item { cursor: default; }
+.master-skill-item:hover {
+  border-color: var(--border-gold-hover);
+  box-shadow: 0 4px 16px rgba(181,65,62,0.06);
+}
+.master-info-card { transition: all 0.3s ease; }
+.master-info-card:hover {
+  border-color: var(--border-gold-hover);
+  box-shadow: 0 4px 16px rgba(181,65,62,0.06);
+}
+
 /* ===== 移动端响应式 ===== */
 @media (max-width: 1024px) {
   .master-hero { padding: 80px 0 40px; }
@@ -118,7 +134,7 @@
 <!-- 传承人主视觉 -->
 <section class="master-hero">
   <div class="master-portrait">
-    <img src="vibe_images/inheritor-portrait.webp" alt="刘永利肖像" style="width:100%;display:block;border-radius:14px;box-shadow:0 8px 32px rgba(51,51,51,0.1);">
+    <img src="vibe_images/inheritor-portrait.webp" alt="刘永利肖像" data-lightbox="vibe_images/inheritor-portrait.webp" data-lightbox-alt="刘永利" style="width:100%;display:block;border-radius:14px;box-shadow:0 8px 32px rgba(51,51,51,0.1);cursor:zoom-in;" onclick="openLightbox('vibe_images/inheritor-portrait.webp','刘永利')">
   </div>
   <h1 class="master-name">刘永利</h1>
   <p class="master-title-text">省级非遗代表性传承人</p>
@@ -185,27 +201,27 @@
   </div>
   <div class="master-works-grid">
     <div class="master-work-card reveal">
-      <div class="work-img"><img src="vibe_images/inheritor-work-01.webp" alt="淀泊春晓" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-img"><img src="vibe_images/inheritor-work-01.webp" alt="淀泊春晓" data-lightbox="vibe_images/inheritor-work-01.webp" data-lightbox-alt="淀泊春晓" style="width:100%;height:200px;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox('vibe_images/inheritor-work-01.webp','淀泊春晓')"></div>
       <div class="work-body"><h5>淀泊春晓</h5><p>春日淀区荷花初绽</p></div>
     </div>
     <div class="master-work-card reveal">
-      <div class="work-img"><img src="vibe_images/inheritor-work-02.webp" alt="芦雁归秋" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-img"><img src="vibe_images/inheritor-work-02.webp" alt="芦雁归秋" data-lightbox="vibe_images/inheritor-work-02.webp" data-lightbox-alt="芦雁归秋" style="width:100%;height:200px;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox('vibe_images/inheritor-work-02.webp','芦雁归秋')"></div>
       <div class="work-body"><h5>芦雁归秋</h5><p>秋日芦荡雁阵南归</p></div>
     </div>
     <div class="master-work-card reveal">
-      <div class="work-img"><img src="vibe_images/inheritor-work-03.webp" alt="荷韵清夏" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-img"><img src="vibe_images/inheritor-work-03.webp" alt="荷韵清夏" data-lightbox="vibe_images/inheritor-work-03.webp" data-lightbox-alt="荷韵清夏" style="width:100%;height:200px;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox('vibe_images/inheritor-work-03.webp','荷韵清夏')"></div>
       <div class="work-body"><h5>荷韵清夏</h5><p>盛夏荷塘清雅意境</p></div>
     </div>
     <div class="master-work-card reveal">
-      <div class="work-img"><img src="vibe_images/inheritor-work-04.webp" alt="渔舟唱晚" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-img"><img src="vibe_images/inheritor-work-04.webp" alt="渔舟唱晚" data-lightbox="vibe_images/inheritor-work-04.webp" data-lightbox-alt="渔舟唱晚" style="width:100%;height:200px;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox('vibe_images/inheritor-work-04.webp','渔舟唱晚')"></div>
       <div class="work-body"><h5>渔舟唱晚</h5><p>水乡傍晚渔舟归泊</p></div>
     </div>
     <div class="master-work-card reveal">
-      <div class="work-img"><img src="vibe_images/inheritor-work-05.webp" alt="水乡人家" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-img"><img src="vibe_images/inheritor-work-05.webp" alt="水乡人家" data-lightbox="vibe_images/inheritor-work-05.webp" data-lightbox-alt="水乡人家" style="width:100%;height:200px;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox('vibe_images/inheritor-work-05.webp','水乡人家')"></div>
       <div class="work-body"><h5>水乡人家</h5><p>淀区民俗生活场景</p></div>
     </div>
     <div class="master-work-card reveal">
-      <div class="work-img"><img src="vibe_images/inheritor-work-06.webp" alt="百鸟朝凤" style="width:100%;height:200px;object-fit:cover;display:block;"></div>
+      <div class="work-img"><img src="vibe_images/inheritor-work-06.webp" alt="百鸟朝凤" data-lightbox="vibe_images/inheritor-work-06.webp" data-lightbox-alt="百鸟朝凤" style="width:100%;height:200px;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox('vibe_images/inheritor-work-06.webp','百鸟朝凤')"></div>
       <div class="work-body"><h5>百鸟朝凤</h5><p>精细鸟羽纹理之妙</p></div>
     </div>
   </div>
@@ -249,6 +265,7 @@
     <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
     <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
     <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+    <p style="margin-top:8px;"><a href="admin.html" style="color:var(--gold-primary);opacity:0.5;font-size:11px;letter-spacing:1px;text-decoration:none;transition:opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">内容管理后台</a></p>
   </div>
   <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>

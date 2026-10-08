@@ -23,6 +23,16 @@
 .intro-text p { font-size: 16px; color: var(--text-secondary); line-height: 2.2; letter-spacing: 1px; }
 
 /* ===== 移动端响应式 ===== */
+a.policy-item {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  cursor: pointer;
+}
+a.policy-item:hover {
+  border-color: var(--border-gold-hover);
+  box-shadow: 0 4px 20px rgba(181,65,62,0.08);
+}
 @media (max-width: 1024px) {
   .page-hero { height: 45vh; margin-top: 64px; }
   .page-hero-content h1 { font-size: 40px; letter-spacing: 5px; }
@@ -145,10 +155,7 @@
     <h2 class="section-title">制度护航 · 文脉永续</h2>
     <div class="section-line"></div>
   </div>
-  <div class="intro-text reveal">
-    <p>非物质文化遗产是中华优秀传统文化的重要组成部分，其保护与传承离不开完善的制度保障。从国家立法到地方管理办法，从数字化保护指导意见到传承人扶持政策，多层次、全方位的政策法规体系为雄安新区非遗保护构筑了坚实的制度基础。</p>
-    <p>本页面系统梳理与雄安非遗保护密切相关的六项核心政策法规，呈现从国家到地方、从保护到创新的政策脉络，助力非遗在数字时代焕发新生。</p>
-  </div>
+  <div class="intro-text reveal" id="policyOverview"></div>
 </section>
 
 <!-- 核心政策法规 -->
@@ -158,62 +165,7 @@
     <h2 class="section-title">核心政策法规</h2>
     <div class="section-line"></div>
   </div>
-  <div class="policy-list">
-    <div class="policy-item reveal">
-      <div class="policy-num">01</div>
-      <div class="policy-content">
-        <h3 class="policy-title">《中华人民共和国非物质文化遗产法》</h3>
-        <div class="policy-meta">颁布日期：2011年2月25日 · 颁布机构：全国人民代表大会常务委员会</div>
-        <p class="policy-desc">这是我国非物质文化遗产保护领域的核心法律，确立了非遗保护、保存、传承与传播的法律框架。该法明确了非遗的定义、保护原则及各级政府与传承人的权利义务，为非遗保护工作提供了根本法律依据，是雄安新区开展非遗保护的根本遵循。</p>
-        <a href="https://zwgk.mct.gov.cn/zfxxgkml/zcfg/fl/202012/t20201214_919523.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
-      </div>
-    </div>
-    <div class="policy-item reveal">
-      <div class="policy-num">02</div>
-      <div class="policy-content">
-        <h3 class="policy-title">《河北省非物质文化遗产条例》</h3>
-        <div class="policy-meta">颁布日期：2014年9月26日 · 颁布机构：河北省人民代表大会常务委员会</div>
-        <p class="policy-desc">河北省非遗保护的地方性法规，结合本省实际细化了非遗保护、传承、利用的具体措施。条例规范了非遗项目名录建设、传承人认定及经费保障机制，为雄安地区芦苇画、黑陶、盒子灯等非遗项目的保护与传承提供了省级制度支撑。</p>
-        <a href="https://whly.hebei.gov.cn/c/2026-07-21/585770.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
-      </div>
-    </div>
-    <div class="policy-item reveal">
-      <div class="policy-num">03</div>
-      <div class="policy-content">
-        <h3 class="policy-title">《雄安新区非物质文化遗产保护管理办法》</h3>
-        <div class="policy-meta">颁布日期：2020年 · 颁布机构：河北雄安新区管理委员会</div>
-        <p class="policy-desc">针对雄安新区非遗保护实际制定的管理规范，建立了新区非遗项目名录与传承人管理体系。办法明确了非遗普查、记录、建档及展示推广的具体要求，协调新区建设中非遗保护与城市发展的关系，为新区非遗保护提供属地化管理依据。</p>
-        <a href="https://www.xiongan.gov.cn/20250613/231de3532117402c9702562389d3a138/c.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
-      </div>
-    </div>
-    <div class="policy-item reveal">
-      <div class="policy-num">04</div>
-      <div class="policy-content">
-        <h3 class="policy-title">《关于推进非物质文化遗产数字化保护的指导意见》</h3>
-        <div class="policy-meta">颁布日期：2022年 · 颁布机构：文化和旅游部</div>
-        <p class="policy-desc">推动非遗数字化的专项政策，鼓励运用数字技术对非遗项目进行采集、存储、记录与展示。指导意见支持建设非遗数字资源库与线上展示平台，为非遗的永久保存与传播创新提供政策引导，是本平台 AIGC 赋能非遗数字化保护的重要政策依据。</p>
-        <a href="https://whly.hebei.gov.cn/c/2024-04-08/576170.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
-      </div>
-    </div>
-    <div class="policy-item reveal">
-      <div class="policy-num">05</div>
-      <div class="policy-content">
-        <h3 class="policy-title">《雄安新区非遗传承人补贴与扶持办法》</h3>
-        <div class="policy-meta">颁布日期：2023年 · 颁布机构：河北雄安新区管理委员会</div>
-        <p class="policy-desc">专项扶持非遗传承人的政策，对各级代表性传承人给予定期补贴与创作资助。办法鼓励传承人开展授徒传艺、展演展示及技艺研发活动，保障传承人基本生活与传承活动的可持续开展，让千年技艺在人中延续、在手间传承。</p>
-        <a href="https://whly.hebei.gov.cn/c/2026-07-21/585766.html" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
-      </div>
-    </div>
-    <div class="policy-item reveal">
-      <div class="policy-num">06</div>
-      <div class="policy-content">
-        <h3 class="policy-title">《AIGC技术赋能非遗创新应用管理规范》</h3>
-        <div class="policy-meta">颁布日期：2024年 · 颁布机构：河北雄安新区管理委员会</div>
-        <p class="policy-desc">规范 AIGC 人工智能生成内容技术在非遗创新应用中的使用，明确了数据采集、模型训练与生成内容的管理要求。规范鼓励以 AIGC 赋能非遗纹样重构、数字创作与文化传播，同时保障传承人权益与文化真实性，为非遗的数字创新划定了清晰边界。</p>
-        <a href="https://www.mct.gov.cn/" target="_blank" style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</a>
-      </div>
-    </div>
-  </div>
+  <div class="policy-list" id="policyList"></div>
 </section>
 
 <!-- 底部纹样 -->
@@ -255,6 +207,7 @@
     <p>Copyright © 2026 数绘雄州 · 智承非遗 All Rights Reserved.</p>
     <p class="sf-note">本站为学生课程学习作品，部分图文资料来源于公开网络及 AIGC 生成，版权归原作者及相关机构所有，仅供学习交流使用，不作任何商业用途</p>
     <p class="sf-browser">建议使用 Chrome、Edge、Firefox 等现代浏览器浏览，最佳分辨率 1920 × 1080</p>
+    <p style="margin-top:8px;"><a href="admin.html" style="color:var(--gold-primary);opacity:0.5;font-size:11px;letter-spacing:1px;text-decoration:none;transition:opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">内容管理后台</a></p>
   </div>
   <svg class="sf-skyline" viewBox="0 0 1200 74" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
@@ -307,6 +260,34 @@
   <div class="dh-avatar" onclick="toggleDH()">📋</div>
 </div>
 
+<script src="data/loader.js"></script>
+<script>
+(function(){
+  var esc = XionganData.escHTML;
+  XionganData.onReady(function(data){
+    var ov = data.policyOverview;
+    var ovEl = document.getElementById('policyOverview');
+    if(ovEl && ov){
+      ovEl.innerHTML = ov.paragraphs.map(function(p){ return '<p>'+esc(p)+'</p>'; }).join('');
+    }
+    var policies = data.policies || [];
+    var listEl = document.getElementById('policyList');
+    if(listEl){
+      listEl.innerHTML = policies.map(function(p){
+        return '<a class="policy-item reveal" href="'+esc(p.link)+'" target="_blank" rel="noopener">'
+          +'<div class="policy-num">'+esc(p.number)+'</div>'
+          +'<div class="policy-content">'
+          +'<h3 class="policy-title">'+esc(p.title)+'</h3>'
+          +'<div class="policy-meta">'+esc(p.meta)+'</div>'
+          +'<p class="policy-desc">'+esc(p.description)+'</p>'
+          +'<span style="font-size:13px;color:var(--cinnabar);letter-spacing:1px;margin-top:8px;display:inline-block;">查看原文 →</span>'
+          +'</div></a>';
+      }).join('');
+    }
+    if(typeof initReveal==='function') initReveal();
+  });
+})();
+</script>
 <script src="app.js?v=1790317800"></script>
 </body>
 </html>
